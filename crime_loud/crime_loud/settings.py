@@ -43,7 +43,9 @@ THIRD_PARTY_APPS = (
 #'south',
 )
 
-LOCAL_APPS = ()
+LOCAL_APPS = (
+'web_interface',
+)
 
 INSTALLED_APPS = DEFAULT_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
