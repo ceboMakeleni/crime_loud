@@ -23,79 +23,211 @@
 		<![endif]-->
 	</head>
 	<body>
-		<div class="container" id="mainContainer">
-			
-			<div class= "navbar navbar-default navbar-fixed-top">
-				<div class="container">
-					
-					<button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse" type="button">
+		<div class= "navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-responsive-collapse" type="button" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					
-					<a href="#" class="navbar-brand"><img alt="Crime Loud" src="..."</a>
-					
+					<a href="#" class="navbar-brand">Crime Loud</a>
+				</div><!-- end navbar-header -->
+	
+				<div class="navbar-collapse collapse navbar-responsive-collapse">
+					<ul class="nav navbar-nav">
+						<li class="active">
+							<a href="#">Home</a>
+						</li>
+					</ul><!-- end navbar-left -->
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+								<span class="glyphicon glyphicon-user"></span>
+								Jane Doe <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+								
+								<li><a href="#"><span class="glyphicon glyphicon-upload"></span> Uploads</a></li>
+								
+								<li><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+								
+								<li class="divider"></li>
+								
+								<li class="dropdown-header">More information</li>
+								
+								<li><a href="#"><span class="fa fa-key"></span> Privacy info</a></li>
+								
+								<li><a href="#"><span class="fa fa-lock"></span> Anonymity</a></li>
+								
+								<li><a href="#"><span class="fa fa-question-circle"></span> Help</a></li>
+								
+								<li class="divider"></li>
+								
+								<li><a href="#"><span class="glyphicon glyphicon-off"></span> Sign out</a></li>
+							</ul>
+						</li>
+					</ul><!-- end navbar-right -->
+				</div><!-- end navbar-collapse -->
+			
+			</div><!-- end container -->
+		</div><!--End of Navigation bar-->
 		
-					<div class="collapse navbar-collapse navbar-responsive-collapse">
-						<ul class="nav navbar-nav">
-							<li class="active">
-								<a href="#">Home</a>
-							</li>
-						</ul><!-- end navbar-left -->
-						<ul class="nav navbar-nav pull-right">
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-									<span class="glyphicon glyphicon-user"></span>
-									Jane Doe <strong class="caret"></strong>
-								</a>
-								<ul class="dropdown-menu">
-									<li>
-										<a href="#"><span class="glyphicon glyphicon-user"></span> Profile</a>
-									</li>
-									
-									<li>
-										<a href="#"><span class="glyphicon glyphicon-upload"></span> Uploads</a>
-									</li>
-									
-									<li>
-										<a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a>
-									</li>
-									
-									<li class="divider"></li>
-									
-									<li class="dropdown-header">More information</li>
-									
-									<li>
-										<a href="#">Privacy info</a>
-									</li>
-									
-									<li>
-										<a href="#">Anonymity</a>
-									</li>
-									
-									<li>
-										<a href="#">Help</a>
-									</li>
-									
-									<li class="divider"></li>
-									
-									<li>
-										<a href="#"><span class="glyphicon glyphicon-off"></span> Sign out</a>
-									</li>
-								</ul>
-							</li>
-						</ul><!-- end navbar-right -->
-					</div><!-- end navbar-collapse -->
+		<div class="container" id="mainContainer">
+			
+			<div class="carousel slide" id="myCarousel" data-ride="carousel">
 				
-				</div><!-- end container -->
-			</div><!--End of Navigation bar-->
+				<!-- Indicators -->
+				<ol class="carousel-indicators">
+					<li class="active" data-slide-to="0" data-target="#myCarousel"></li>
+					<li data-slide-to="1" data-target="#myCarousel"></li>
+					<li data-slide-to="2" data-target="#myCarousel"></li>
+					<li data-slide-to="3" data-target="#myCarousel"></li>
+					<li data-slide-to="4" data-target="#myCarousel"></li>
+				</ol><!-- end carousel-indicators -->
+				
+				<!-- Wrapper for slides -->
+				<div class="carousel-inner" role="listbox">
+					<div class="item active" id="slide1">
+						<div class="container">
+							<div class="carousel-caption">
+								<h4>What is Crime_loud?</h4>
+								<p>Crime_loud is a web application that allows people to upload
+								information in the form of images, audio, and video that might
+								be used by law enforcement.</p>
+							</div><!-- end carousel-caption -->
+						</div><!-- end container -->
+					</div><!-- end item -->
+					
+					<div class="item" id="slide2">
+						<div class="container">
+							<div class="carousel-caption">
+								<h4>Upload images</h4>
+								<p>Upload images of any suspicious behaviour, criminal offence or wrong doings.
+								This will help law enforcement in dealing with cases.</p>
+							</div><!-- end carousel-caption -->
+						</div><!-- end container -->
+					</div><!-- end item -->
+					
+					<div class="item" id="slide3">
+						<div class="container">
+							<div class="carousel-caption">
+								<h4>Upload videos</h4>
+								<p>Upload videos of anysuspicious behaviour, criminal offence or wrong doings.
+								Videos are a powerfull tool in solving criminal and other cases.</p>
+							</div><!-- end carousel-caption -->
+						</div><!-- end container -->
+					</div><!-- end item -->
+					
+					<div class="item" id="slide4">
+						<div class="container">
+							<div class="carousel-caption">
+								<h4>Upload audio clips</h4>
+								<p>Upload audio clips or recordings of anysuspicious behaviour, criminal offence or wrong doings.
+								Audio recordings can lead to the solving of crimes and or assisting in investigations by forensic specialists.</p>
+							</div><!-- end carousel-caption -->
+						</div><!-- end container -->
+					</div><!-- end item -->
+					
+					<div class="item" id="slide5">
+						<div class="container">
+							<div class="carousel-caption">
+								<h4>Assist law enforcement</h4>
+								<p>By uploading content to the site, you are helping law enforcement and also helping your
+								community in making a better place by putting away unjust individuals.</p>
+							</div><!-- end carousel-caption -->
+						</div><!-- end container -->
+					</div><!-- end item -->
+				</div><!-- end carousel-inner -->
+				
+				<!-- Controls -->
+				<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+					<span class="glyphicon glyphicon-chevron-left"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+					<span class="glyphicon glyphicon-chevron-right"></span>
+					<span class="sr-only">Next</span>
+				</a>
+			</div><!-- end myCarousel -->
+			
+			<div class="row" id="registerOrUpload">
+				<div class="col-md-12">
+					
+					<div class="well">
+						<div class="page-header">
+							<h1>Register as a member <small>Registering helps with verification of uploads</small></h1>
+						</div><!-- end page-header -->
+						
+						<p class="lead">Register as a member on the site in order to not only track your uploads, but to
+						also be able to be reached regarding an upload and potentially be notified in the case of your
+						upload helping to solve a case.</p>
+						
+						<a href="#" class="btn btn-large btn-primary">Register as uploader</a>
+						<a href="#" class="btn btn-large btn-default">Login to upload</a>
+						<a href="#" class="btn btn-large btn-link">or upload anonymously</a>
+					</div><!-- end well -->
+					
+				</div><!-- end col-md-12 -->
+			</div><!-- end registerOrUpload -->
+			
+			<div class="row" id="uploadHeader">
+				<div class="col-md-12">
+					<h2>Upload Section</h2>
+					<p class="lead">This is the upload section, select the type of media you want to upload.</p>
+				</div><!-- end col-md-12 -->
+			</div><!-- end uploadHeader -->
+			
+			<div class="row" id="uploadOptions">
+				<div class="col-sm-4 feature">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">Upload an image</h3>
+						</div><!-- end panel-heading -->
+						<div class="panel-body">
+							<p>some bull ish stuff that needs to fill the space.</p>
+							
+							<a class="btn btn-block btn-primary">Upload an image</a>
+						</div><!-- end panel-body -->
+					</div><!-- end panel -->
+				</div><!-- end feature -->
+				
+				<div class="col-sm-4 feature">
+					<div class="panel panel-warning">
+						<div class="panel-heading">
+							<h3 class="panel-title">Upload an audio clip</h3>
+						</div><!-- end panel-heading -->
+						<div class="panel-body">
+							<p>some bull ish stuff that needs to fill the space.</p>
+							
+							<a class="btn btn-block btn-warning">Upload an audio clip</a>
+						</div><!-- end panel-body -->
+					</div><!-- end panel -->
+				</div><!-- end feature -->
+				
+				<div class="col-sm-4 feature">
+					<div class="panel panel-danger">
+						<div class="panel-heading">
+							<h3 class="panel-title">Upload a video</h3>
+						</div><!-- end panel-heading -->
+						<div class="panel-body">
+							<p>some bull ish stuff that needs to fill the space.</p>
+							
+							<a class="btn btn-block btn-danger">Upload a video</a>
+						</div><!-- end panel-body -->
+					</div><!-- end panel -->
+				</div><!-- end feature -->
+			</div><!-- end uploadOptions -->
 		
 		</div><!-- end mainContainer -->
 		
-		<footer id="mainFooter">
-			
-		</footer><!-- end mainFooter -->
+		<footer class="footer">
+			<div class="container">
+				<p class="text-muted">University of Pretoria, South Africa <span class="fa fa-copyright"></span></p>
+			</div><!-- end container -->
+		</footer><!-- end footer -->
 		
 		<!-- jQuery 2.0.2 -->
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
