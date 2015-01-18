@@ -17,6 +17,11 @@ body {
   margin: 20px 0;
 }
 
+.panel-body > img {
+    width: 256px;
+    height: 256px;
+}
+
 /*---------------------------
 Typography
 ----------------------------- */
