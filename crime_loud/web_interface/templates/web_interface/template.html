@@ -204,8 +204,46 @@
 									<h4 class="modal-title">Upload an image</h4>
 								</div><!-- end modal-header -->
 								<div class="modal-body">
-									
+									<form class="form-horizontal">
+										<div class="form-group">
+											<label class="col-lg-2 control-label" for="imageTitle">Title</label>
+											<div class="col-lg-10">
+												<input class="form-control" id="imageTitle" placeholder="Title" type="text">
+											</div><!-- end col-lg-10 -->
+										</div><!-- end form-group -->
+										
+										<div class="form-group">
+											<label class="col-lg-2 control-label" for="imageDescription">Description</label>
+											<div class="col-lg-10">
+												<textarea class="form-control" id="imageDescription" placeholder="Describe what is happening image(s)" rows="4"></textarea>
+											</div><!-- end col-lg-10 -->
+										</div><!-- end form-group -->
+										
+										<div class="form-group">
+											<label class="col-lg-2 control-label" for="imageLocation">Location</label>
+											<div class="col-lg-10">
+												<input class="form-control" id="imageLocation" placeholder="Location" type="text">
+											</div><!-- end col-lg-10 -->
+										</div><!-- end form-group -->
+										
+										<div class="form-group">
+											<label class="col-lg-2 control-label" for="imageDate">Date</label>
+											<div class="col-lg-10">
+												<input class="form-control" id="audioDate" placeholder="Date and Time" type="text">
+											</div><!-- end col-lg-10 -->
+										</div><!-- end form-group -->
+										
+										<div class="form-group">
+											<label class="col-lg-2 control-label" for="imageUpload">File input</label>
+											<input type="file" id="imageFileUpload">
+											<p class="help-block">List types of images files to be uploaded.</p>
+										</div>
+									</form>
 								</div><!-- end modal-body -->
+								<div class="modal-footer">
+									<button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+									<button class="btn btn-primary" type="button">Upload</button>
+								</div><!-- end modal-footer -->
 							</div><!-- end modal-content -->
 						</div><!-- end modal-dialog -->
 					</div><!-- end imageUploadModal -->
@@ -233,8 +271,46 @@
 											<h4 class="modal-title">Upload an audio clip</h4>
 										</div><!-- end modal-header -->
 										<div class="modal-body">
-											
+											<form class="form-horizontal">
+												<div class="form-group">
+													<label class="col-lg-2 control-label" for="audioTitle">Title</label>
+													<div class="col-lg-10">
+														<input class="form-control" id="audioTitle" placeholder="Title" type="text">
+													</div><!-- end col-lg-10 -->
+												</div><!-- end form-group -->
+												
+												<div class="form-group">
+													<label class="col-lg-2 control-label" for="audioDescription">Description</label>
+													<div class="col-lg-10">
+														<textarea class="form-control" id="audioDescription" placeholder="Describe what is happening in the audio clip" rows="4"></textarea>
+													</div><!-- end col-lg-10 -->
+												</div><!-- end form-group -->
+												
+												<div class="form-group">
+													<label class="col-lg-2 control-label" for="audioLocation">Location</label>
+													<div class="col-lg-10">
+														<input class="form-control" id="audioLocation" placeholder="Location" type="text">
+													</div><!-- end col-lg-10 -->
+												</div><!-- end form-group -->
+												
+												<div class="form-group">
+													<label class="col-lg-2 control-label" for="audioDate">Date</label>
+													<div class="col-lg-10">
+														<input class="form-control" id="audioDate" placeholder="Date and Time" type="text">
+													</div><!-- end col-lg-10 -->
+												</div><!-- end form-group -->
+												
+												<div class="form-group">
+													<label class="col-lg-2 control-label" for="audioUpload">File input</label>
+													<input type="file" id="audioFileUpload">
+													<p class="help-block">List types of audio files to be uploaded.</p>
+												</div>
+											</form>
 										</div><!-- end modal-body -->
+										<div class="modal-footer">
+											<button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+											<button class="btn btn-primary" type="button">Upload</button>
+										</div><!-- end modal-footer -->
 									</div><!-- end modal-content -->
 								</div><!-- end modal-dialog -->
 							</div><!-- end audioUploadModal -->
@@ -267,8 +343,46 @@
 									<h4 class="modal-title">Upload a video</h4>
 								</div><!-- end modal-header -->
 								<div class="modal-body">
-									
+									<form class="form-horizontal">
+										<div class="form-group">
+											<label class="col-lg-2 control-label" for="videoTitle">Title</label>
+											<div class="col-lg-10">
+												<input class="form-control" id="videoTitle" placeholder="Title" type="text">
+											</div><!-- end col-lg-10 -->
+										</div><!-- end form-group -->
+										
+										<div class="form-group">
+											<label class="col-lg-2 control-label" for="videoDescription">Description</label>
+											<div class="col-lg-10">
+												<textarea class="form-control" id="videoDescription" placeholder="Describe the what is happening in the video" rows="4"></textarea>
+											</div><!-- end col-lg-10 -->
+										</div><!-- end form-group -->
+										
+										<div class="form-group">
+											<label class="col-lg-2 control-label" for="videoLocation">Location</label>
+											<div class="col-lg-10">
+												<input class="form-control" id="videoLocation" placeholder="Location" type="text">
+											</div><!-- end col-lg-10 -->
+										</div><!-- end form-group -->
+										
+										<div class="form-group">
+											<label class="col-lg-2 control-label" for="videoDate">Date</label>
+											<div class="col-lg-10">
+												<input class="form-control" id="videoDate" placeholder="Date and Time" type="text">
+											</div><!-- end col-lg-10 -->
+										</div><!-- end form-group -->
+										
+										<div class="form-group">
+											<label class="col-lg-2 control-label" for="videoUpload">File input</label>
+											<input type="file" id="videoFileUpload">
+											<p class="help-block">List types of videos to be uploaded.</p>
+										</div>
+									</form>
 								</div><!-- end modal-body -->
+								<div class="modal-footer">
+									<button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+									<button class="btn btn-primary" type="button">Upload</button>
+								</div><!-- end modal-footer -->
 							</div><!-- end modal-content -->
 						</div><!-- end modal-dialog -->
 					</div><!-- end videoUploadModal -->
