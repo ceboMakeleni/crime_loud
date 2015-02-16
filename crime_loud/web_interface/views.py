@@ -5,3 +5,4 @@ def home(request):
     return render_to_response("web_interface/index.html",
                               locals(),
                               context_instance = RequestContext(request))
+
