@@ -24,6 +24,7 @@
 	</head>
 	<body>
 		<div class= "navbar navbar-default navbar-fixed-top">
+		{% block navbar %}
 			<div class="container">
 				<div class="navbar-header">
 					<button class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-responsive-collapse" type="button" aria-expanded="false" aria-controls="navbar">
@@ -73,11 +74,12 @@
 				</div><!-- end navbar-collapse -->
 			
 			</div><!-- end container -->
+		{% endblock %}
 		</div><!--End of Navigation bar-->
 		
 		<div class="container" id="mainContainer">
 			
-			<div class="carousel slide" id="myCarousel" data-ride="carousel">
+			<div class="carousel slide" id="myCarousel" data-ride="carousel"> {% block carousel %}
 				
 				<!-- Indicators -->
 				<ol class="carousel-indicators">
@@ -151,323 +153,22 @@
 					<span class="glyphicon glyphicon-chevron-right"></span>
 					<span class="sr-only">Next</span>
 				</a>
+			{% endblock %}
 			</div><!-- end myCarousel -->
+			{% block content%}
 			
-			<div class="row" id="registerOrUpload">
-				<div class="col-md-12">
-					
-					<div class="well">
-						<div class="page-header">
-							<h1>Register as a member <small>Registering helps with verification of uploads</small></h1>
-						</div><!-- end page-header -->
-						
-						<p class="lead">Register as a member on the site in order to not only track your uploads, but to
-						also be able to be reached regarding an upload and potentially be notified in the case of your
-						upload helping to solve a case.</p>
-						
-						<a class="btn btn-block btn-primary" href="#RegisterModal" role="button" data-toggle="modal">Register as a new user</a>
-						<a href="#" class="btn btn-large btn-default">Login to upload</a>
-						<a href="#" class="btn btn-large btn-link">or upload anonymously</a>
-					</div><!-- end well -->
-					
-				</div><!-- end col-md-12 -->
-				
-				
-			<div class="col-sm-4 feature">		
-				<!-- The register modal -->
-				<div class="modal fade" id="RegisterModal">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<form class="form-horizontal" method="post" action="register">
-								<div class="modal-header">
-									<button class="close" data-dismiss="modal">&times;</button>
-									
-									<h4 class="modal-title">Register for Crime_loud </h4>
-								</div><!-- end modal-header -->
-								<div class="modal-body">
-									
-									<div class="form-group">
-										<label class="col-lg-2 control-label" for="idNum">ID No: </label>
-										<div class="col-lg-10">
-											<input class="form-control" name = "registerID" id="registerID" placeholder="Enter 13-digit ID number or Passport number here" type="text">
-										</div><!-- end col-lg-10 -->
-									</div><!-- end form-group -->
-										
-									<div class="form-group">
-										<label class="col-lg-2 control-label" for="registerName">Name: </label>
-										<div class="col-lg-10">
-											<input class="form-control" name = "registerName" id="registerName" type = "text">
-										</div><!-- end col-lg-10 -->
-									</div><!-- end form-group -->
-									
-									<div class="form-group">
-										<label class="col-lg-2 control-label" for="registerSurname">Surname: </label>
-										<div class="col-lg-10">
-											<input class="form-control" name = "registerSurname" id="registerSurname"  type="text">
-										</div><!-- end col-lg-10 -->
-									</div><!-- end form-group -->
-									
-									<div class="form-group">
-										<label class="col-lg-2 control-label" for="registerCell">Cell:</label>
-										<div class="col-lg-10">
-											<input class="form-control" name = "registerCell" id="registerCell"  type="text">
-										</div><!-- end col-lg-10 -->
-									</div><!-- end form-group -->
-									
-									<div class="form-group">
-										<label class="col-lg-2 control-label" for="registerEmail">Email: </label>
-										<div class="col-lg-10">
-											<input type="email" name = "registerEmail" id="registerEmail" class="form-control">
-										</div>
-									</div>
-									
-									<div class="form-group">
-										<label class="col-lg-2 control-label" for="registerPassword">Password: </label>
-										<div class="col-lg-10">
-											<input type="password" name = "registerPassword" id="registerPassword" placeholder = "Create a password that can log you into the system in future"class="form-control">
-										</div>
-									</div>
-									
-								</div><!-- end modal-body -->
-								<div class="modal-footer">
-									<button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
-									<button  class="btn btn-primary" type="submit">Submit</button>
-								</div><!-- end modal-footer -->
-							</form>
-						</div><!-- end modal-content -->
-					</div><!-- end modal-dialog -->
-			</div>
-					
-				
-				
-				
-	
-			</div><!-- end registerOrUpload -->
 			
-			<div class="row" id="uploadHeader">
-				<div class="col-md-12">
-					<h2>Upload Section</h2>
-					<p class="lead">This is the upload section, select the type of media you want to upload.</p>
-				</div><!-- end col-md-12 -->
-			</div><!-- end uploadHeader -->
 			
-			<div class="row" id="uploadOptions">
-				<div class="col-sm-4 feature">
-					<div class="panel panel-primary">
-						<div class="panel-heading">
-							<h3 class="panel-title">Upload an image</h3>
-						</div><!-- end panel-heading -->
-						<div class="panel-body">
-							<img class="img-circle" alt="Upload image" src="/static/web_interface/images/badge_camera.jpg" height="140px" width="140px">
-							<p>Upload images from your device and give details. Multiple images are better than one image.</p>
-							
-							<a class="btn btn-block btn-primary" href="#imageUploadModal" role="button" data-toggle="modal">Upload an image</a>
-						</div><!-- end panel-body -->
-					</div><!-- end panel -->
-					
-					<!-- The image upload modal -->
-					<div class="modal fade" id="imageUploadModal">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button class="close" data-dismiss="modal">&times;</button>
-									
-									<h4 class="modal-title">Upload an image</h4>
-								</div><!-- end modal-header -->
-								<div class="modal-body">
-									<form class="form-horizontal">
-										<div class="form-group">
-											<label class="col-lg-2 control-label" for="imageTitle">Title</label>
-											<div class="col-lg-10">
-												<input class="form-control" id="imageTitle" placeholder="Title" type="text">
-											</div><!-- end col-lg-10 -->
-										</div><!-- end form-group -->
-										
-										<div class="form-group">
-											<label class="col-lg-2 control-label" for="imageDescription">Description</label>
-											<div class="col-lg-10">
-												<textarea class="form-control" id="imageDescription" placeholder="Describe what is happening image(s)" rows="4"></textarea>
-											</div><!-- end col-lg-10 -->
-										</div><!-- end form-group -->
-										
-										<div class="form-group">
-											<label class="col-lg-2 control-label" for="imageLocation">Location</label>
-											<div class="col-lg-10">
-												<input class="form-control" id="imageLocation" placeholder="Location" type="text">
-											</div><!-- end col-lg-10 -->
-										</div><!-- end form-group -->
-										
-										<div class="form-group">
-											<label class="col-lg-2 control-label" for="imageDate">Date</label>
-											<div class="col-lg-10">
-												<input class="form-control" id="audioDate" placeholder="Date and Time" type="text">
-											</div><!-- end col-lg-10 -->
-										</div><!-- end form-group -->
-										
-										<div class="form-group">
-											<label class="col-lg-2 control-label" for="imageUpload">File input</label>
-											<input type="file" id="imageFileUpload">
-											<p class="help-block">List types of images files to be uploaded.</p>
-										</div>
-									</form>
-								</div><!-- end modal-body -->
-								<div class="modal-footer">
-									<button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
-									<button class="btn btn-primary" type="button">Upload</button>
-								</div><!-- end modal-footer -->
-							</div><!-- end modal-content -->
-						</div><!-- end modal-dialog -->
-					</div><!-- end imageUploadModal -->
-					
-				</div><!-- end feature -->
-				
-				<div class="col-sm-4 feature">
-					<div class="panel panel-warning">
-						<div class="panel-heading">
-							<h3 class="panel-title">Upload an audio clip</h3>
-						</div><!-- end panel-heading -->
-						<div class="panel-body">
-							<img class="img-circle" alt="Upload image" src="/static/web_interface/images/badge_audio.jpg" height="140px" width="140px">
-							<p>Upload recordings and add details about them in the form that pop-ups.</p>
-							
-							<a class="btn btn-block btn-warning" href="#audioUploadModal" role="button" data-toggle="modal">Upload an audio clip</a>
-							
-							<!-- The image upload modal -->
-							<div class="modal fade" id="audioUploadModal">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<button class="close" data-dismiss="modal">&times;</button>
-											
-											<h4 class="modal-title">Upload an audio clip</h4>
-										</div><!-- end modal-header -->
-										<div class="modal-body">
-											<form class="form-horizontal">
-												<div class="form-group">
-													<label class="col-lg-2 control-label" for="audioTitle">Title</label>
-													<div class="col-lg-10">
-														<input class="form-control" id="audioTitle" placeholder="Title" type="text">
-													</div><!-- end col-lg-10 -->
-												</div><!-- end form-group -->
-												
-												<div class="form-group">
-													<label class="col-lg-2 control-label" for="audioDescription">Description</label>
-													<div class="col-lg-10">
-														<textarea class="form-control" id="audioDescription" placeholder="Describe what is happening in the audio clip" rows="4"></textarea>
-													</div><!-- end col-lg-10 -->
-												</div><!-- end form-group -->
-												
-												<div class="form-group">
-													<label class="col-lg-2 control-label" for="audioLocation">Location</label>
-													<div class="col-lg-10">
-														<input class="form-control" id="audioLocation" placeholder="Location" type="text">
-													</div><!-- end col-lg-10 -->
-												</div><!-- end form-group -->
-												
-												<div class="form-group">
-													<label class="col-lg-2 control-label" for="audioDate">Date</label>
-													<div class="col-lg-10">
-														<input class="form-control" id="audioDate" placeholder="Date and Time" type="text">
-													</div><!-- end col-lg-10 -->
-												</div><!-- end form-group -->
-												
-												<div class="form-group">
-													<label class="col-lg-2 control-label" for="audioUpload">File input</label>
-													<input type="file" id="audioFileUpload">
-													<p class="help-block">List types of audio files to be uploaded.</p>
-												</div>
-											</form>
-										</div><!-- end modal-body -->
-										<div class="modal-footer">
-											<button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
-											<button class="btn btn-primary" type="button">Upload</button>
-										</div><!-- end modal-footer -->
-									</div><!-- end modal-content -->
-								</div><!-- end modal-dialog -->
-							</div><!-- end audioUploadModal -->
-							
-						</div><!-- end panel-body -->
-					</div><!-- end panel -->
-				</div><!-- end feature -->
-				
-				<div class="col-sm-4 feature">
-					<div class="panel panel-danger">
-						<div class="panel-heading">
-							<h3 class="panel-title">Upload a video</h3>
-						</div><!-- end panel-heading -->
-						<div class="panel-body">
-							<img class="img-circle" alt="Upload image" src="/static/web_interface/images/badge_video.jpg" height="140px" width="140px">
-							<p>Upload videos from your device, higher quality videos use more bandwidth but are prefered.</p>
-							
-							<a class="btn btn-block btn-danger" href="#videoUploadModal" role="button" data-toggle="modal">Upload a video</a>
-							
-						</div><!-- end panel-body -->
-					</div><!-- end panel -->
-					
-					<!-- The video upload modal -->
-					<div class="modal fade" id="videoUploadModal">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button class="close" data-dismiss="modal">&times;</button>
-									
-									<h4 class="modal-title">Upload a video</h4>
-								</div><!-- end modal-header -->
-								<div class="modal-body">
-									<form class="form-horizontal">
-										<div class="form-group">
-											<label class="col-lg-2 control-label" for="videoTitle">Title</label>
-											<div class="col-lg-10">
-												<input class="form-control" id="videoTitle" placeholder="Title" type="text">
-											</div><!-- end col-lg-10 -->
-										</div><!-- end form-group -->
-										
-										<div class="form-group">
-											<label class="col-lg-2 control-label" for="videoDescription">Description</label>
-											<div class="col-lg-10">
-												<textarea class="form-control" id="videoDescription" placeholder="Describe the what is happening in the video" rows="4"></textarea>
-											</div><!-- end col-lg-10 -->
-										</div><!-- end form-group -->
-										
-										<div class="form-group">
-											<label class="col-lg-2 control-label" for="videoLocation">Location</label>
-											<div class="col-lg-10">
-												<input class="form-control" id="videoLocation" placeholder="Location" type="text">
-											</div><!-- end col-lg-10 -->
-										</div><!-- end form-group -->
-										
-										<div class="form-group">
-											<label class="col-lg-2 control-label" for="videoDate">Date</label>
-											<div class="col-lg-10">
-												<input class="form-control" id="videoDate" placeholder="Date and Time" type="text">
-											</div><!-- end col-lg-10 -->
-										</div><!-- end form-group -->
-										
-										<div class="form-group">
-											<label class="col-lg-2 control-label" for="videoUpload">File input</label>
-											<input type="file" id="videoFileUpload">
-											<p class="help-block">List types of videos to be uploaded.</p>
-										</div>
-									</form>
-								</div><!-- end modal-body -->
-								<div class="modal-footer">
-									<button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
-									<button class="btn btn-primary" type="button">Upload</button>
-								</div><!-- end modal-footer -->
-							</div><!-- end modal-content -->
-						</div><!-- end modal-dialog -->
-					</div><!-- end videoUploadModal -->
-							
-				</div><!-- end feature -->
-			</div><!-- end uploadOptions -->
-		
+			{% endblock %}
 		</div><!-- end mainContainer -->
 		
+		{% block footer %}
 		<footer class="footer">
 			<div class="container">
 				<p class="text-muted"><span class="fa fa-copyright"></span> University of Pretoria, South Africa</p>
 			</div><!-- end container -->
 		</footer><!-- end footer -->
+		{% endblock %}
 		
 		<!-- jQuery 2.0.2 -->
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
