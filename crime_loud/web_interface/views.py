@@ -36,7 +36,7 @@ def registerNewUser(request):
             return render_to_response("web_interface/landing.html", { 'name':name})
         
         else:
-            return render_to_response("web_interface/landing.html", { 'name':name})
+            return render_to_response("web_interface/login.html", { 'name':name})
     else:
         print "Web_interface views: registerNewUser --- GET method instead of POST used"
         return Http404()
@@ -58,7 +58,7 @@ def login(request):
         if res['type'] == 1:
             return render_to_response("web_interface/landing.html")
         else:
-            return render_to_response("web_interface/landing.html")
+            return render_to_response("web_interface/login.html")
         
     else:
         print "Web_interface views: login --- GET method instead of POST used"

@@ -3,7 +3,7 @@ import datetime
 from django.http import Http404, HttpResponse
 from django.shortcuts import render
 from django.core.context_processors import csrf
-# from business_logic import api
+from business_logic import api
 
 def registerNewUser(request, jsonObj):
     json_data = json.loads(jsonObj)
@@ -14,7 +14,7 @@ def registerNewUser(request, jsonObj):
     userEmail = json_data['userEmail']
     userPassword = json_data['userPassword']
     
-    #result = api.registerNewUser(userID, userName, userSurname, userEmail, userPassword)
+    result = api.registerNewUser(userID, userName, userSurname, userEmail, userPassword)
     result = True
     
     if result == True:
@@ -37,8 +37,7 @@ def login(request, jsonObj):
     userEmail = json_data['userEmail']
     userPassword = json_data['userPassword']
     
-    #result = api.login(userEmail, userPassword)
-    result = True
+    result = api.login(userEmail, userPassword)
     
     if result == True:
         data = {
