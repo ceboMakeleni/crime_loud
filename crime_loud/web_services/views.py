@@ -14,7 +14,7 @@ def registerNewUser(request, jsonObj):
     userEmail = json_data['userEmail']
     userPassword = json_data['userPassword']
     
-    result = api.registerNewUser(userID, userName, userSurname, userEmail, userPassword)
+    result = api.registerNewUser(userID, userName, userSurname, userEmail, userPassword,request)
     result = True
     
     if result == True:
@@ -37,7 +37,7 @@ def login(request, jsonObj):
     userEmail = json_data['userEmail']
     userPassword = json_data['userPassword']
     
-    result = api.login(userEmail, userPassword)
+    result = api.login(userEmail, userPassword,request)
     
     if result == True:
         data = {
