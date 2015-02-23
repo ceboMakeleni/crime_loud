@@ -16,6 +16,7 @@ def registerNewUser(request):
     userSurname = request.POST['registerSurname']
     userEmail = request.POST['registerEmail']
     userPassword = request.POST['registerPassword']
+    userCell = request.POST['registerCell']
     
     if request.method == "POST":
         data = {
@@ -23,7 +24,8 @@ def registerNewUser(request):
                 'userName': userName,
                 'userSurname': userSurname,
                 'userEmail': userEmail,
-                'userPassword': userPassword
+                'userPassword': userPassword,
+                'userCell':userCell
             }
         
         results = views.registerNewUser(request, json.dumps(data))
@@ -33,7 +35,11 @@ def registerNewUser(request):
         
         
         if res['type'] == 1:
-            return render_to_response("web_interface/landing.html", { 'name':name})
+            return render_to_response("web_interface/landing.html", { 'name':name,
+                                                                     'surname':res['userSurname'],
+                                                                     'userID':res['userID'],
+                                                                     'userEmail':res['userEmail'],
+                                                                     'cellNo':res['userCell']})
         
         else:
             return render_to_response("web_interface/login.html", { 'name':name})
@@ -56,10 +62,15 @@ def login(request):
         res = json.loads(results.content)
         
         if res['type'] == 1:
-            return render_to_response("web_interface/landing.html")
+            return render_to_response("web_interface/landing.html",{ 'name':name,
+                                                                     'surname':res['surname'],
+                                                                     'userID':res['userID'],
+                                                                     'userEmail':res['email'],
+                                                                     'cellNo':res['cellNo']})
         else:
             return render_to_response("web_interface/login.html")
         
     else:
         print "Web_interface views: login --- GET method instead of POST used"
         return Http404()
+

@@ -13,14 +13,19 @@ def registerNewUser(request, jsonObj):
     userSurname = json_data['userSurname']
     userEmail = json_data['userEmail']
     userPassword = json_data['userPassword']
+    userCell = json_data['userCell']
     
-    result = api.registerNewUser(userID, userName, userSurname, userEmail, userPassword,request)
+    result = api.registerNewUser(userID, userName, userSurname, userEmail, userPassword,userCell,request)
     result = True
     
     if result == True:
         data = {
             'type':1,
-            'name': userName
+            'name': userName,
+            'userID':userID,
+            'userSurname':userSurname,
+            'userEmail':userEmail,
+            'userCell':userCell
         }
     
     else:
@@ -39,9 +44,14 @@ def login(request, jsonObj):
     
     result = api.login(userEmail, userPassword,request)
     
-    if result == True:
+    if result != "":
         data = {
-            'type':1
+            'type':1,
+            'name':result['name'],
+            'surname':result['surname'],
+            'userID':result['userID'],
+            'cellNo':result['cellNo'],
+            'email':result['email']
         }
         
     else:
