@@ -3,6 +3,9 @@ from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from web_services import views
 from django.views.decorators.csrf import csrf_exempt
+from crime_loud.settings import MEDIA_ROOT
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
 
 def home(request):
     return render_to_response("web_interface/login.html",
@@ -74,15 +77,33 @@ def login(request):
         print "Web_interface views: login --- GET method instead of POST used"
         return Http404()
 
+@csrf_exempt
 def UploadAudio(request):
-    if request['method'] == 'POST':
-        if 'file' in request.FILES:
-            file = request.FILES['file']
-
-            filename = file['filename']
-
-            fd = open('%s/%s' % (MEDIA_ROOT, filename), 'wb')
-            fd.write(file['content'])
-            fd.close()
+    if request.method == 'POST':
+        title = request.POST['audioTitle']
+        description = request.POST['audioDescription']
+        location = request.POST['audioLocation']
+        date = request.POST['audioDate']
+        filename = request.FILES['audioFileUpload']
         
-        return HttpResponse("web_interface/login.html")
+        data = {
+            'title':title,
+            'description':description,
+            'location':location,
+            'date':date,
+            'file': filename.name
+        }
+        #path = default_storage.save(MEDIA_ROOT, ContentFile(file.read()))
+        fd = open(MEDIA_ROOT, 'wb')
+        fd.write(filename.content)
+        fd.close()
+        
+        results = views.UploadAudio(request,json.dump(data))
+        res = json.loads(results)
+        
+        if res['type'] == 1:
+            return render_to_response("web_interface/landing.html")
+        else:
+            return render_to_response("web_interface/landing.html")
+
+        

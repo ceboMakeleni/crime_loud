@@ -4,7 +4,7 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import render
 from django.core.context_processors import csrf
 from business_logic import api
-from crime_loud.settings import MEDIA_ROOT
+
 
 def registerNewUser(request, jsonObj):
     json_data = json.loads(jsonObj)
@@ -62,7 +62,18 @@ def login(request, jsonObj):
         
     return HttpResponse(json.dumps(data))
 
-
+def UploadAudio(request, jsonObj):
+    json_data = json.loads(jsonObj)
+    
+    title = json_data['title']
+    description = json_data['description']
+    location = json_data['location']
+    date = json_data['date']
+    file = json_data['file']
+    
+    return HttpResponse(json.dumps({'type':1}))
+    
+    
     
    
 
