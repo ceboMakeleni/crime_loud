@@ -62,7 +62,7 @@ def login(request):
         res = json.loads(results.content)
         
         if res['type'] == 1:
-            return render_to_response("web_interface/landing.html",{ 'name':name,
+            return render_to_response("web_interface/landing.html",{ 'name':res['name'],
                                                                      'surname':res['surname'],
                                                                      'userID':res['userID'],
                                                                      'userEmail':res['email'],
@@ -74,3 +74,15 @@ def login(request):
         print "Web_interface views: login --- GET method instead of POST used"
         return Http404()
 
+def UploadAudio(request):
+    if request['method'] == 'POST':
+        if 'file' in request.FILES:
+            file = request.FILES['file']
+
+            filename = file['filename']
+
+            fd = open('%s/%s' % (MEDIA_ROOT, filename), 'wb')
+            fd.write(file['content'])
+            fd.close()
+        
+        return HttpResponse("web_interface/login.html")

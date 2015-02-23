@@ -4,6 +4,7 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import render
 from django.core.context_processors import csrf
 from business_logic import api
+from crime_loud.settings import MEDIA_ROOT
 
 def registerNewUser(request, jsonObj):
     json_data = json.loads(jsonObj)
@@ -61,7 +62,7 @@ def login(request, jsonObj):
         
     return HttpResponse(json.dumps(data))
 
-    
+
     
    
 
