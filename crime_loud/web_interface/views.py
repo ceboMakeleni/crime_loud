@@ -62,7 +62,7 @@ def login(request):
         res = json.loads(results.content)
         
         if res['type'] == 1:
-            return render_to_response("web_interface/landing.html",{ 'name':name,
+            return render_to_response("web_interface/landing.html",{ 'name':res['name'],
                                                                      'surname':res['surname'],
                                                                      'userID':res['userID'],
                                                                      'userEmail':res['email'],
@@ -73,4 +73,25 @@ def login(request):
     else:
         print "Web_interface views: login --- GET method instead of POST used"
         return Http404()
-
+    
+@csrf_exempt
+def imageUpload(request):
+    title = request.POST['imageTitle']
+    description = request.POST['imageDescription']
+    location = request.POST['imageLocation']
+    date = request.POST['imageDate']
+    
+    userID = request.session['user']['identity']
+    
+    photo = request.FILES['imageFileUpload']
+    
+    data = {
+        'title':title,
+        'description': description,
+        'location':location,
+        'date':date,
+        'userID':userID,
+        'photo':photo,
+    }
+    
+    return render_to_response("web_interface/landing.html")

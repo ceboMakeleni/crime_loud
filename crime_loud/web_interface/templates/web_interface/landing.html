@@ -35,46 +35,47 @@
                                             <h4 class="modal-title">Upload an image</h4>
                                     </div><!-- end modal-header -->
                                     <div class="modal-body">
-                                            <form class="form-horizontal">
+                                            <form class="form-horizontal" action="/imageUpload" method='post' enctype="multipart/form-data">
                                                     <div class="form-group">
                                                             <label class="col-lg-2 control-label" for="imageTitle">Title</label>
                                                             <div class="col-lg-10">
-                                                                    <input class="form-control" id="imageTitle" placeholder="Title" type="text">
+                                                                    <input class="form-control" id="imageTitle" name= "imageTitle" placeholder="Title" type="text">
                                                             </div><!-- end col-lg-10 -->
                                                     </div><!-- end form-group -->
                                                     
                                                     <div class="form-group">
                                                             <label class="col-lg-2 control-label" for="imageDescription">Description</label>
                                                             <div class="col-lg-10">
-                                                                    <textarea class="form-control" id="imageDescription" placeholder="Describe what is happening image(s)" rows="4"></textarea>
+                                                                    <textarea class="form-control" id="imageDescription" name="imageDescription" placeholder="Describe what is happening image(s)" rows="4"></textarea>
                                                             </div><!-- end col-lg-10 -->
                                                     </div><!-- end form-group -->
                                                     
                                                     <div class="form-group">
                                                             <label class="col-lg-2 control-label" for="imageLocation">Location</label>
                                                             <div class="col-lg-10">
-                                                                    <input class="form-control" id="imageLocation" placeholder="Location" type="text">
+                                                                    <input class="form-control" id="imageLocation" name= "imageLocation" placeholder="Location" type="text">
                                                             </div><!-- end col-lg-10 -->
                                                     </div><!-- end form-group -->
                                                     
                                                     <div class="form-group">
                                                             <label class="col-lg-2 control-label" for="imageDate">Date</label>
                                                             <div class="col-lg-10">
-                                                                    <input class="form-control" id="audioDate" placeholder="Date and Time" type="text">
+                                                                    <input class="form-control" id="imageDate" name="imageDate" placeholder="Date and Time" type="text">
                                                             </div><!-- end col-lg-10 -->
                                                     </div><!-- end form-group -->
                                                     
                                                     <div class="form-group">
-                                                            <label class="col-lg-2 control-label" for="imageUpload">File input</label>
-                                                            <input type="file" id="imageFileUpload">
+                                                            <label class="col-lg-2 control-label" for="imageFileUpload">File input</label>
+                                                            <input type="file" id="imageFileUpload" name="imageFileUpload">
                                                             <p class="help-block">List types of images files to be uploaded.</p>
                                                     </div>
+                                                <div class="form-group">
+                                                    <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                                                    <input class="btn btn-primary" type="submit" name="submit" value="Upload"> 
+                                                </div><!-- end modal-footer -->
                                             </form>
                                     </div><!-- end modal-body -->
-                                    <div class="modal-footer">
-                                            <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
-                                            <button class="btn btn-primary" type="button">Upload</button>
-                                    </div><!-- end modal-footer -->
+                                    
                             </div><!-- end modal-content -->
                     </div><!-- end modal-dialog -->
             </div><!-- end imageUploadModal -->
