@@ -12,5 +12,6 @@ urlpatterns = patterns('',
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'register', 'web_interface.views.registerNewUser', name = 'registerNewUser'),
     url(r'login', 'web_interface.views.login', name = 'login'),
-    url(r'upload', 'web_interface.views.UploadAudio', name = 'upload')
+    url(r'audioUpload', 'web_interface.views.UploadAudio', name = 'upload_audio'),
+    url(r'videoUpload', 'web_interface.views.UploadVideo', name = 'upload_video')
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

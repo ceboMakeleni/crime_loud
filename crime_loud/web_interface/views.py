@@ -91,19 +91,52 @@ def UploadAudio(request):
             'description':description,
             'location':location,
             'date':date,
-            'file': filename.name
         }
-        #path = default_storage.save(MEDIA_ROOT, ContentFile(file.read()))
-        fd = open(MEDIA_ROOT, 'wb')
-        fd.write(filename.content)
-        fd.close()
         
-        results = views.UploadAudio(request,json.dump(data))
-        res = json.loads(results)
+        results = views.UploadAudio(request,json.dumps(data))
+        res = json.loads(results.content)
         
         if res['type'] == 1:
-            return render_to_response("web_interface/landing.html")
+            return render_to_response("web_interface/landing.html",{ 'name':res['name'],
+                                                                     'surname':res['surname'],
+                                                                     'userID':res['userID'],
+                                                                     'userEmail':res['email'],
+                                                                     'cellNo':res['cellNo']})
         else:
-            return render_to_response("web_interface/landing.html")
+            return render_to_response("web_interface/landing.html", { 'name':res['name'],
+                                                                     'surname':res['surname'],
+                                                                     'userID':res['userID'],
+                                                                     'userEmail':res['email'],
+                                                                     'cellNo':res['cellNo']})
 
+@csrf_exempt
+def UploadVideo(request):
+    if request.method == 'POST':
+        title = request.POST['videoTitle']
+        description = request.POST['videoDescription']
+        location = request.POST['videoLocation']
+        date = request.POST['videoDate']
+        filename = request.FILES['videoFileUpload']
         
+        data = {
+            'title':title,
+            'description':description,
+            'location':location,
+            'date':date,
+        }
+        
+        results = views.UploadVideo(request,json.dumps(data))
+        res = json.loads(results.content)
+        
+        if res['type'] == 1:
+            return render_to_response("web_interface/landing.html",{ 'name':res['name'],
+                                                                     'surname':res['surname'],
+                                                                     'userID':res['userID'],
+                                                                     'userEmail':res['email'],
+                                                                     'cellNo':res['cellNo']})
+        else:
+            return render_to_response("web_interface/landing.html", { 'name':res['name'],
+                                                                     'surname':res['surname'],
+                                                                     'userID':res['userID'],
+                                                                     'userEmail':res['email'],
+                                                                     'cellNo':res['cellNo']})  

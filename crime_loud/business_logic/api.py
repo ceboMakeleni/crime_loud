@@ -1,4 +1,5 @@
 from .models import *
+import datetime
 
 def registerNewUser(userID,username,surname,email,password,usercell,request):
     user = Person(first_name=username, last_name=surname,email=email, identity=userID,password=password,cell_number=usercell,userRole='user')
@@ -31,5 +32,33 @@ def login(userEmail, userPassword,request):
     else:
         return ""
 
+def UploadAudio(Title,Description,Location,Date,request):
+    file = request.FILES['audioFileUpload']
+    user = Person.objects.get(identity=request.session['user']['identity'])
+    
+    upload = pdeAttribute(title=Title,description=Description,location=Location,date=datetime.datetime.now(),Person=user,audio=file)
+    upload.save()
+    data = {
+            'name':user.first_name,
+            'surname':user.last_name,
+            'userID':user.identity,
+            'cellNo':user.cell_number,
+            'email':user.email
+        }
+    return data
 
+def UploadVideo(Title,Description,Location,Date,request):
+    file = request.FILES['videoFileUpload']
+    user = Person.objects.get(identity=request.session['user']['identity'])
+    
+    upload = pdeAttribute(title=Title,description=Description,location=Location,date=datetime.datetime.now(),Person=user,video=file)
+    upload.save()
+    data = {
+            'name':user.first_name,
+            'surname':user.last_name,
+            'userID':user.identity,
+            'cellNo':user.cell_number,
+            'email':user.email
+        }
+    return data
     
