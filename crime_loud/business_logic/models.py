@@ -20,7 +20,7 @@ class pdeAttribute(models.Model):
     description=models.CharField(max_length=100)
     location=models.CharField(max_length=40)
     date=models.DateTimeField()
-    digitalData=models.CharField(max_length=30)# For the hash of the image
+    digitalData=models.CharField(max_length=30, null=True)# For the hash of the image
     caseAttribute=models.ForeignKey(caseAttribute, null=True)
     Person = models.ForeignKey(Person)
     photo = models.FileField(upload_to='photo',null=True)

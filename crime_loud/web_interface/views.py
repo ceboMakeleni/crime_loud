@@ -3,6 +3,8 @@ from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from web_services import views
 from django.views.decorators.csrf import csrf_exempt
+from crime_loud.settings import MEDIA_ROOT
+
 
 def home(request):
     return render_to_response("web_interface/login.html",
@@ -82,16 +84,18 @@ def imageUpload(request):
     date = request.POST['imageDate']
     
     userID = request.session['user']['identity']
-    
-    photo = request.FILES['imageFileUpload']
-    
+   
     data = {
         'title':title,
         'description': description,
         'location':location,
         'date':date,
         'userID':userID,
-        'photo':photo,
     }
+
+    results = views.imageUpload(request, json.dumps(data))
+    res = json.loads(results.content)
     
-    return render_to_response("web_interface/landing.html")
+    return render_to_response("web_interface/landing.html",{'type':res['type'], 'name':res['name'],
+                                                            'surname':res['surname'], 'cell':res['cell'],
+                                                            'userID':res['userID'], 'email':res['email']})

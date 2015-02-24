@@ -61,6 +61,42 @@ def login(request, jsonObj):
         
     return HttpResponse(json.dumps(data))
 
+def imageUpload(request, jsonObj):
+    json_data = json.loads(jsonObj)
+    
+    title = json_data['title']
+    description = json_data['description']
+    location = json_data['location']
+    date = json_data['date']
+    userID = json_data['userID']
+    
+    
+    result = api.uploadImage(request, title, description, location, date, userID)
+    
+    if result is not None:
+        data = {
+            'type':1,
+            'name':result['name'],
+            'surname':result['surname'],
+            'userID':result['userID'],
+            'cell':result['cell'],
+            'email': result['email']
+        }
+        
+    else:
+        data = {
+            'type':-1,
+            'name':result['name'],
+            'surname':result['surname'],
+            'userID':result['userID'],
+            'cell':result['cell'],
+            'email': result['email']
+        }
+    
+    return HttpResponse(json.dumps(data))
+    
+    
+
     
     
    
