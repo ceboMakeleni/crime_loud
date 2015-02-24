@@ -22,7 +22,7 @@ class pdeAttribute(models.Model):
     date=models.DateTimeField()
     digitalData=models.CharField(max_length=30, null=True)# For the hash of the image
     caseAttribute=models.ForeignKey(caseAttribute, null=True)
-    Person = models.ForeignKey(Person)
+    Person = models.ForeignKey(Person) #Person who uploaded
     photo = models.FileField(upload_to='photo',null=True)
     video = models.FileField(upload_to='video',null=True)
     audio = models.FileField(upload_to='audio',null=True)

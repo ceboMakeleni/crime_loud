@@ -94,6 +94,12 @@ def imageUpload(request, jsonObj):
         }
     
     return HttpResponse(json.dumps(data))
+
+def viewProfile(request, jsonObj):
+    json_data = json.loads(jsonObj)
+    userID = json_data['userID']
+    
+    result = api.viewProfile(userID)
     
     
 

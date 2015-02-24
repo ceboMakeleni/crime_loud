@@ -1,0 +1,63 @@
+{% extends "web_interface/template.html" %}
+
+{% block title %} Welcome {% endblock  %}
+{% block navbar %}
+<div class= "navbar navbar-default navbar-fixed-top">
+    <div class="container">
+            <div class="navbar-header">
+                    <button class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-responsive-collapse" type="button" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                    </button>
+                    <a href="#" class="navbar-brand">Crime Loud</a>
+            </div><!-- end navbar-header -->
+
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                    <ul class="nav navbar-nav">
+                            <li class="active">
+                                    <a href="#">Home</a>
+                            </li>
+                    </ul><!-- end navbar-left -->
+                    <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                            <span class="glyphicon glyphicon-user"></span>
+                                            {{ name }} {{ surname }} <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu">                                            
+                                            <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+                                            
+                                            <li class="divider"></li>
+                                            
+                                            <li class="dropdown-header">More information</li>
+                                            
+                                            <li><a href="#"><span class="fa fa-key"></span> Privacy info</a></li>
+                                            
+                                            <li><a href="#"><span class="fa fa-lock"></span> Anonymity</a></li>
+                                            
+                                            <li><a href="#"><span class="fa fa-question-circle"></span> Help</a></li>
+                                            
+                                            <li class="divider"></li>
+                                            
+                                            <li><a href="#"><span class="glyphicon glyphicon-off"></span> Sign out</a></li>
+                                    </ul>
+                            </li>
+                    </ul><!-- end navbar-right -->
+            </div><!-- end navbar-collapse -->
+    
+    </div><!-- end container -->
+</div><!--End of Navigation bar-->
+{% endblock %}
+
+{% block carousel%} {% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+  <h1>Hello, world!</h1>
+  <p>...</p>
+  <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+</div>
+
+{% endblock %}

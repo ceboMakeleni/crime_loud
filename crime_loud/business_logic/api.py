@@ -51,6 +51,12 @@ def uploadImage(request, title_, description_, location_, date_, userID_):
         return data
     else:
         return ""
+    
+def viewProfile(userID):
+    per = Person.objects.get(identity = userID)
+    
+    
+
 
 
     

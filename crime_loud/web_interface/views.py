@@ -99,3 +99,20 @@ def imageUpload(request):
     return render_to_response("web_interface/landing.html",{'type':res['type'], 'name':res['name'],
                                                             'surname':res['surname'], 'cell':res['cell'],
                                                             'userID':res['userID'], 'email':res['email']})
+
+def viewProfile(request):
+    userID = request.session['user']['identity']
+    
+    data = {
+        'userID':userID
+    }
+    results = views.viewProfile(request, json.dumps(data))
+    res = json.loads(results.content)
+    
+    return render_to_response("web_interface/landing.html",{'type':res['type'], 'name':res['name'],
+                                                            'surname':res['surname'], 'cell':res['cell'],
+                                                            'userID':res['userID'], 'email':res['email'],
+                                                            'photoUploads':res['photoUploads'], 'videoUploads':res['videoUploads'],
+                                                            'audioUploads':res['audioUploads']})
+    
+
