@@ -4,8 +4,6 @@ from django.template import RequestContext
 from web_services import views
 from django.views.decorators.csrf import csrf_exempt
 from crime_loud.settings import MEDIA_ROOT
-from django.core.files import File
-from django.core.files.temp import NamedTemporaryFile
 
 def home(request):
     return render_to_response("web_interface/login.html",
@@ -139,4 +137,6 @@ def UploadVideo(request):
                                                                      'surname':res['surname'],
                                                                      'userID':res['userID'],
                                                                      'userEmail':res['email'],
-                                                                     'cellNo':res['cellNo']})  
+                                                                     'cellNo':res['cellNo']})
+        
+    
