@@ -101,6 +101,29 @@ def viewProfile(request, jsonObj):
     
     result = api.viewProfile(userID)
     
+    if result != []:
+        data = {
+            'type':1,
+            'name':result[0],
+            'surname':result[1],
+            'userID':result[2],
+            'cell':result[3],
+            'email':result[4],
+            'photoUploads':result[5],
+            'videoUploads':result[6],
+            'audioUploads':result[7]
+        }
+    else:
+        data = {
+            'type':-1, #person could not be located in database
+        }
+        
+    return HttpResponse(json.dumps(data))
+
+
+
+    
+    
     
 
     

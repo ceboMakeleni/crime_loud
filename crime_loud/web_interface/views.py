@@ -109,10 +109,23 @@ def viewProfile(request):
     results = views.viewProfile(request, json.dumps(data))
     res = json.loads(results.content)
     
-    return render_to_response("web_interface/landing.html",{'type':res['type'], 'name':res['name'],
+    
+    return render_to_response("web_interface/profile.html",{'type':res['type'], 'name':res['name'],
                                                             'surname':res['surname'], 'cell':res['cell'],
                                                             'userID':res['userID'], 'email':res['email'],
                                                             'photoUploads':res['photoUploads'], 'videoUploads':res['videoUploads'],
                                                             'audioUploads':res['audioUploads']})
+    
+def backHome(request):
+    userID = request.session['user']['identity']
+    name = request.session['user']['first_name']
+    surname = request.session['user']['last_name']
+    
+    return render_to_response("web_interface/landing.html",{'name':name, 'surname':surname, 'userID':userID})
+
+def logout(request):
+    request.session.delete()      
+    return render_to_response("web_interface/login.html")
+
     
 

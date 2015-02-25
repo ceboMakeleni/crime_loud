@@ -5,7 +5,7 @@ def registerNewUser(userID,username,surname,email,password,usercell,request):
     user = Person(first_name=username, last_name=surname,email=email, identity=userID,password=password,cell_number=usercell,userRole='user')
     user.save()
     
-    request.session['user']={'identity':userID,'userRole':'user'}
+    request.session['user']={'identity':userID,'userRole':'user', 'first_name': username, 'last_name':surname}
     #print request.session['user']
     return True
 
@@ -20,7 +20,7 @@ def login(userEmail, userPassword,request):
         return ""
     print "but i got here"
     if userE.password == userPassword:
-        request.session['user']={'identity':userE.identity,'userRole':userE.userRole}
+        request.session['user']={'identity':userE.identity,'userRole':userE.userRole, 'first_name':userE.first_name, 'last_name':userE.last_name}
         data = {
             'name':userE.first_name,
             'surname':userE.last_name,
@@ -53,9 +53,54 @@ def uploadImage(request, title_, description_, location_, date_, userID_):
         return ""
     
 def viewProfile(userID):
-    per = Person.objects.get(identity = userID)
+    data = []
+    
+    per = Person.objects.get(identity = userID) 
+    allUploads = pdeAttribute.objects.filter(Person = per)
+    
+    photoUploads = []
+    videoUploads = []
+    audioUploads = []
+    
+    for upload in allUploads:
+        if upload.photo is not "null":
+            name = upload.photo.name
+            sts = name.split('/')
+            list = []
+            list.append(upload.title)
+            list.append(sts[1])
+            photoUploads.append(list)
+        
+        elif upload.video is not "null":
+            name = upload.video.name
+            sts = name.split('/')
+            list = []
+            list.append(upload.title)
+            list.append(sts[1])
+            videoUploads.append(list)
+        
+        elif upload.audio is not "null":
+            name = upload.audio.name
+            sts = name.split('/')
+            list = []
+            list.append(upload.title)
+            list.append(sts[1])
+            audioUploads.append(list)
+    
+    data.append(per.first_name)
+    data.append(per.last_name)
+    data.append(per.identity)
+    data.append(per.cell_number)
+    data.append(per.email)
+    data.append(photoUploads)
+    data.append(videoUploads)
+    data.append(audioUploads)
+    
+    return data
+
     
     
+
 
 
 

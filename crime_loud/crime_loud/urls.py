@@ -14,4 +14,6 @@ urlpatterns = patterns('',
     url(r'login', 'web_interface.views.login', name = 'login'),
     url(r'imageUpload', 'web_interface.views.imageUpload', name = 'imageUpload'),
     url(r'viewProfile', 'web_interface.views.viewProfile', name = 'viewProfile'),
+    url(r'backHome', 'web_interface.views.backHome', name = 'backHome'),
+    url(r'logout', 'web_interface.views.logout', name = 'logout'),
 )+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
