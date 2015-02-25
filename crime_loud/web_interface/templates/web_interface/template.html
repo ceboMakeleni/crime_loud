@@ -20,7 +20,83 @@
 		<!--[if lt IE 9]>
 		  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 		  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+		  <script src=src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		  <script src="/static/web_interface/js/bootstrap-datetimepicker.js"></script>
 		<![endif]-->
+		
+		<script>
+			
+			function validateAudio()
+			{
+				alert("ao wat happend");
+				var value = document.getElementById('audioFileUpload').value;
+				value = value.substr(value.length - 4, value.length).toLowerCase();
+				value = value.replace('.','');
+				alert(value)
+				switch(value){
+				  case 'ogg':
+				  case 'm4a':
+				  case 'mp3':
+				  case 'aac':
+				  case 'amr':
+				  case 'fla':
+				  case 'mwa':
+				  case 'wav':
+					
+				    break;
+				  default:
+				    alert('Error, please upload an audio!!!');
+				     return false;
+				    break;
+				    }
+			}
+			
+			function validateVideo()
+			{
+				var value = document.getElementById('videoFileUpload').value;
+				value = value.substr(value.length - 4, value.length).toLowerCase();
+				value = value.replace('.','');
+				alert(value);
+				switch(value){
+				  case '3gp':
+				  case 'avi':
+				  case 'asf':
+				  case 'mp4':
+				  case 'mov':
+				  case 'mwv':
+				    break;
+				  default:
+				    alert('Error, please upload an video!!!');
+				     return false;
+				    break;
+				    }
+			}
+			
+			function validateImage()
+			{
+				var value = document.getElementById('audioFileUpload').value;
+				value = value.substr(value.length - 4, value.length).toLowerCase();
+				value = value.replace('.','');
+				switch(value){
+				  case 'jpg':
+				  case 'gif':
+				  case 'png':
+				    break;
+				  default:
+				    alert('Error, please upload an audio!!!');
+				     return false;
+				    break;
+				    }
+			}
+			
+			document.getElementById('videoDate').datetimepicker();
+			$(document).ready(function(){
+				$(function () {
+					$('#videoDate').datetimepicker();
+				});
+			});
+			
+		</script>
 	</head>
 	<body>
 		<div class= "navbar navbar-default navbar-fixed-top">

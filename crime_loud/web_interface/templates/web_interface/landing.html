@@ -39,34 +39,34 @@
                                                     <div class="form-group">
                                                             <label class="col-lg-2 control-label" for="imageTitle">Title</label>
                                                             <div class="col-lg-10">
-                                                                    <input class="form-control" id="imageTitle" name= "imageTitle" placeholder="Title" type="text">
+                                                                    <input class="form-control" id="imageTitle" name= "imageTitle" placeholder="Title" type="text" required='required'>
                                                             </div><!-- end col-lg-10 -->
                                                     </div><!-- end form-group -->
                                                     
                                                     <div class="form-group">
                                                             <label class="col-lg-2 control-label" for="imageDescription">Description</label>
                                                             <div class="col-lg-10">
-                                                                    <textarea class="form-control" id="imageDescription" name="imageDescription" placeholder="Describe what is happening image(s)" rows="4"></textarea>
+                                                                    <textarea class="form-control" id="imageDescription" name="imageDescription" required='required' placeholder="Describe what is happening image(s)" rows="4"></textarea>
                                                             </div><!-- end col-lg-10 -->
                                                     </div><!-- end form-group -->
                                                     
                                                     <div class="form-group">
                                                             <label class="col-lg-2 control-label" for="imageLocation">Location</label>
                                                             <div class="col-lg-10">
-                                                                    <input class="form-control" id="imageLocation" name= "imageLocation" placeholder="Location" type="text">
+                                                                    <input class="form-control" id="imageLocation" name= "imageLocation" placeholder="Location" type="text" required='required'>
                                                             </div><!-- end col-lg-10 -->
                                                     </div><!-- end form-group -->
                                                     
                                                     <div class="form-group">
                                                             <label class="col-lg-2 control-label" for="imageDate">Date</label>
                                                             <div class="col-lg-10">
-                                                                    <input class="form-control" id="imageDate" name="imageDate" placeholder="Date and Time" type="text">
+                                                                    <input class="form-control" id="imageDate" name="imageDate" placeholder="Date and Time" required='required' type="text">
                                                             </div><!-- end col-lg-10 -->
                                                     </div><!-- end form-group -->
                                                     
                                                     <div class="form-group">
                                                             <label class="col-lg-2 control-label" for="imageFileUpload">File input</label>
-                                                            <input type="file" id="imageFileUpload" name="imageFileUpload">
+                                                            <input type="file" id="imageFileUpload" name="imageFileUpload" required='required'>
                                                             <p class="help-block">List types of images files to be uploaded.</p>
                                                     </div>
                                                 <div class="form-group">
@@ -103,46 +103,47 @@
                                                             <h4 class="modal-title">Upload an audio clip</h4>
                                                     </div><!-- end modal-header -->
                                                     <div class="modal-body">
-                                                            <form class="form-horizontal">
+                                                            <form class="form-horizontal" enctype="multipart/form-data" action='/audioUpload' method='post' onsubmit="return validateAudio();">
                                                                     <div class="form-group">
                                                                             <label class="col-lg-2 control-label" for="audioTitle">Title</label>
                                                                             <div class="col-lg-10">
-                                                                                    <input class="form-control" id="audioTitle" placeholder="Title" type="text">
+                                                                                    <input class="form-control" id="audioTitle" name='audioTitle' placeholder="Title" type="text" required='required'>
                                                                             </div><!-- end col-lg-10 -->
                                                                     </div><!-- end form-group -->
                                                                     
                                                                     <div class="form-group">
                                                                             <label class="col-lg-2 control-label" for="audioDescription">Description</label>
                                                                             <div class="col-lg-10">
-                                                                                    <textarea class="form-control" id="audioDescription" placeholder="Describe what is happening in the audio clip" rows="4"></textarea>
+                                                                                    <textarea class="form-control" id="audioDescription" name='audioDescription'  required='required' placeholder="Describe what is happening in the audio clip" rows="4"></textarea>
                                                                             </div><!-- end col-lg-10 -->
                                                                     </div><!-- end form-group -->
                                                                     
                                                                     <div class="form-group">
                                                                             <label class="col-lg-2 control-label" for="audioLocation">Location</label>
                                                                             <div class="col-lg-10">
-                                                                                    <input class="form-control" id="audioLocation" placeholder="Location" type="text">
+                                                                                    <input class="form-control" id="audioLocation" name='audioLocation' placeholder="Location" required='required' type="text">
                                                                             </div><!-- end col-lg-10 -->
                                                                     </div><!-- end form-group -->
                                                                     
                                                                     <div class="form-group">
                                                                             <label class="col-lg-2 control-label" for="audioDate">Date</label>
                                                                             <div class="col-lg-10">
-                                                                                    <input class="form-control" id="audioDate" placeholder="Date and Time" type="text">
+                                                                                    <input class="form-control" id="audioDate" name='audioDate' placeholder="Date and Time" required='required' type="text">
                                                                             </div><!-- end col-lg-10 -->
                                                                     </div><!-- end form-group -->
                                                                     
                                                                     <div class="form-group">
                                                                             <label class="col-lg-2 control-label" for="audioUpload">File input</label>
-                                                                            <input type="file" id="audioFileUpload">
+                                                                            <input type="file" id="audioFileUpload" name='audioFileUpload' required='required'>
                                                                             <p class="help-block">List types of audio files to be uploaded.</p>
                                                                     </div>
+                                                                    <div class="form-group">
+                                                                        <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                                                                        <input class="btn btn-primary" type="submit" name='upload' value="Upload"/>
+                                                                    </div><!-- end modal-footer -->
                                                             </form>
                                                     </div><!-- end modal-body -->
-                                                    <div class="modal-footer">
-                                                            <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
-                                                            <button class="btn btn-primary" type="button">Upload</button>
-                                                    </div><!-- end modal-footer -->
+                                                    
                                             </div><!-- end modal-content -->
                                     </div><!-- end modal-dialog -->
                             </div><!-- end audioUploadModal -->
@@ -175,46 +176,47 @@
                                             <h4 class="modal-title">Upload a video</h4>
                                     </div><!-- end modal-header -->
                                     <div class="modal-body">
-                                            <form class="form-horizontal">
+                                            <form class="form-horizontal" enctype="multipart/form-data" action='/videoUpload' method='post' onsubmit='return validateVideo();'>
                                                     <div class="form-group">
                                                             <label class="col-lg-2 control-label" for="videoTitle">Title</label>
                                                             <div class="col-lg-10">
-                                                                    <input class="form-control" id="videoTitle" placeholder="Title" type="text">
+                                                                    <input class="form-control" id="videoTitle" name="videoTitle" placeholder="Title" type="text" required='required'>
                                                             </div><!-- end col-lg-10 -->
                                                     </div><!-- end form-group -->
                                                     
                                                     <div class="form-group">
                                                             <label class="col-lg-2 control-label" for="videoDescription">Description</label>
                                                             <div class="col-lg-10">
-                                                                    <textarea class="form-control" id="videoDescription" placeholder="Describe the what is happening in the video" rows="4"></textarea>
+                                                                    <textarea class="form-control" id="videoDescription" name="videoDescription" placeholder="Describe the what is happening in the video" rows="4" required='required'></textarea>
                                                             </div><!-- end col-lg-10 -->
                                                     </div><!-- end form-group -->
                                                     
                                                     <div class="form-group">
                                                             <label class="col-lg-2 control-label" for="videoLocation">Location</label>
                                                             <div class="col-lg-10">
-                                                                    <input class="form-control" id="videoLocation" placeholder="Location" type="text">
+                                                                    <input class="form-control" id="videoLocation" name="videoLocation" placeholder="Location" type="text" required='required'>
                                                             </div><!-- end col-lg-10 -->
                                                     </div><!-- end form-group -->
                                                     
                                                     <div class="form-group">
                                                             <label class="col-lg-2 control-label" for="videoDate">Date</label>
                                                             <div class="col-lg-10">
-                                                                    <input class="form-control" id="videoDate" placeholder="Date and Time" type="text">
+                                                                 <input class="form-control" id="videoDate" name="videoDate" placeholder="Date and Time" type="text" required='required'>
                                                             </div><!-- end col-lg-10 -->
                                                     </div><!-- end form-group -->
                                                     
                                                     <div class="form-group">
                                                             <label class="col-lg-2 control-label" for="videoUpload">File input</label>
-                                                            <input type="file" id="videoFileUpload">
+                                                            <input type="file" id="videoFileUpload" name="videoFileUpload" required='required'>
                                                             <p class="help-block">List types of videos to be uploaded.</p>
                                                     </div>
+                                                    <div class="form-group">
+                                                        <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                                                        <input class="btn btn-primary" type="submit" value="submit"/>
+                                                    </div><!-- end modal-footer -->
                                             </form>
                                     </div><!-- end modal-body -->
-                                    <div class="modal-footer">
-                                            <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
-                                            <button class="btn btn-primary" type="button">Upload</button>
-                                    </div><!-- end modal-footer -->
+    
                             </div><!-- end modal-content -->
                     </div><!-- end modal-dialog -->
             </div><!-- end videoUploadModal -->

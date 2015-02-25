@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.core.context_processors import csrf
 from business_logic import api
 
+
 def registerNewUser(request, jsonObj):
     json_data = json.loads(jsonObj)
     
@@ -61,7 +62,68 @@ def login(request, jsonObj):
         
     return HttpResponse(json.dumps(data))
 
+def UploadAudio(request, jsonObj):
+    json_data = json.loads(jsonObj)
     
+    title = json_data['title']
+    description = json_data['description']
+    location = json_data['location']
+    date = json_data['date']
+    #file = json_data['file']
+    
+    result = api.UploadAudio(title,description,location,date,request)
+    if result != "":
+        data = {
+            'type':1,
+            'name':result['name'],
+            'surname':result['surname'],
+            'userID':result['userID'],
+            'cellNo':result['cellNo'],
+            'email':result['email']
+        }
+        return HttpResponse(json.dumps(data))
+    else:
+        data = {
+            'type':-1,
+            'name':result['name'],
+            'surname':result['surname'],
+            'userID':result['userID'],
+            'cellNo':result['cellNo'],
+            'email':result['email']
+        }
+        return HttpResponse(json.dumps(data))
+    
+def UploadVideo(request, jsonObj):
+    json_data = json.loads(jsonObj)
+    
+    title = json_data['title']
+    description = json_data['description']
+    location = json_data['location']
+    date = json_data['date']
+    #file = json_data['file']
+    
+    result = api.UploadVideo(title,description,location,date,request)
+    if result != "":
+        data = {
+            'type':1,
+            'name':result['name'],
+            'surname':result['surname'],
+            'userID':result['userID'],
+            'cellNo':result['cellNo'],
+            'email':result['email']
+        }
+        return HttpResponse(json.dumps(data))
+    else:
+        data = {
+            'type':-1,
+            'name':result['name'],
+            'surname':result['surname'],
+            'userID':result['userID'],
+            'cellNo':result['cellNo'],
+            'email':result['email']
+        }
+        return HttpResponse(json.dumps(data))
+
     
    
 

@@ -1,4 +1,8 @@
 from .models import *
+import datetime
+import hashlib
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
 
 def registerNewUser(userID,username,surname,email,password,usercell,request):
     user = Person(first_name=username, last_name=surname,email=email, identity=userID,password=password,cell_number=usercell,userRole='user')
@@ -31,5 +35,41 @@ def login(userEmail, userPassword,request):
     else:
         return ""
 
+def UploadAudio(Title,Description,Location,Date,request):
+    file = request.FILES['audioFileUpload']
+    user = Person.objects.get(identity=request.session['user']['identity'])
+    
+    hashed = hashlib.sha1()
+    hashed.update(file.read())
+    print hashed
+    
+    upload = pdeAttribute(title=Title,description=Description,location=Location,date=datetime.datetime.now(),digitalData=hashed.hexdigest(),Person=user,audio=file)
+    upload.save()
+    data = {
+            'name':user.first_name,
+            'surname':user.last_name,
+            'userID':user.identity,
+            'cellNo':user.cell_number,
+            'email':user.email
+        }
+    return data
+
+def UploadVideo(Title,Description,Location,Date,request):
+    file = request.FILES['videoFileUpload']
+    user = Person.objects.get(identity=request.session['user']['identity'])
+    
+    hashed = hashlib.sha1()
+    hashed.update(file.read())
+    
+    upload = pdeAttribute(title=Title,description=Description,location=Location,date=datetime.datetime.now(),digitalData=hashed.hexdigest(),Person=user,video=file)
+    upload.save()
+    data = {
+            'name':user.first_name,
+            'surname':user.last_name,
+            'userID':user.identity,
+            'cellNo':user.cell_number,
+            'email':user.email
+        }
+    return data
 
     
