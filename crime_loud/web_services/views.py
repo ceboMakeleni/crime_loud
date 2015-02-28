@@ -81,7 +81,7 @@ def imageUpload(request, jsonObj):
             'name':result['name'],
             'surname':result['surname'],
             'userID':result['userID'],
-            'cell':result['cell'],
+            'cell':result['cellNo'],
             'email': result['email']
         }
         
@@ -91,7 +91,7 @@ def imageUpload(request, jsonObj):
             'name':result['name'],
             'surname':result['surname'],
             'userID':result['userID'],
-            'cell':result['cell'],
+            'cell':result['cellNo'],
             'email': result['email']
         }
     

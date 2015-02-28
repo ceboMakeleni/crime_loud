@@ -4,10 +4,6 @@ from django.template import RequestContext
 from web_services import views
 from django.views.decorators.csrf import csrf_exempt
 from crime_loud.settings import MEDIA_ROOT
-<<<<<<< HEAD
-=======
-
->>>>>>> imageUpload
 
 def home(request):
     return render_to_response("web_interface/login.html",

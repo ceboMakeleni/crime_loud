@@ -103,30 +103,38 @@ def viewProfile(userID):
     videoUploads = []
     audioUploads = []
     
+    print "All uploads --------------------------------------------"
+    print allUploads
+    print "------------------------------------------------------"
     for upload in allUploads:
-        if upload.photo is not "null":
-            name = upload.photo.name
-            sts = name.split('/')
-            list = []
-            list.append(upload.title)
-            list.append(sts[1])
-            photoUploads.append(list)
-        
-        elif upload.video is not "null":
+        if upload.video is not "null":
             name = upload.video.name
             sts = name.split('/')
             list = []
             list.append(upload.title)
-            list.append(sts[1])
+            list.append(name)
             videoUploads.append(list)
+            
+        elif upload.photo is not "null":
+            name = upload.photo.name
+            sts = name.split('/')
+            list = []
+            list.append(upload.title)
+            list.append(name)
+            photoUploads.append(list)
+        
+        
         
         elif upload.audio is not "null":
             name = upload.audio.name
             sts = name.split('/')
             list = []
             list.append(upload.title)
-            list.append(sts[1])
+            list.append(name)
             audioUploads.append(list)
+            
+    print "photouploads: "
+    print photoUploads
     
     data.append(per.first_name)
     data.append(per.last_name)
@@ -139,7 +147,10 @@ def viewProfile(userID):
     
     return data
 
-    
+'''
+    Problem, when uploading different things as a user and outputting them (in the profile page), they are all
+    outputted in the same div of video dspite the others being of different type.
+'''
     
 
 

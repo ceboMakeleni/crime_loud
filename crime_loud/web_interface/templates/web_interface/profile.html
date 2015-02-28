@@ -40,59 +40,65 @@
 
 {% block content %}
 <div class="jumbotron">
-    <div class="panel panel-success">
-      <!-- Default panel contents -->
-      <div class="panel-heading">Personal Information</div>
-      
-      <!-- List group -->
-      <ul class="list-group">
-        <li class="list-group-item">Name: {{ name}} {{ surname}} </li>
-        <li class="list-group-item">ID: {{ userID}}</li>
-        <li class="list-group-item">Cell: {{ cell }}</li>
-        <li class="list-group-item">Email: {{ email }} </li>
-      </ul>
-    </div>
-    
-    <div></div>
-    
-    <div class="panel panel-success">
-      <!-- Default panel contents -->
-      <div class="panel-heading">Image Uploads</div>
-      
-      <!-- List group -->
-      <ul class="list-group">
-    {% for upload in photoUploads %}
-        <li class="list-group-item">{{ upload.0 }}: {{ upload.1 }} </li>
-    {% endfor %}
-      </ul>
-    </div>
-    
-    <div></div>
-
-    <div class="panel panel-success">
-      <!-- Default panel contents -->
-      <div class="panel-heading">Video Uploads</div>
-      
-      <!-- List group -->
-      <ul class="list-group">
-    {% for upload in videoUploads %}
-        <li class="list-group-item">{{ upload.0 }}: {{ upload.1 }} </li>
-    {% endfor %}
-      </ul>
-    </div>
-    
-    <div></div>
-    
-    <div class="panel panel-success">
-      <!-- Default panel contents -->
-      <div class="panel-heading">Audio Uploads</div>
-      
-      <!-- List group -->
-      <ul class="list-group">
-    {% for upload in audioUploads %}
-        <li class="list-group-item">{{ upload.0 }}: {{ upload.1 }} </li>
-    {% endfor %}
-      </ul>
+    <div class="row" id="displayInfoAndUploads">
+        <div class="col-sm-6 feature">
+            <div class="panel panel-success">
+              <!-- Default panel contents -->
+              <div class="panel-heading">Personal Information</div>
+              
+              <!-- List group -->
+              <ul class="list-group">
+                <li class="list-group-item">Name: {{ name}} {{ surname}} </li>
+                <li class="list-group-item">ID: {{ userID}}</li>
+                <li class="list-group-item">Cell: {{ cell }}</li>
+                <li class="list-group-item">Email: {{ email }} </li>
+              </ul>
+            </div>
+        </div>
+        
+        <div class="col-sm-6 feature">
+        
+            <div class="panel panel-success">
+              <!-- Default panel contents -->
+              <div class="panel-heading">Image Uploads</div>
+              
+              <!-- List group -->
+              <ul class="list-group">
+            {% for upload in photoUploads %}
+                <li class="list-group-item">{{ upload.0 }}: {{ upload.1 }} </li>
+            {% endfor %}
+              </ul>
+            </div>
+            
+            <div></div>
+        
+            <div class="panel panel-success">
+              <!-- Default panel contents -->
+              <div class="panel-heading">Video Uploads</div>
+              
+              <!-- List group -->
+              <ul class="list-group">
+            {% for upload in videoUploads %}
+                <li class="list-group-item">{{ upload.0 }}: {{ upload.1 }} </li>
+            {% endfor %}
+              </ul>
+            </div>
+            
+            <div></div>
+            
+            <div class="panel panel-success">
+              <!-- Default panel contents -->
+              <div class="panel-heading">Audio Uploads</div>
+              
+              <!-- List group -->
+              <ul class="list-group">
+            {% for upload in audioUploads %}
+                <li class="list-group-item">{{ upload.0 }}: {{ upload.1 }} </li>
+            {% endfor %}
+              </ul>
+            </div>
+            
+        </div>
     </div>
 
 </div>

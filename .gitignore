@@ -1,0 +1,21 @@
+# Python
+*.pyc
+*.py~
+
+# Documents
+*.pdf
+*.csv
+
+# Development environments
+*.kpf
+*.komodoproject
+
+# Databases
+*.sqlite
+*.sqlite3
+
+migrations
+
+#Media files
+
+#media/
