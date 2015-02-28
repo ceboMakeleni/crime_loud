@@ -62,36 +62,66 @@ def login(request, jsonObj):
         
     return HttpResponse(json.dumps(data))
 
-def UploadAudio(request, jsonObj):
+
+def imageUpload(request, jsonObj):
     json_data = json.loads(jsonObj)
     
     title = json_data['title']
     description = json_data['description']
     location = json_data['location']
     date = json_data['date']
-    #file = json_data['file']
+    userID = json_data['userID']
     
-    result = api.UploadAudio(title,description,location,date,request)
-    if result != "":
+    
+    result = api.uploadImage(request, title, description, location, date, userID)
+    
+    if result is not None:
         data = {
             'type':1,
             'name':result['name'],
             'surname':result['surname'],
             'userID':result['userID'],
-            'cellNo':result['cellNo'],
-            'email':result['email']
+            'cell':result['cell'],
+            'email': result['email']
         }
-        return HttpResponse(json.dumps(data))
+        
     else:
         data = {
             'type':-1,
             'name':result['name'],
             'surname':result['surname'],
             'userID':result['userID'],
-            'cellNo':result['cellNo'],
-            'email':result['email']
+            'cell':result['cell'],
+            'email': result['email']
         }
-        return HttpResponse(json.dumps(data))
+    
+    return HttpResponse(json.dumps(data))
+
+def viewProfile(request, jsonObj):
+    json_data = json.loads(jsonObj)
+    userID = json_data['userID']
+    
+    result = api.viewProfile(userID)
+    
+    if result != []:
+        data = {
+            'type':1,
+            'name':result[0],
+            'surname':result[1],
+            'userID':result[2],
+            'cell':result[3],
+            'email':result[4],
+            'photoUploads':result[5],
+            'videoUploads':result[6],
+            'audioUploads':result[7]
+        }
+    else:
+        data = {
+            'type':-1, #person could not be located in database
+        }
+        
+    return HttpResponse(json.dumps(data))
+
     
 def UploadVideo(request, jsonObj):
     json_data = json.loads(jsonObj)
@@ -123,7 +153,36 @@ def UploadVideo(request, jsonObj):
             'email':result['email']
         }
         return HttpResponse(json.dumps(data))
-
+    
+    
+def UploadAudio(request, jsonObj):
+    json_data = json.loads(jsonObj)
+    title = json_data['title']
+    description = json_data['description']
+    location = json_data['location']
+    date = json_data['date']
+    #file = json_data['file']
+    result = api.UploadAudio(title,description,location,date,request)
+    if result != "":
+        data = {
+            'type':1,
+            'name':result['name'],
+            'surname':result['surname'],
+            'userID':result['userID'],
+            'cellNo':result['cellNo'],
+            'email':result['email']
+        }
+        return HttpResponse(json.dumps(data))
+    else:
+        data = {
+            'type':-1,
+            'name':result['name'],
+            'surname':result['surname'],
+            'userID':result['userID'],
+            'cellNo':result['cellNo'],
+            'email':result['email']
+        }
+        return HttpResponse(json.dumps(data))
     
    
 

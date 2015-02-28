@@ -4,6 +4,10 @@ from django.template import RequestContext
 from web_services import views
 from django.views.decorators.csrf import csrf_exempt
 from crime_loud.settings import MEDIA_ROOT
+<<<<<<< HEAD
+=======
+
+>>>>>>> imageUpload
 
 def home(request):
     return render_to_response("web_interface/login.html",
@@ -83,18 +87,42 @@ def imageUpload(request):
     date = request.POST['imageDate']
     
     userID = request.session['user']['identity']
-    
-    photo = request.FILES['imageFileUpload']
-    
+   
     data = {
         'title':title,
         'description': description,
         'location':location,
         'date':date,
         'userID':userID,
-        'photo':photo,
     }
+
+    results = views.imageUpload(request, json.dumps(data))
+    res = json.loads(results.content)
     
+    return render_to_response("web_interface/landing.html",{'type':res['type'], 'name':res['name'],
+                                                            'surname':res['surname'], 'cell':res['cell'],
+                                                            'userID':res['userID'], 'email':res['email']})
+
+def viewProfile(request):
+    userID = request.session['user']['identity']
+    
+    data = {
+        'userID':userID
+    }
+    results = views.viewProfile(request, json.dumps(data))
+    res = json.loads(results.content)
+    
+    
+    return render_to_response("web_interface/profile.html",{'type':res['type'], 'name':res['name'],
+                                                            'surname':res['surname'], 'cell':res['cell'],
+                                                            'userID':res['userID'], 'email':res['email'],
+                                                            'photoUploads':res['photoUploads'], 'videoUploads':res['videoUploads'],
+                                                            'audioUploads':res['audioUploads']})
+    
+def backHome(request):
+    userID = request.session['user']['identity']
+    name = request.session['user']['first_name']
+    surname = request.session['user']['last_name']
     return render_to_response("web_interface/landing.html")
 
 @csrf_exempt
@@ -160,5 +188,7 @@ def UploadVideo(request):
                                                                      'userID':res['userID'],
                                                                      'userEmail':res['email'],
                                                                      'cellNo':res['cellNo']})
-        
-    
+def logout(request):
+    request.session.delete()      
+    return render_to_response("web_interface/login.html")
+
