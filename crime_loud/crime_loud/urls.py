@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     url(r'viewProfile', 'web_interface.views.viewProfile', name = 'viewProfile'),
     url(r'backHome', 'web_interface.views.backHome', name = 'backHome'),
     url(r'logout', 'web_interface.views.logout', name = 'logout'),
+    url(r'takePhoto','web_interface.views.takePhoto', name='take_photo'),
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

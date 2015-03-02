@@ -188,3 +188,6 @@ def logout(request):
     request.session.delete()      
     return render_to_response("web_interface/login.html")
 
+def takePhoto(request):  
+    return render_to_response("web_interface/takePhoto.html")
+
