@@ -103,11 +103,11 @@ def viewProfile(userID):
     videoUploads = []
     audioUploads = []
     
-    print "All uploads --------------------------------------------"
-    print allUploads
-    print "------------------------------------------------------"
     for upload in allUploads:
-        if upload.video is not "null":
+        print "the upload vid:" + str(upload.video) + "  photo:  " +str(upload.photo)+ "  audio:  "+ str(upload.audio)
+        if upload.video:
+            print "/////////////////////////////////////////////////////////////////////"
+            print "the upload vid:" + str(upload.video) + "  photo:  " +str(upload.photo)+ "  audio:  "+ str(upload.audio)
             name = upload.video.name
             sts = name.split('/')
             list = []
@@ -115,7 +115,7 @@ def viewProfile(userID):
             list.append(name)
             videoUploads.append(list)
             
-        elif upload.photo is not "null":
+        elif upload.photo:
             name = upload.photo.name
             sts = name.split('/')
             list = []
@@ -125,7 +125,7 @@ def viewProfile(userID):
         
         
         
-        elif upload.audio is not "null":
+        elif upload.audio:
             name = upload.audio.name
             sts = name.split('/')
             list = []
@@ -133,8 +133,7 @@ def viewProfile(userID):
             list.append(name)
             audioUploads.append(list)
             
-    print "photouploads: "
-    print photoUploads
+
     
     data.append(per.first_name)
     data.append(per.last_name)
