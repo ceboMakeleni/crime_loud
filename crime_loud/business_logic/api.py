@@ -24,13 +24,46 @@ def login(userEmail, userPassword,request):
     print "but i got here"
     if userE.password == userPassword:
         request.session['user']={'identity':userE.identity,'userRole':userE.userRole, 'first_name':userE.first_name, 'last_name':userE.last_name}
-        data = {
-            'name':userE.first_name,
-            'surname':userE.last_name,
-            'userID':userE.identity,
-            'cellNo':userE.cell_number,
-            'email':userE.email
-        }
+        if userE.userRole == 'user':
+            data = {
+                'name':userE.first_name,
+                'surname':userE.last_name,
+                'userID':userE.identity,
+                'cellNo':userE.cell_number,
+                'email':userE.email,
+                'userRole':userE.userRole
+            }
+        else:
+            pde = pdeAttribute.objects.filter(date__gte=datetime.date.today())
+            images = []
+            audio = []
+            video = []
+            for value in pde:
+                if value.photo:
+                    name = value.photo.name
+                    sts = name.split('/')
+                    images.append({'title': value.title, 'data': sts[1]})
+                elif value.audio:
+                    name = value.audio.name
+                    sts = name.split('/')
+                    audio.append({'title': value.title, 'data': sts[1]})
+                elif value.video:
+                    name = value.video.name
+                    sts = name.split('/')
+                    video.append({'title': value.title, 'data': sts[1]})
+                    
+            data = {
+                'name':userE.first_name,
+                'surname':userE.last_name,
+                'userID':userE.identity,
+                'cellNo':userE.cell_number,
+                'email':userE.email,
+                'userRole':userE.userRole,
+                'images':images,
+                'audio':audio,
+                'video':video,
+                'date':str(datetime.date.today())
+            }
         return data
     else:
         return ""
@@ -110,9 +143,10 @@ def viewProfile(userID):
             print "the upload vid:" + str(upload.video) + "  photo:  " +str(upload.photo)+ "  audio:  "+ str(upload.audio)
             name = upload.video.name
             sts = name.split('/')
+            print sts
             list = []
             list.append(upload.title)
-            list.append(name)
+            list.append(sts[1])
             videoUploads.append(list)
             
         elif upload.photo:
@@ -120,7 +154,7 @@ def viewProfile(userID):
             sts = name.split('/')
             list = []
             list.append(upload.title)
-            list.append(name)
+            list.append(sts[1])
             photoUploads.append(list)
         
         
@@ -130,7 +164,7 @@ def viewProfile(userID):
             sts = name.split('/')
             list = []
             list.append(upload.title)
-            list.append(name)
+            list.append(sts[1])
             audioUploads.append(list)
             
 

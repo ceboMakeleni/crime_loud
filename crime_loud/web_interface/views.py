@@ -63,11 +63,23 @@ def login(request):
         res = json.loads(results.content)
         
         if res['type'] == 1:
-            return render_to_response("web_interface/landing.html",{ 'name':res['name'],
-                                                                     'surname':res['surname'],
-                                                                     'userID':res['userID'],
-                                                                     'userEmail':res['email'],
-                                                                     'cellNo':res['cellNo']})
+            if res['userRole'] == 'user':
+                return render_to_response("web_interface/landing.html",{ 'name':res['name'],
+                                                                         'surname':res['surname'],
+                                                                         'userID':res['userID'],
+                                                                         'userEmail':res['email'],
+                                                                         'cellNo':res['cellNo']})
+            elif res['userRole'] == 'LEA' or res['userRole'] == 'DFI' :
+                return render_to_response("web_interface/law_enforcement.html",{ 'name':res['name'],
+                                                                         'surname':res['surname'],
+                                                                         'userID':res['userID'],
+                                                                         'userEmail':res['email'],
+                                                                         'cellNo':res['cellNo'],'images':res['images'],
+                                                                         'audio':res['audio'],'video':res['video'], 'date':res['date']})
+            elif res['userRole'] == 'JDY':
+                pass
+            elif res['userRole'] == 'SA':
+                pass
         else:
             return render_to_response("web_interface/login.html")
         
@@ -116,10 +128,17 @@ def viewProfile(request):
                                                             'audioUploads':res['audioUploads']})
     
 def backHome(request):
-    userID = request.session['user']['identity']
+    userRole = request.session['user']['userRole']
     name = request.session['user']['first_name']
     surname = request.session['user']['last_name']
-    return render_to_response("web_interface/landing.html")
+    if userRole == 'user':
+        return render_to_response("web_interface/landing.html",{'name':name, 'surname':surname} )
+    elif userRole == 'LEA' or userRole == 'DFI':
+        return render_to_response("web_interface/law_enforcement.html",{'name':name, 'surname':surname} )
+    elif userRole == 'JDY':
+        pass
+    elif userRole == 'SA':
+        pass
 
 @csrf_exempt
 def UploadAudio(request):

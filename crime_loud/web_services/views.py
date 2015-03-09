@@ -46,14 +46,30 @@ def login(request, jsonObj):
     result = api.login(userEmail, userPassword,request)
     
     if result != "":
-        data = {
-            'type':1,
-            'name':result['name'],
-            'surname':result['surname'],
-            'userID':result['userID'],
-            'cellNo':result['cellNo'],
-            'email':result['email']
-        }
+        if request.session['user']['userRole'] == 'user':
+            data = {
+                'type':1,
+                'name':result['name'],
+                'surname':result['surname'],
+                'userID':result['userID'],
+                'cellNo':result['cellNo'],
+                'email':result['email'],
+                'userRole':result['userRole']
+            }
+        else:
+            data = {
+                'type':1,
+                'name':result['name'],
+                'surname':result['surname'],
+                'userID':result['userID'],
+                'cellNo':result['cellNo'],
+                'email':result['email'],
+                'userRole':result['userRole'],
+                'images':result['images'],
+                'audio': result['audio'],
+                'video': result['video'],
+                'date': result['date']
+            }
         
     else:
         data = {
