@@ -20,6 +20,9 @@ urlpatterns = patterns('',
     url(r'backHome', 'web_interface.views.backHome', name = 'backHome'),
     url(r'logout', 'web_interface.views.logout', name = 'logout'),
     url(r'takePhoto','web_interface.views.takePhoto', name='take_photo'),
+    url(r'view_image/(?P<image_id>\d+)','web_interface.views.viewImage', name='view_image'),
+    url(r'view_audio/(?P<audio_id>\d+)','web_interface.views.viewAudio', name='view_audio'),
+    url(r'view_video/(?P<video_id>\d+)','web_interface.views.viewVideo', name='view_video'),
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

@@ -15,12 +15,16 @@ def registerNewUser(userID,username,surname,email,password,usercell,request):
 def login(userEmail, userPassword,request):
     user = Person.objects.all()
     userE = ""
+    found = False
     for i in user:
         if i.email == userEmail:
             userE = Person.objects.get(email=userEmail)
+            found = True
+        
             
-    if userEmail == "":
+    if found == False:
         return ""
+    
     print "but i got here"
     if userE.password == userPassword:
         request.session['user']={'identity':userE.identity,'userRole':userE.userRole, 'first_name':userE.first_name, 'last_name':userE.last_name}
@@ -34,7 +38,7 @@ def login(userEmail, userPassword,request):
                 'userRole':userE.userRole
             }
         else:
-            pde = pdeAttribute.objects.filter(date__gte=datetime.date.today())
+            pde = pdeAttribute.objects.filter()
             images = []
             audio = []
             video = []
@@ -42,16 +46,16 @@ def login(userEmail, userPassword,request):
                 if value.photo:
                     name = value.photo.name
                     sts = name.split('/')
-                    images.append({'title': value.title, 'data': sts[1]})
+                    images.append({'title': value.title, 'data': sts[1],'id':value.id})
                 elif value.audio:
                     name = value.audio.name
                     sts = name.split('/')
-                    audio.append({'title': value.title, 'data': sts[1]})
+                    audio.append({'title': value.title, 'data': sts[1],'id':value.id})
                 elif value.video:
                     name = value.video.name
                     sts = name.split('/')
-                    video.append({'title': value.title, 'data': sts[1]})
-                    
+                    video.append({'title': value.title, 'data': sts[1],'id':value.id})
+            
             data = {
                 'name':userE.first_name,
                 'surname':userE.last_name,

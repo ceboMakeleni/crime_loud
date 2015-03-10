@@ -210,3 +210,13 @@ def logout(request):
 def takePhoto(request):  
     return render_to_response("web_interface/takePhoto.html")
 
+def viewImage(request,image_id):
+    #../midea/file.png
+    return render_to_response("web_interface/view_image_LEA.html", {'image':'WIN_20141111_131259.JPG'})
+    pass
+
+def viewAudio(request,audio_id):
+    pass
+
+def viewVideo(request,video_id):
+    pass
