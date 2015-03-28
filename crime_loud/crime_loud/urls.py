@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     url(r'view_image/(?P<image_id>\d+)','web_interface.views.viewImage', name='view_image'),
     url(r'view_audio/(?P<audio_id>\d+)','web_interface.views.viewAudio', name='view_audio'),
     url(r'view_video/(?P<video_id>\d+)','web_interface.views.viewVideo', name='view_video'),
+    url(r'^assign_case/(?P<image_id>\d+)/(?P<case_id>\d+)','web_interface.views.assignCaseImage', name='assign_case'),
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

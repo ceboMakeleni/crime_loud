@@ -200,5 +200,134 @@ def UploadAudio(request, jsonObj):
         }
         return HttpResponse(json.dumps(data))
     
+def viewImage(request,jsonObj):
+    json_data = json.loads(jsonObj)
+    image_id = json_data['image']
+    
+    result = api.viewImage(request,image_id)
+    if result:
+        data={
+            'type':1,
+            'name':result['name'],
+            'surname':result['surname'],
+            'title': result['title'],
+            'description':result['description'],
+            'location':result['location'],
+            'date':result['date'],
+            'caseNumber': result['caseNumber'],
+            'imageName':result['imageName'],
+            'cases':result['arrayCases']
+        }
+        
+        return HttpResponse(json.dumps(data))
+    else:
+        res = api.leaHomePage(result)
+        data = {
+            'type':-1,
+            'name':res['name'],
+            'surname':res['surname'],
+            'images':res['images'],
+            'audio': res['audio'],
+            'video': res['video'],
+            'date': res['date']
+        }
+        return HttpResponse(json.dumps(data))
 
+def assignCase(request,jsonObj):
+    json_data = json.loads(jsonObj)
+    case = json_data['case']
+    pde = json_data['pde']
+    
+    result = api.assignCase(pde,case)
+    
+    if result:
+        data ={
+            'type': 1
+        }
+    else:
+        data = {
+            'type':-1
+        }
+    
+    return HttpResponse(json.dumps(data))
+    
+def leaHomePage(request):
+        res = api.leaHomePage(request)
+        
+        data = {
+            'type':1,
+            'name':res['name'],
+            'surname':res['surname'],
+            'images':res['images'],
+            'audio': res['audio'],
+            'video': res['video'],
+            'date': res['date']
+        }
+        
+        return HttpResponse(json.dumps(data))
 
+def viewVideo(request,jsonObj):
+    json_data = json.loads(jsonObj)
+    video_id = json_data['image']
+    
+    result = api.viewVideo(request,video_id)
+    if result:
+        data={
+            'type':1,
+            'name':result['name'],
+            'surname':result['surname'],
+            'title': result['title'],
+            'description':result['description'],
+            'location':result['location'],
+            'date':result['date'],
+            'caseNumber': result['caseNumber'],
+            'videoName':result['videoName'],
+            'cases':result['arrayCases']
+        }
+        
+        return HttpResponse(json.dumps(data))
+    else:
+        res = api.leaHomePage(result)
+        data = {
+            'type':-1,
+            'name':res['name'],
+            'surname':res['surname'],
+            'images':res['images'],
+            'audio': res['audio'],
+            'video': res['video'],
+            'date': res['date']
+        }
+        return HttpResponse(json.dumps(data))
+    
+def viewAudio(request,jsonObj):
+    json_data = json.loads(jsonObj)
+    video_id = json_data['audio']
+    
+    result = api.viewVideo(request,video_id)
+    if result:
+        data={
+            'type':1,
+            'name':result['name'],
+            'surname':result['surname'],
+            'title': result['title'],
+            'description':result['description'],
+            'location':result['location'],
+            'date':result['date'],
+            'caseNumber': result['caseNumber'],
+            'audioName':result['audioName'],
+            'cases':result['arrayCases']
+        }
+        
+        return HttpResponse(json.dumps(data))
+    else:
+        res = api.leaHomePage(result)
+        data = {
+            'type':-1,
+            'name':res['name'],
+            'surname':res['surname'],
+            'images':res['images'],
+            'audio': res['audio'],
+            'video': res['video'],
+            'date': res['date']
+        }
+        return HttpResponse(json.dumps(data))

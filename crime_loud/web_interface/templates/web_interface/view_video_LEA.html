@@ -41,13 +41,17 @@
 <div class="jumbotron">
     <div class="row" id="displayInfoAndUploads">
         <div class="col-md-6 feature">
-            <img src="../media/photo/{{image}}"/>
+            <div align="center" class="embed-responsive embed-responsive-16by9">
+                 <video autoplay controls class="embed-responsive-item">
+                    <source src="../media/video/{{video}}" >
+                </video>
+            </div>
         </div>
         <div class="col-md-6 feature">
             
             <div class="panel panel-primary">
                 <!-- Default panel contents -->
-              <div class="panel-heading">Image Information</div>
+              <div class="panel-heading">Video Information</div>
                 <ul class="list-group">
                   <li class="list-group-item"><strong>Title: </strong> {{title}}</li>
                   <li class="list-group-item"><strong>Description: </strong>{{ description }}</li>
@@ -62,7 +66,7 @@
                     Assign Case<span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu">
                     {%for i in cases%}
-                        <li><a href="/assign_case/{{images}}/{{i.1}}">{{i.0}}</a></li>
+                        <li><a href="/assign_case/{{videos}}/{{i.1}}">{{i.0}}</a></li>
                     {%endfor%}
                 </ul>
             </div>

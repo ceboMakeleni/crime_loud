@@ -141,10 +141,7 @@ def viewProfile(userID):
     audioUploads = []
     
     for upload in allUploads:
-        print "the upload vid:" + str(upload.video) + "  photo:  " +str(upload.photo)+ "  audio:  "+ str(upload.audio)
         if upload.video:
-            print "/////////////////////////////////////////////////////////////////////"
-            print "the upload vid:" + str(upload.video) + "  photo:  " +str(upload.photo)+ "  audio:  "+ str(upload.audio)
             name = upload.video.name
             sts = name.split('/')
             print sts
@@ -184,14 +181,143 @@ def viewProfile(userID):
     
     return data
 
-'''
-    Problem, when uploading different things as a user and outputting them (in the profile page), they are all
-    outputted in the same div of video dspite the others being of different type.
-'''
+def viewImage(request,image):
+    pde = pdeAttribute.objects.get(id=image)
+    userE = Person.objects.get(identity=request.session['user']['identity'])
+    case = None
+    if pde.caseAttribute:
+        case = pde.caseAttribute.caseNumber
+    
+    Iname = pde.photo.name
+    sts = Iname.split('/')
+    
+    caseObj = caseAttribute.objects.all()
+    list = []
+    for i in caseObj:
+        list1 = []
+        list1.append(i.caseNumber)
+        list1.append(i.id)
+        list.append(list1)
+    
+    data = {
+        'name':userE.first_name,
+        'surname':userE.last_name,
+        'title':pde.title,
+        'description':pde.description,
+        'location':pde.location,
+        'date':str(pde.date),
+        'caseNumber':case,
+        'imageName':sts[1],
+        'arrayCases':list
+    }
+    
+    return data
     
 
+def leaHomePage(request):
+    userE = Person.objects.get(identity=request.session['user']['identity'])
+    pde = pdeAttribute.objects.filter()
+    images = []
+    audio = []
+    video = []
+    for value in pde:
+        if value.photo:
+            name = value.photo.name
+            sts = name.split('/')
+            images.append({'title': value.title, 'data': sts[1],'id':value.id})
+        elif value.audio:
+            name = value.audio.name
+            sts = name.split('/')
+            audio.append({'title': value.title, 'data': sts[1],'id':value.id})
+        elif value.video:
+            name = value.video.name
+            sts = name.split('/')
+            video.append({'title': value.title, 'data': sts[1],'id':value.id})
+    
+            
+    data = {
+                'name':userE.first_name,
+                'surname':userE.last_name,
+                'images':images,
+                'audio':audio,
+                'video':video,
+                'date':str(datetime.date.today())
+        }
+    return data
 
+def assignCase(pdeID,caseID):
+    pde = pdeAttribute.objects.get(id=pdeID)
+    case = caseAttribute.objects.get(id=caseID)
+    
+    pde.caseAttribute = case
+    pde.save()
+    print "+++++++++++++++++++++++++++++++++++++++++++"
+    print str(pde.caseAttribute.caseNumber)
+    return True;
 
+def viewVideo(request,video):
+    pde = pdeAttribute.objects.get(id=video)
+    userE = Person.objects.get(identity=request.session['user']['identity'])
+    case = None
+    if pde.caseAttribute:
+        case = pde.caseAttribute.caseNumber
+    
+    Iname = pde.video.name
+    sts = Iname.split('/')
+    
+    caseObj = caseAttribute.objects.all()
+    list = []
+    for i in caseObj:
+        list1 = []
+        list1.append(i.caseNumber)
+        list1.append(i.id)
+        list.append(list1)
+    
+    data = {
+        'name':userE.first_name,
+        'surname':userE.last_name,
+        'title':pde.title,
+        'description':pde.description,
+        'location':pde.location,
+        'date':str(pde.date),
+        'caseNumber':case,
+        'videoName':sts[1],
+        'arrayCases':list
+    }
+    
+    return data
+
+def viewAudio(request,audio):
+    pde = pdeAttribute.objects.get(id=audio)
+    userE = Person.objects.get(identity=request.session['user']['identity'])
+    case = None
+    if pde.caseAttribute:
+        case = pde.caseAttribute.caseNumber
+    
+    Iname = pde.audio.name
+    sts = Iname.split('/')
+    
+    caseObj = caseAttribute.objects.all()
+    list = []
+    for i in caseObj:
+        list1 = []
+        list1.append(i.caseNumber)
+        list1.append(i.id)
+        list.append(list1)
+    
+    data = {
+        'name':userE.first_name,
+        'surname':userE.last_name,
+        'title':pde.title,
+        'description':pde.description,
+        'location':pde.location,
+        'date':str(pde.date),
+        'caseNumber':case,
+        'audioName':sts[1],
+        'arrayCases':list
+    }
+    
+    return data
 
 
     
