@@ -303,7 +303,7 @@ def viewAudio(request,jsonObj):
     json_data = json.loads(jsonObj)
     video_id = json_data['audio']
     
-    result = api.viewVideo(request,video_id)
+    result = api.viewAudio(request,video_id)
     if result:
         data={
             'type':1,
@@ -331,3 +331,38 @@ def viewAudio(request,jsonObj):
             'date': res['date']
         }
         return HttpResponse(json.dumps(data))
+
+def addCase(request,jsonObj):
+    json_data = json.loads(jsonObj)
+    name = json_data['name']
+    number = json_data['number']
+    
+    result = api.addCase(name,number,request)
+    if result:
+        data = {
+            'type': 1,
+        }
+        return HttpResponse(json.dumps(data))
+    else:
+        data = {
+            'type': -1
+        }
+        return HttpResponse(json.dumps(data))
+    
+def deletePDE(request,jsonObj):
+    json_data = json.loads(jsonObj)
+    pde = json_data['id']
+    
+    result = api.deletePDE(pde,request)
+    if result:
+        data = {
+            'type':1
+        }
+        return HttpResponse(json.dumps(data))
+    else:
+        data ={
+            'type':-1
+        }
+        return HttpResponse(json.dumps(data))
+
+    

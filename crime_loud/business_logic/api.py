@@ -319,5 +319,13 @@ def viewAudio(request,audio):
     
     return data
 
+def addCase(case_name, case_number, request):
+    user = Person.objects.get(identity=request.session['user']['identity'])
+    case = caseAttribute(caseName=case_name,caseNumber=case_number,person=user)
+    case.save()
+    return True
 
-    
+def deletePDE(pde_id,request):
+    pde = pdeAttribute.objects.get(id=pde_id)
+    pde.delete()
+    return True;

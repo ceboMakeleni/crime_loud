@@ -314,6 +314,55 @@ def viewVideo(request,video_id):
                                                                         'audio':res['audio'],
                                                                         'video':res['video'],
                                                                         'date':res['date']})
+    
+def assignCaseVideo(request,video_id,case_id):
+    result = views.assignCase(request,json.dumps({'case':case_id, 'pde':video_id}))
+    res = json.loads(result.content)
+    if res['type'] == 1:
+        results = views.viewVideo(request,json.dumps({'image':video_id}))
+        res = json.loads(results.content)
+        print "lol"
+        if res['type'] == 1:
+            return render_to_response("web_interface/view_video_LEA.html", {'video':res['videoName'],
+                                                                        'caseName': res['caseNumber'],
+                                                                        'cases':res['cases'],
+                                                                        'date':res['date'],
+                                                                        'location': res['location'],
+                                                                        'description':res['description'],
+                                                                        'title': res['title'],
+                                                                        'surname':res['surname'],
+                                                                        'name':res['name'],
+                                                                        'videos':video_id})
+        else:
+            return render_to_response("web_interface/law_enforcement.html",{'name':res['name'],
+                                                                        'surname':res['surname'],
+                                                                        'images':res['images'],
+                                                                        'audio':res['audio'],
+                                                                        'video':res['video'],
+                                                                        'date':res['date']})
+    elif res['type'] == -1:
+        results = views.viewVideo(request,json.dumps({'image':video_id}))
+        res = json.loads(results.content)
+        print "lol times two"
+        if res['type'] == 1:
+            return render_to_response("web_interface/view_video_LEA.html", {'video':res['videoName'],
+                                                                        'caseName': res['caseNumber'],
+                                                                        'cases':res['cases'],
+                                                                        'date':res['date'],
+                                                                        'location': res['location'],
+                                                                        'description':res['description'],
+                                                                        'title': res['title'],
+                                                                        'surname':res['surname'],
+                                                                        'name':res['name'],
+                                                                        'videos':video_id})
+        else:
+            return render_to_response("web_interface/law_enforcement.html",{'name':res['name'],
+                                                                        'surname':res['surname'],
+                                                                        'images':res['images'],
+                                                                        'audio':res['audio'],
+                                                                        'video':res['video'],
+                                                                        'date':res['date']})
+
 
 def viewAudio(request,audio_id):
     results = views.viewAudio(request,json.dumps({'audio':audio_id}))
@@ -331,7 +380,7 @@ def viewAudio(request,audio_id):
                                                                         'title': res['title'],
                                                                         'surname':res['surname'],
                                                                         'name':res['name'],
-                                                                        'audios':audios_id})
+                                                                        'audios':audio_id})
     else:
         return render_to_response("web_interface/law_enforcement.html",{'name':res['name'],
                                                                         'surname':res['surname'],
@@ -339,3 +388,112 @@ def viewAudio(request,audio_id):
                                                                         'audio':res['audio'],
                                                                         'video':res['video'],
                                                                         'date':res['date']})
+    
+def assignCaseAudio(request,audio_id,case_id):
+    result = views.assignCase(request,json.dumps({'case':case_id, 'pde':audio_id}))
+    res = json.loads(result.content)
+    if res['type'] == 1:
+        results = views.viewAudio(request,json.dumps({'audio':audio_id}))
+        res = json.loads(results.content)
+        print "lol"
+        if res['type'] == 1:
+            return render_to_response("web_interface/view_audio_LEA.html", {'audio':res['audioName'],
+                                                                        'caseName': res['caseNumber'],
+                                                                        'cases':res['cases'],
+                                                                        'date':res['date'],
+                                                                        'location': res['location'],
+                                                                        'description':res['description'],
+                                                                        'title': res['title'],
+                                                                        'surname':res['surname'],
+                                                                        'name':res['name'],
+                                                                        'audios':audio_id})
+        else:
+            return render_to_response("web_interface/law_enforcement.html",{'name':res['name'],
+                                                                        'surname':res['surname'],
+                                                                        'images':res['images'],
+                                                                        'audio':res['audio'],
+                                                                        'video':res['video'],
+                                                                        'date':res['date']})
+    elif res['type'] == -1:
+        results = views.viewAudio(request,json.dumps({'audio':audio_id}))
+        res = json.loads(results.content)
+        print "lol times two"
+        if res['type'] == 1:
+            return render_to_response("web_interface/view_audio_LEA.html", {'audio':res['vaudioName'],
+                                                                        'caseName': res['caseNumber'],
+                                                                        'cases':res['cases'],
+                                                                        'date':res['date'],
+                                                                        'location': res['location'],
+                                                                        'description':res['description'],
+                                                                        'title': res['title'],
+                                                                        'surname':res['surname'],
+                                                                        'name':res['name'],
+                                                                        'audios':audio_id})
+        else:
+            return render_to_response("web_interface/law_enforcement.html",{'name':res['name'],
+                                                                        'surname':res['surname'],
+                                                                        'images':res['images'],
+                                                                        'audio':res['audio'],
+                                                                        'video':res['video'],
+                                                                        'date':res['date']})
+
+@csrf_exempt    
+def addCase(request):
+    name = request.POST['name']
+    number = request.POST['number']
+    
+    data = {
+        'name':name,
+        'number':number
+    }
+    results = views.addCase(request,json.dumps(data))
+    res = json.loads(results.content)
+    
+    if res['type'] == 1:
+        result = views.leaHomePage(request)
+        res = json.loads(result.content)
+        if res['type'] == 1:
+            return render_to_response("web_interface/law_enforcement.html",{'name':res['name'],
+                                                                        'surname':res['surname'],
+                                                                        'images':res['images'],
+                                                                        'audio':res['audio'],
+                                                                        'video':res['video'],
+                                                                        'date':res['date']})
+    else:
+        result = views.leaHomePage(request)
+        res = json.loads(result.content)
+        if res['type'] == 1:
+            return render_to_response("web_interface/law_enforcement.html",{'name':res['name'],
+                                                                        'surname':res['surname'],
+                                                                        'images':res['images'],
+                                                                        'audio':res['audio'],
+                                                                        'video':res['video'],
+                                                                        'date':res['date']})
+        
+@csrf_exempt
+def deletePDE(request):
+    pde_id = request.POST['ID']
+    results = views.deletePDE(request, json.dumps({'id':pde_id}))
+    res = json.loads(results.content)
+    
+    if res['type'] == 1:
+        result = views.leaHomePage(request)
+        res = json.loads(result.content)
+        if res['type'] == 1:
+            return render_to_response("web_interface/law_enforcement.html",{'name':res['name'],
+                                                                        'surname':res['surname'],
+                                                                        'images':res['images'],
+                                                                        'audio':res['audio'],
+                                                                        'video':res['video'],
+                                                                        'date':res['date']})
+    else:
+        result = views.leaHomePage(request)
+        res = json.loads(result.content)
+        if res['type'] == 1:
+            return render_to_response("web_interface/law_enforcement.html",{'name':res['name'],
+                                                                        'surname':res['surname'],
+                                                                        'images':res['images'],
+                                                                        'audio':res['audio'],
+                                                                        'video':res['video'],
+                                                                        'date':res['date']})
+        

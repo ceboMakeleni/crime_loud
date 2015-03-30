@@ -41,6 +41,16 @@
 {% block content %}
 <div class="jumbotron">
     <div class="row" id="displayInfoAndUploads">
+        <div class="panel panel-default">
+            <div class="panel-heading">Add New Case</div>
+            <div class="panel-body">
+                <form action="add_case" method="post">
+                    Case Name: <input type="text" name="name" placeholder="Case Name"/><br/>
+                    Case Number: <input type="text" name="number" placeholder="Case Number"/><br/>
+                    <input type="submit" name="submit" value="Add" style="background-color: green"/>
+                </form>
+            </div>
+        </div>
         <div class="col-sm-4 feature">
             <div class="panel panel-default">
                 <div class="panel-heading">Images uploaded as on {{date}}</div>

@@ -43,7 +43,7 @@
         <div class="col-md-6 feature">
             <div align="center" class="embed-responsive embed-responsive-16by9">
                  <video autoplay controls class="embed-responsive-item">
-                    <source src="../media/video/{{video}}" >
+                    <source src="../media/video/{{video}}" type="mp4">
                 </video>
             </div>
         </div>
@@ -66,11 +66,14 @@
                     Assign Case<span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu">
                     {%for i in cases%}
-                        <li><a href="/assign_case/{{videos}}/{{i.1}}">{{i.0}}</a></li>
+                        <li><a href="/assign_video_case/{{videos}}/{{i.1}}">{{i.0}}</a></li>
                     {%endfor%}
                 </ul>
             </div>
-            
+            <form action="/deletePDE" method="post">
+               <input type="hidden" name="ID" value=" {{videos}} "/>
+               <input type="submit" name="submit" value="delete"/>
+            </form>
         </div>
     </div>
 </div>

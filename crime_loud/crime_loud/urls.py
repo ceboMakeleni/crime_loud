@@ -23,7 +23,11 @@ urlpatterns = patterns('',
     url(r'view_image/(?P<image_id>\d+)','web_interface.views.viewImage', name='view_image'),
     url(r'view_audio/(?P<audio_id>\d+)','web_interface.views.viewAudio', name='view_audio'),
     url(r'view_video/(?P<video_id>\d+)','web_interface.views.viewVideo', name='view_video'),
-    url(r'^assign_case/(?P<image_id>\d+)/(?P<case_id>\d+)','web_interface.views.assignCaseImage', name='assign_case'),
+    url(r'^assign_image_case/(?P<image_id>\d+)/(?P<case_id>\d+)','web_interface.views.assignCaseImage', name='assign_image_case'),
+    url(r'^assign_video_case/(?P<video_id>\d+)/(?P<case_id>\d+)','web_interface.views.assignCaseVideo', name='assign_image_case'),
+    url(r'^assign_audio_case/(?P<audio_id>\d+)/(?P<case_id>\d+)','web_interface.views.assignCaseAudio', name='assign_audio_case'),
+    url(r'^add_case','web_interface.views.addCase', name='add_case'),
+    url(r'^delete','web_interface.views.deletePDE', name='delete_pde'),
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
