@@ -28,6 +28,9 @@ urlpatterns = patterns('',
     url(r'^assign_audio_case/(?P<audio_id>\d+)/(?P<case_id>\d+)','web_interface.views.assignCaseAudio', name='assign_audio_case'),
     url(r'^add_case','web_interface.views.addCase', name='add_case'),
     url(r'^delete','web_interface.views.deletePDE', name='delete_pde'),
+    url(r'viewImage/(?P<image_id>\d+)','web_interface.views.viewImageJDY', name='view_image_JDY'),
+    url(r'viewVideo/(?P<video_id>\d+)','web_interface.views.viewVideoJDY', name='view_video_JDY'),
+    url(r'viewAudio/(?P<audio_id>\d+)','web_interface.views.viewAudioJDY', name='view_audio_JDY'),
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

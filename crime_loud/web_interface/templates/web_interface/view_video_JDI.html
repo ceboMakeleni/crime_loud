@@ -41,15 +41,22 @@
 <div class="jumbotron">
     <div class="row" id="displayInfoAndUploads">
         <div class="col-md-6 feature">
-            <audio controls autoplay>
-                <source src="../media/audio/{{audio}}" />
-            </audio> 
+            <div align="center" class="embed-responsive embed-responsive-16by9">
+                 <video autoplay controls class="embed-responsive-item">
+                    <source src="../media/video/{{video}}" type="video/mp4">
+                    <source src="../media/video/{{video}}" type="video/3gp">
+                    <source src="../media/video/{{video}}" type="video/avi">
+                    <source src="../media/video/{{video}}" type="video/asf">
+                    <source src="../media/video/{{video}}" type="video/mov">
+                    <source src="../media/video/{{video}}" type="video/mwv">
+                </video>
+            </div>
         </div>
         <div class="col-md-6 feature">
             
             <div class="panel panel-primary">
                 <!-- Default panel contents -->
-              <div class="panel-heading">Audio Information</div>
+              <div class="panel-heading">Video Information</div>
                 <ul class="list-group">
                   <li class="list-group-item"><strong>Title: </strong> {{title}}</li>
                   <li class="list-group-item"><strong>Description: </strong>{{ description }}</li>
@@ -58,20 +65,6 @@
                   <li class="list-group-item"><strong>Case Number:</strong> {{ caseName }}</li>
                 </ul>
             </div>
-            
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    Assign Case<span class="caret"></span></button>
-                <ul class="dropdown-menu" role="menu">
-                    {%for i in cases%}
-                        <li><a href="/assign_audio_case/{{audios}}/{{i.1}}">{{i.0}}</a></li>
-                    {%endfor%}
-                </ul>
-            </div>
-            <form action="/deletePDE" method="post">
-               <input type="hidden" name="ID" value=" {{audios}} "/>
-               <input type="submit" name="submit" value="delete"/>
-            </form>
             
         </div>
     </div>

@@ -77,7 +77,12 @@ def login(request):
                                                                          'cellNo':res['cellNo'],'images':res['images'],
                                                                          'audio':res['audio'],'video':res['video'], 'date':res['date']})
             elif res['userRole'] == 'JDY':
-                pass
+                return render_to_response("web_interface/judiciary.html",{ 'name':res['name'],
+                                                                         'surname':res['surname'],
+                                                                         'userID':res['userID'],
+                                                                         'userEmail':res['email'],
+                                                                         'cellNo':res['cellNo'],'images':res['images'],
+                                                                         'audio':res['audio'],'video':res['video'], 'date':res['date']})
             elif res['userRole'] == 'SA':
                 pass
         else:
@@ -143,7 +148,13 @@ def backHome(request):
                                                                          'video':res['video'], 'date':res['date']})
         
     elif userRole == 'JDY':
-        pass
+        result = views.leaHomePage(request)
+        res = json.loads(result.content)
+        return render_to_response("web_interface/judiciary.html",{ 'name':res['name'],
+                                                                         'surname':res['surname'],
+                                                                         'images':res['images'],
+                                                                         'audio':res['audio'],
+                                                                         'video':res['video'], 'date':res['date']})
     elif userRole == 'SA':
         pass
 
@@ -240,6 +251,29 @@ def viewImage(request,image_id):
                                                                         'video':res['video'],
                                                                         'date':res['date']})
     
+def viewImageJDY(request,image_id):
+    results = views.viewImage(request,json.dumps({'image':image_id}))
+    res = json.loads(results.content)
+    
+    if res['type'] == 1:
+        return render_to_response("web_interface/view_image_JDI.html", {'image':res['imageName'],
+                                                                        'caseName': res['caseNumber'],
+                                                                        'date':res['date'],
+                                                                        'location': res['location'],
+                                                                        'description':res['description'],
+                                                                        'title': res['title'],
+                                                                        'surname':res['surname'],
+                                                                        'name':res['name'],
+                                                                        'images':image_id})
+    else:
+        return render_to_response("web_interface/judiciary.html",{'name':res['name'],
+                                                                        'surname':res['surname'],
+                                                                        'images':res['images'],
+                                                                        'audio':res['audio'],
+                                                                        'video':res['video'],
+                                                                        'date':res['date']})
+
+    
 def assignCaseImage(request,image_id,case_id):
     result = views.assignCase(request,json.dumps({'case':case_id, 'pde':image_id}))
     res = json.loads(result.content)
@@ -315,6 +349,28 @@ def viewVideo(request,video_id):
                                                                         'video':res['video'],
                                                                         'date':res['date']})
     
+def viewVideoJDY(request,video_id):
+    results = views.viewVideo(request,json.dumps({'image':video_id}))
+    res = json.loads(results.content)
+    if res['type'] == 1:
+        print "its a success"
+        return render_to_response("web_interface/view_video_JDI.html", {'video':res['videoName'],
+                                                                        'caseName': res['caseNumber'],
+                                                                        'date':res['date'],
+                                                                        'location': res['location'],
+                                                                        'description':res['description'],
+                                                                        'title': res['title'],
+                                                                        'surname':res['surname'],
+                                                                        'name':res['name'],
+                                                                        'videos':video_id})
+    else:
+        return render_to_response("web_interface/judiciary.html",{'name':res['name'],
+                                                                        'surname':res['surname'],
+                                                                        'images':res['images'],
+                                                                        'audio':res['audio'],
+                                                                        'video':res['video'],
+                                                                        'date':res['date']})
+    
 def assignCaseVideo(request,video_id,case_id):
     result = views.assignCase(request,json.dumps({'case':case_id, 'pde':video_id}))
     res = json.loads(result.content)
@@ -367,10 +423,7 @@ def assignCaseVideo(request,video_id,case_id):
 def viewAudio(request,audio_id):
     results = views.viewAudio(request,json.dumps({'audio':audio_id}))
     res = json.loads(results.content)
-    print "______________________"
-    print "i got so far hahahahahahahah"
     if res['type'] == 1:
-        print "its a success"
         return render_to_response("web_interface/view_audio_LEA.html", {'audio':res['audioName'],
                                                                         'caseName': res['caseNumber'],
                                                                         'cases':res['cases'],
@@ -383,6 +436,27 @@ def viewAudio(request,audio_id):
                                                                         'audios':audio_id})
     else:
         return render_to_response("web_interface/law_enforcement.html",{'name':res['name'],
+                                                                        'surname':res['surname'],
+                                                                        'images':res['images'],
+                                                                        'audio':res['audio'],
+                                                                        'video':res['video'],
+                                                                        'date':res['date']})
+    
+def viewAudioJDY(request,audio_id):
+    results = views.viewAudio(request,json.dumps({'audio':audio_id}))
+    res = json.loads(results.content)
+    if res['type'] == 1:
+        return render_to_response("web_interface/view_audio_JDI.html", {'audio':res['audioName'],
+                                                                        'caseName': res['caseNumber'],
+                                                                        'date':res['date'],
+                                                                        'location': res['location'],
+                                                                        'description':res['description'],
+                                                                        'title': res['title'],
+                                                                        'surname':res['surname'],
+                                                                        'name':res['name'],
+                                                                        'audios':audio_id})
+    else:
+        return render_to_response("web_interface/judiciary.html",{'name':res['name'],
                                                                         'surname':res['surname'],
                                                                         'images':res['images'],
                                                                         'audio':res['audio'],
