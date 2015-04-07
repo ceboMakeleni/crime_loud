@@ -329,3 +329,8 @@ def deletePDE(pde_id,request):
     pde = pdeAttribute.objects.get(id=pde_id)
     pde.delete()
     return True;
+
+def RegisterAuthorizedUser(request, name, surname, idNo, cell, role, Password, mail):
+    user = Person(first_name=name, last_name=surname, identity=idNo, cell_number=cell, email=mail,password=Password, userRole= role)
+    user.save()
+    return True

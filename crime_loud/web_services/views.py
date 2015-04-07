@@ -365,4 +365,15 @@ def deletePDE(request,jsonObj):
         }
         return HttpResponse(json.dumps(data))
 
+def registerAuthorzedUser(request, jsonObj):
+    json_data = json.loads(jsonObj)
+    name = json_data['name']
+    surname = json_data['surname']
+    email = json_data['email']
+    cell = json_data['cell']
+    idNo = json_data['idNo']
+    role = "LEA"
+    password = json_data['password']
+    
+    results = api.RegisterAuthorizedUser(request, name)
     

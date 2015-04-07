@@ -84,7 +84,13 @@ def login(request):
                                                                          'cellNo':res['cellNo'],'images':res['images'],
                                                                          'audio':res['audio'],'video':res['video'], 'date':res['date']})
             elif res['userRole'] == 'SA':
-                pass
+                return render_to_response("web_interface/administrator.html",{ 'name':res['name'],
+                                                                         'surname':res['surname'],
+                                                                         'userID':res['userID'],
+                                                                         'userEmail':res['email'],
+                                                                         'cellNo':res['cellNo'],'images':res['images'],
+                                                                         'audio':res['audio'],'video':res['video'], 'date':res['date']})
+                
         else:
             return render_to_response("web_interface/login.html")
         
@@ -291,6 +297,7 @@ def assignCaseImage(request,image_id,case_id):
                                                                         'title': res['title'],
                                                                         'surname':res['surname'],
                                                                         'name':res['name'],
+
                                                                         'images':image_id})
         else:
             return render_to_response("web_interface/law_enforcement.html",{'name':res['name'],
@@ -571,3 +578,5 @@ def deletePDE(request):
                                                                         'video':res['video'],
                                                                         'date':res['date']})
         
+def RegisterAuthorizedUser(request):
+    pass
