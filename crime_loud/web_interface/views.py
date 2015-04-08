@@ -577,6 +577,44 @@ def deletePDE(request):
                                                                         'audio':res['audio'],
                                                                         'video':res['video'],
                                                                         'date':res['date']})
-        
+
+@csrf_exempt    
 def RegisterAuthorizedUser(request):
-    pass
+    name = request.POST['registerName'],
+    surname = request.POST['registerSurname']
+    idNo = request.POST['registerID']
+    cell = request.POST['registerCell']
+    email = request.POST['registerEmail']
+    # role = request.POST['role']
+    role = "LEA"
+    pwd = request.POST['registerPassword']
+    
+    data = {
+        'name':name,
+        'surname': surname,
+        'idNo':idNo,
+        'cell':cell,
+        'email':email,
+        'role': role,
+        'password':pwd
+    }
+    
+    results = views.registerAuthorzedUser(request,json.dumps(data))
+    res = json.loads(results.content)
+    
+    if res['type'] == 1:
+        result = views.leaHomePage(request)
+        res = json.loads(result.content)
+        return render_to_response("web_interface/administrator.html",{ 'name':res['name'],
+                                                                        'images':res['images'],
+                                                                        'audio':res['audio'],
+                                                                        'video':res['video'],
+                                                                        'date':res['date']})
+    else:
+        result = views.leaHomePage(request)
+        res = json.loads(result.content)
+        return render_to_response("web_interface/administrator.html",{ 'name':res['name'],
+                                                                        'images':res['images'],
+                                                                        'audio':res['audio'],
+                                                                        'video':res['video'],
+                                                                        'date':res['date']})

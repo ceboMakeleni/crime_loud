@@ -102,7 +102,7 @@
             <div class="modal fade" id="RegisterModal">
                     <div class="modal-dialog">
                             <div class="modal-content">
-                                    <form class="form-horizontal" method="post" action="register">
+                                    <form class="form-horizontal" method="post" action="RegisterUser">
                                             <div class="modal-header">
                                                     <button class="close" data-dismiss="modal">&times;</button>
                                                     
@@ -148,13 +148,21 @@
                                                     <div class="form-group">
                                                             <label class="col-lg-2 control-label" for="registerPassword">Password: </label>
                                                             <div class="col-lg-10">
-                                                                    <input type="password" name = "registerPassword" id="registerPassword" placeholder = "Create a password that can log you into the system in future"class="form-control">
+                                                                <input type="password" name = "registerPassword" id="registerPassword" placeholder = "Create a password that can log you into the system in future"class="form-control">
                                                             </div>
                                                     </div>
-                                                    
+                                                    <div class="form-group">
+                                                            <div class="col-sm-offset-2 col-sm-10">
+                                                              <div class="checkbox">
+                                                                <label>
+                                                                  <input type="checkbox"> Remember me
+                                                                </label>
+                                                              </div>
+                                                            </div>
+                                                    </div>
                                             </div><!-- end modal-body -->
                                             <div class="modal-footer">
-                                                    <input class="btn btn-default" data-dismiss="modal" type="submit" value='submit'>
+                                                    <input class="btn btn-default" data-dismiss="modal" type="submit" value='close'>
                                                     <input  class="btn btn-primary" type="submit" value='Submit'/>
                                             </div><!-- end modal-footer -->
                                     </form>

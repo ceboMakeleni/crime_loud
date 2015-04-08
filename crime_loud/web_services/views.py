@@ -368,12 +368,25 @@ def deletePDE(request,jsonObj):
 def registerAuthorzedUser(request, jsonObj):
     json_data = json.loads(jsonObj)
     name = json_data['name']
+    print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    print name
     surname = json_data['surname']
     email = json_data['email']
     cell = json_data['cell']
     idNo = json_data['idNo']
-    role = "LEA"
+    role = json_data['role']
     password = json_data['password']
     
-    results = api.RegisterAuthorizedUser(request, name)
+    results = api.RegisterAuthorizedUser(request, name[0], surname, idNo, cell, role, password, email)
+    if results:
+        data = {
+            'type':1,
+        }
+        return HttpResponse(json.dumps(data))
+    else:
+        data = {
+            'type':-1
+        }
+        return HttpResponse(json.dumps(data))
+    
     
