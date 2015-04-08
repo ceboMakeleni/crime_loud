@@ -585,8 +585,7 @@ def RegisterAuthorizedUser(request):
     idNo = request.POST['registerID']
     cell = request.POST['registerCell']
     email = request.POST['registerEmail']
-    # role = request.POST['role']
-    role = "LEA"
+    role = request.POST['role']
     pwd = request.POST['registerPassword']
     
     data = {
