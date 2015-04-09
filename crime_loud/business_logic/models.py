@@ -10,9 +10,9 @@ class Person(models.Model):
     password=models.CharField(max_length=30)
     userRole=models.CharField(max_length=4)
 
-class personCase(models.Model):
-    person = models.ForeignKey(Person)
-    case = models.ForeignKey(caseAttribute)
+#class personCase(models.Model):
+#    person = models.ForeignKey(Person)
+#    case = models.ForeignKey(caseAttribute)
 
 class caseAttribute(models.Model):
     caseName = models.CharField(max_length=30)
@@ -31,16 +31,16 @@ class pdeAttribute(models.Model):
     video = models.FileField(upload_to='video',null=True)
     audio = models.FileField(upload_to='audio',null=True)
     
-class AuditLogCase(models.Model):
-    person_id = models.ForeignKey(Person)
-    action = models.CharField(max_length=20)
-    old_value=models.CharField(max_length=100,null=True)
-    new_value=models.CharField(max_length=100,null=True)
-    
-class AuditLogPDE(models.Model):
-    person_id = models.ForeignKey(person)
-    action=models.CharField(max_length=20)
-    pde_name=models.CharField(max_length=100)
+#class AuditLogCase(models.Model):
+#    person_id = models.ForeignKey(Person)
+#    action = models.CharField(max_length=20)
+#    old_value=models.CharField(max_length=100,null=True)
+#    new_value=models.CharField(max_length=100,null=True)
+#    
+#class AuditLogPDE(models.Model):
+#    person_id = models.ForeignKey(person)
+#    action=models.CharField(max_length=20)
+#    pde_name=models.CharField(max_length=100)
     
 
     

@@ -7,6 +7,7 @@ container_commands:
     leader_only: true
   03_collectstatic:
     command: "source /opt/python/run/venv/bin/activate && python crime_loud/manage.py collectstatic --noinput"
+    leader_only: true
 
 option_settings:
   "aws:elasticbeanstalk:application:environment":
