@@ -14,9 +14,8 @@ def registerNewUser(request, jsonObj):
     userSurname = json_data['userSurname']
     userEmail = json_data['userEmail']
     userPassword = json_data['userPassword']
-    userCell = json_data['userCell']
     
-    result = api.registerNewUser(userID, userName, userSurname, userEmail, userPassword,userCell,request)
+    result = api.registerNewUser(userID, userName, userSurname, userEmail, userPassword,request)
     result = True
     
     if result == True:
@@ -26,7 +25,6 @@ def registerNewUser(request, jsonObj):
             'userID':userID,
             'userSurname':userSurname,
             'userEmail':userEmail,
-            'userCell':userCell
         }
     
     else:
@@ -52,7 +50,6 @@ def login(request, jsonObj):
                 'name':result['name'],
                 'surname':result['surname'],
                 'userID':result['userID'],
-                'cellNo':result['cellNo'],
                 'email':result['email'],
                 'userRole':result['userRole']
             }
@@ -62,7 +59,6 @@ def login(request, jsonObj):
                 'name':result['name'],
                 'surname':result['surname'],
                 'userID':result['userID'],
-                'cellNo':result['cellNo'],
                 'email':result['email'],
                 'userRole':result['userRole'],
                 'images':result['images'],
@@ -97,7 +93,6 @@ def imageUpload(request, jsonObj):
             'name':result['name'],
             'surname':result['surname'],
             'userID':result['userID'],
-            'cell':result['cellNo'],
             'email': result['email']
         }
         
@@ -107,7 +102,6 @@ def imageUpload(request, jsonObj):
             'name':result['name'],
             'surname':result['surname'],
             'userID':result['userID'],
-            'cell':result['cellNo'],
             'email': result['email']
         }
     
@@ -125,11 +119,10 @@ def viewProfile(request, jsonObj):
             'name':result[0],
             'surname':result[1],
             'userID':result[2],
-            'cell':result[3],
-            'email':result[4],
-            'photoUploads':result[5],
-            'videoUploads':result[6],
-            'audioUploads':result[7]
+            'email':result[3],
+            'photoUploads':result[4],
+            'videoUploads':result[5],
+            'audioUploads':result[6]
         }
     else:
         data = {
@@ -155,7 +148,6 @@ def UploadVideo(request, jsonObj):
             'name':result['name'],
             'surname':result['surname'],
             'userID':result['userID'],
-            'cellNo':result['cellNo'],
             'email':result['email']
         }
         return HttpResponse(json.dumps(data))
@@ -165,7 +157,6 @@ def UploadVideo(request, jsonObj):
             'name':result['name'],
             'surname':result['surname'],
             'userID':result['userID'],
-            'cellNo':result['cellNo'],
             'email':result['email']
         }
         return HttpResponse(json.dumps(data))
@@ -185,7 +176,6 @@ def UploadAudio(request, jsonObj):
             'name':result['name'],
             'surname':result['surname'],
             'userID':result['userID'],
-            'cellNo':result['cellNo'],
             'email':result['email']
         }
         return HttpResponse(json.dumps(data))
@@ -195,7 +185,6 @@ def UploadAudio(request, jsonObj):
             'name':result['name'],
             'surname':result['surname'],
             'userID':result['userID'],
-            'cellNo':result['cellNo'],
             'email':result['email']
         }
         return HttpResponse(json.dumps(data))
@@ -372,12 +361,11 @@ def registerAuthorzedUser(request, jsonObj):
     print name
     surname = json_data['surname']
     email = json_data['email']
-    cell = json_data['cell']
     idNo = json_data['idNo']
     role = json_data['role']
     password = json_data['password']
     
-    results = api.RegisterAuthorizedUser(request, name[0], surname, idNo, cell, role, password, email)
+    results = api.RegisterAuthorizedUser(request, name[0], surname, idNo, role, password, email)
     if results:
         data = {
             'type':1,

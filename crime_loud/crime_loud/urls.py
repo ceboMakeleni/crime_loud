@@ -31,7 +31,8 @@ urlpatterns = patterns('',
     url(r'viewImage/(?P<image_id>\d+)','web_interface.views.viewImageJDY', name='view_image_JDY'),
     url(r'viewVideo/(?P<video_id>\d+)','web_interface.views.viewVideoJDY', name='view_video_JDY'),
     url(r'viewAudio/(?P<audio_id>\d+)','web_interface.views.viewAudioJDY', name='view_audio_JDY'),
-    url(r'RegisterUser','web_interface.views.RegisterAuthorizedUser', name='register user')
+    url(r'RegisterUser','web_interface.views.RegisterAuthorizedUser', name='register user'),
+    url(r'Download','web_interface.views.downloadFIle', name='register user')
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

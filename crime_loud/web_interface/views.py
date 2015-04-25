@@ -4,6 +4,7 @@ from django.template import RequestContext
 from web_services import views
 from django.views.decorators.csrf import csrf_exempt
 from crime_loud.settings import MEDIA_ROOT
+from flask import send_file
 
 def home(request):
     return render_to_response("web_interface/login.html",
@@ -17,7 +18,6 @@ def registerNewUser(request):
     userSurname = request.POST['registerSurname']
     userEmail = request.POST['registerEmail']
     userPassword = request.POST['registerPassword']
-    userCell = request.POST['registerCell']
     
     if request.method == "POST":
         data = {
@@ -26,7 +26,6 @@ def registerNewUser(request):
                 'userSurname': userSurname,
                 'userEmail': userEmail,
                 'userPassword': userPassword,
-                'userCell':userCell
             }
         
         results = views.registerNewUser(request, json.dumps(data))
@@ -40,7 +39,7 @@ def registerNewUser(request):
                                                                      'surname':res['userSurname'],
                                                                      'userID':res['userID'],
                                                                      'userEmail':res['userEmail'],
-                                                                     'cellNo':res['userCell']})
+                                                                     })
         
         else:
             return render_to_response("web_interface/login.html", { 'name':name})
@@ -68,27 +67,27 @@ def login(request):
                                                                          'surname':res['surname'],
                                                                          'userID':res['userID'],
                                                                          'userEmail':res['email'],
-                                                                         'cellNo':res['cellNo']})
+                                                                         })
             elif res['userRole'] == 'LEA' or res['userRole'] == 'DFI' :
                 return render_to_response("web_interface/law_enforcement.html",{ 'name':res['name'],
                                                                          'surname':res['surname'],
                                                                          'userID':res['userID'],
                                                                          'userEmail':res['email'],
-                                                                         'cellNo':res['cellNo'],'images':res['images'],
+                                                                         'images':res['images'],
                                                                          'audio':res['audio'],'video':res['video'], 'date':res['date']})
             elif res['userRole'] == 'JDY':
                 return render_to_response("web_interface/judiciary.html",{ 'name':res['name'],
                                                                          'surname':res['surname'],
                                                                          'userID':res['userID'],
                                                                          'userEmail':res['email'],
-                                                                         'cellNo':res['cellNo'],'images':res['images'],
+                                                                         'images':res['images'],
                                                                          'audio':res['audio'],'video':res['video'], 'date':res['date']})
             elif res['userRole'] == 'SA':
                 return render_to_response("web_interface/administrator.html",{ 'name':res['name'],
                                                                          'surname':res['surname'],
                                                                          'userID':res['userID'],
                                                                          'userEmail':res['email'],
-                                                                         'cellNo':res['cellNo'],'images':res['images'],
+                                                                         'images':res['images'],
                                                                          'audio':res['audio'],'video':res['video'], 'date':res['date']})
                 
         else:
@@ -119,7 +118,7 @@ def imageUpload(request):
     res = json.loads(results.content)
     
     return render_to_response("web_interface/landing.html",{'type':res['type'], 'name':res['name'],
-                                                            'surname':res['surname'], 'cell':res['cell'],
+                                                            'surname':res['surname'],
                                                             'userID':res['userID'], 'email':res['email']})
 
 def viewProfile(request):
@@ -133,7 +132,7 @@ def viewProfile(request):
     
     
     return render_to_response("web_interface/profile.html",{'type':res['type'], 'name':res['name'],
-                                                            'surname':res['surname'], 'cell':res['cell'],
+                                                            'surname':res['surname'],
                                                             'userID':res['userID'], 'email':res['email'],
                                                             'photoUploads':res['photoUploads'], 'videoUploads':res['videoUploads'],
                                                             'audioUploads':res['audioUploads']})
@@ -188,13 +187,13 @@ def UploadAudio(request):
                                                                      'surname':res['surname'],
                                                                      'userID':res['userID'],
                                                                      'userEmail':res['email'],
-                                                                     'cellNo':res['cellNo']})
+                                                                     })
         else:
             return render_to_response("web_interface/landing.html", { 'name':res['name'],
                                                                      'surname':res['surname'],
                                                                      'userID':res['userID'],
                                                                      'userEmail':res['email'],
-                                                                     'cellNo':res['cellNo']})
+                                                                    })
 
 @csrf_exempt
 def UploadVideo(request):
@@ -219,14 +218,14 @@ def UploadVideo(request):
             return render_to_response("web_interface/landing.html",{ 'name':res['name'],
                                                                      'surname':res['surname'],
                                                                      'userID':res['userID'],
-                                                                     'userEmail':res['email'],
-                                                                     'cellNo':res['cellNo']})
+                                                                     'userEmail':res['email']
+                                                                     })
         else:
             return render_to_response("web_interface/landing.html", { 'name':res['name'],
                                                                      'surname':res['surname'],
                                                                      'userID':res['userID'],
                                                                      'userEmail':res['email'],
-                                                                     'cellNo':res['cellNo']})
+                                                                     })
 def logout(request):
     request.session.delete()      
     return render_to_response("web_interface/login.html")
@@ -583,7 +582,6 @@ def RegisterAuthorizedUser(request):
     name = request.POST['registerName'],
     surname = request.POST['registerSurname']
     idNo = request.POST['registerID']
-    cell = request.POST['registerCell']
     email = request.POST['registerEmail']
     role = request.POST['role']
     pwd = request.POST['registerPassword']
@@ -592,7 +590,6 @@ def RegisterAuthorizedUser(request):
         'name':name,
         'surname': surname,
         'idNo':idNo,
-        'cell':cell,
         'email':email,
         'role': role,
         'password':pwd
@@ -617,3 +614,8 @@ def RegisterAuthorizedUser(request):
                                                                         'audio':res['audio'],
                                                                         'video':res['video'],
                                                                         'date':res['date']})
+
+@csrf_exempt
+def downloadFIle(request):
+    filename = request.POST['ID']
+    return send_file("../media/photo/"+filename, mimetype="jpeg")

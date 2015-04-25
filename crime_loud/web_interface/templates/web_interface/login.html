@@ -2,7 +2,21 @@
 
 {% block title %} Login or Register {% endblock  %}
 
-
+{%block navbar%}
+<div class= "navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-responsive-collapse" type="button" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a href="#" class="navbar-brand">Neigbourhood Watch</a>
+				</div>
+ </div><!-- end container -->
+</div><!--End of Navigation bar-->
+{%endblock%}
 {% block content %}
 <div class="row" id="registerOrUpload">
     <!--<div class="col-md-12">
@@ -19,21 +33,18 @@
                     <a href="#" class="btn btn-large btn-link">or upload anonymously</a>
             </div><!-- end well -->
             
-    </div>end col-md-12-->
+    </div>
     <div class="col-md-12">
             
             <div class="well">
                     <div class="page-header">
-                            <h1>Register as a member <small>Registering helps with verification of uploads</small></h1>
+                              <small>Register to access the system and make use of the stored PDE</small>
                     </div><!-- end page-header -->
+                    <a class="btn btn-large btn-primary" href="#RegisterModal" role="button" data-toggle="modal">Register</a>
+                    <a href="#LoginModal" role="button" class="btn btn-large btn-default" data-toggle="modal" >Login </a>
+                    <p class="lead"><strong>Law Enforcement Agent or Judiciary or Digital Forensic Investigator</strong></p>
                     
-                    <p class="lead">Register as a member on the site in order to not only track your uploads, but to
-                    also be able to be reached regarding an upload and potentially be notified in the case of your
-                    upload helping to solve a case.</p>
-                    
-                    <a class="btn btn-large btn-primary" href="#RegisterModal" role="button" data-toggle="modal">Register as a new user</a>
-                    <a href="#LoginModal" role="button" class="btn btn-large btn-default" data-toggle="modal" >Login to upload</a>
-                    <a href="#" class="btn btn-large btn-link">or upload anonymously</a>
+                   
             </div><!-- end well -->
             
     </div><!-- end col-md-12 -->
@@ -87,7 +98,7 @@
                                             <div class="modal-header">
                                                     <button class="close" data-dismiss="modal">&times;</button>
                                                     
-                                                    <h4 class="modal-title">Register for Crime_loud </h4>
+                                                    <h4 class="modal-title">Register to use Crime_loud </h4>
                                             </div><!-- end modal-header -->
                                             <div class="modal-body">
                                                     
@@ -113,13 +124,6 @@
                                                     </div><!-- end form-group -->
                                                     
                                                     <div class="form-group">
-                                                            <label class="col-lg-2 control-label" for="registerCell">Cell:</label>
-                                                            <div class="col-lg-10">
-                                                                    <input class="form-control" name = "registerCell" id="registerCell"  type="text">
-                                                            </div><!-- end col-lg-10 -->
-                                                    </div><!-- end form-group -->
-                                                    
-                                                    <div class="form-group">
                                                             <label class="col-lg-2 control-label" for="registerEmail">Email: </label>
                                                             <div class="col-lg-10">
                                                                     <input type="email" name = "registerEmail" id="registerEmail" class="form-control">
@@ -135,7 +139,7 @@
                                                     
                                             </div><!-- end modal-body -->
                                             <div class="modal-footer">
-                                                    <input class="btn btn-default" data-dismiss="modal" type="submit" value='submit'>
+                                                    <input class="btn btn-default" data-dismiss="modal" type="submit" value='Close'>
                                                     <input  class="btn btn-primary" type="submit" value='Submit'/>
                                             </div><!-- end modal-footer -->
                                     </form>

@@ -4,8 +4,7 @@ from django.db import models
 class Person(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    identity = models.CharField(max_length=13)
-    cell_number = models.CharField(max_length=10,default="")
+    id = models.CharField(max_length=13, primary_key = True)
     email = models.CharField(max_length=30)
     password=models.CharField(max_length=30)
     userRole=models.CharField(max_length=4)
@@ -24,23 +23,29 @@ class pdeAttribute(models.Model):
     description=models.CharField(max_length=100)
     location=models.CharField(max_length=40)
     date=models.DateTimeField()
-    digitalData=models.CharField(max_length=50,null=True)
+    digitalData=models.CharField(max_length=200,null=True)
     caseAttribute=models.ForeignKey(caseAttribute, null=True)
     Person = models.ForeignKey(Person) #Person who uploaded
     photo = models.FileField(upload_to='photo',null=True)
     video = models.FileField(upload_to='video',null=True)
     audio = models.FileField(upload_to='audio',null=True)
     
-#class AuditLogCase(models.Model):
-#    person_id = models.ForeignKey(Person)
-#    action = models.CharField(max_length=20)
-#    old_value=models.CharField(max_length=100,null=True)
-#    new_value=models.CharField(max_length=100,null=True)
-#    
-#class AuditLogPDE(models.Model):
-#    person_id = models.ForeignKey(person)
-#    action=models.CharField(max_length=20)
-#    pde_name=models.CharField(max_length=100)
+class AuditLogCase(models.Model):
+    person_id = models.ForeignKey(Person)
+    action = models.CharField(max_length=20)
+    date = models.DateTimeField()
+    old_value=models.CharField(max_length=100,null=True)
+    new_value=models.CharField(max_length=100,null=True)
+    
+class AuditLogPDE(models.Model):
+    person_id = models.ForeignKey(Person)
+    action=models.CharField(max_length=20)
+    date = models.DateTimeField()
+    pde_title=models.CharField(max_length=100)
+    pde_date = models.DateTimeField()
+    pde_location = models.CharField(max_length=40)
+
+
     
 
     

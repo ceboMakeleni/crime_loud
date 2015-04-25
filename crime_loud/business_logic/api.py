@@ -3,9 +3,10 @@ import datetime
 import hashlib
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
+from Crypto.Cipher import AES
 
-def registerNewUser(userID,username,surname,email,password,usercell,request):
-    user = Person(first_name=username, last_name=surname,email=email, identity=userID,password=password,cell_number=usercell,userRole='user')
+def registerNewUser(userID,username,surname,email,password,request):
+    user = Person(first_name=username, last_name=surname,email=email, id=userID,password=password,userRole='user')
     user.save()
     
     request.session['user']={'identity':userID,'userRole':'user', 'first_name': username, 'last_name':surname}
@@ -27,13 +28,12 @@ def login(userEmail, userPassword,request):
     
     print "but i got here"
     if userE.password == userPassword:
-        request.session['user']={'identity':userE.identity,'userRole':userE.userRole, 'first_name':userE.first_name, 'last_name':userE.last_name}
+        request.session['user']={'identity':userE.id,'userRole':userE.userRole, 'first_name':userE.first_name, 'last_name':userE.last_name}
         if userE.userRole == 'user':
             data = {
                 'name':userE.first_name,
                 'surname':userE.last_name,
-                'userID':userE.identity,
-                'cellNo':userE.cell_number,
+                'userID':userE.id,
                 'email':userE.email,
                 'userRole':userE.userRole
             }
@@ -59,8 +59,7 @@ def login(userEmail, userPassword,request):
             data = {
                 'name':userE.first_name,
                 'surname':userE.last_name,
-                'userID':userE.identity,
-                'cellNo':userE.cell_number,
+                'userID':userE.id,
                 'email':userE.email,
                 'userRole':userE.userRole,
                 'images':images,
@@ -75,37 +74,39 @@ def login(userEmail, userPassword,request):
 
 def UploadAudio(Title,Description,Location,Date,request):
     file = request.FILES['audioFileUpload']
-    user = Person.objects.get(identity=request.session['user']['identity'])
+    user = Person.objects.get(id=request.session['user']['identity'])
     
-    hashed = hashlib.sha1()
+    hashed = hashlib.sha256()
     hashed.update(file.read())
-    print hashed
-    
+    print hashed.digest()
+    encrypt(hashed)
     upload = pdeAttribute(title=Title,description=Description,location=Location,date=datetime.datetime.now(),digitalData=hashed.hexdigest(),Person=user,audio=file)
     upload.save()
+    audit = AuditLogPDE(person_id=user,action="Added",pde_title=Title,pde_date=datetime.datetime.now(),pde_location=Location,date=datetime.datetime.now())
+    audit.save()
     data = {
             'name':user.first_name,
             'surname':user.last_name,
-            'userID':user.identity,
-            'cellNo':user.cell_number,
+            'userID':user.id,
             'email':user.email
         }
     return data
 
 def UploadVideo(Title,Description,Location,Date,request):
     file = request.FILES['videoFileUpload']
-    user = Person.objects.get(identity=request.session['user']['identity'])
+    user = Person.objects.get(id=request.session['user']['identity'])
     
     hashed = hashlib.sha1()
     hashed.update(file.read())
     
     upload = pdeAttribute(title=Title,description=Description,location=Location,date=datetime.datetime.now(),digitalData=hashed.hexdigest(),Person=user,video=file)
     upload.save()
+    audit = AuditLogPDE(person_id=user,action="Added",pde_title=Title,pde_date=datetime.datetime.now(),pde_location=Location,date=datetime.datetime.now())
+    audit.save()
     data = {
             'name':user.first_name,
             'surname':user.last_name,
-            'userID':user.identity,
-            'cellNo':user.cell_number,
+            'userID':user.id,
             'email':user.email
         }
     return data
@@ -113,17 +114,17 @@ def UploadVideo(Title,Description,Location,Date,request):
 def uploadImage(request, title_, description_, location_, date_, userID_):
     image = request.FILES['imageFileUpload']
     
-    per = Person.objects.get(identity = userID_)
+    per = Person.objects.get(id = userID_)
     
     pde = pdeAttribute(title=title_, description=description_, location=location_, date=datetime.datetime.now(), Person=per, photo=image)
     pde.save()
-    
+    audit = AuditLogPDE(person_id=per,action="Added",pde_title=title_,pde_date=datetime.datetime.now(),pde_location=location_,date=datetime.datetime.now())
+    audit.save()
     if per is not None:
         data = {
             'name':per.first_name,
             'surname':per.last_name,
-            'userID':per.identity,
-            'cellNo':per.cell_number,
+            'userID':per.id,
             'email':per.email
         }
         return data
@@ -133,7 +134,7 @@ def uploadImage(request, title_, description_, location_, date_, userID_):
 def viewProfile(userID):
     data = []
     
-    per = Person.objects.get(identity = userID) 
+    per = Person.objects.get(id = userID) 
     allUploads = pdeAttribute.objects.filter(Person = per)
     
     photoUploads = []
@@ -172,8 +173,7 @@ def viewProfile(userID):
     
     data.append(per.first_name)
     data.append(per.last_name)
-    data.append(per.identity)
-    data.append(per.cell_number)
+    data.append(per.id)
     data.append(per.email)
     data.append(photoUploads)
     data.append(videoUploads)
@@ -183,7 +183,7 @@ def viewProfile(userID):
 
 def viewImage(request,image):
     pde = pdeAttribute.objects.get(id=image)
-    userE = Person.objects.get(identity=request.session['user']['identity'])
+    userE = Person.objects.get(id=request.session['user']['identity'])
     case = None
     if pde.caseAttribute:
         case = pde.caseAttribute.caseNumber
@@ -215,7 +215,7 @@ def viewImage(request,image):
     
 
 def leaHomePage(request):
-    userE = Person.objects.get(identity=request.session['user']['identity'])
+    userE = Person.objects.get(id=request.session['user']['identity'])
     pde = pdeAttribute.objects.filter()
     images = []
     audio = []
@@ -257,7 +257,7 @@ def assignCase(pdeID,caseID):
 
 def viewVideo(request,video):
     pde = pdeAttribute.objects.get(id=video)
-    userE = Person.objects.get(identity=request.session['user']['identity'])
+    userE = Person.objects.get(id=request.session['user']['identity'])
     case = None
     if pde.caseAttribute:
         case = pde.caseAttribute.caseNumber
@@ -289,7 +289,7 @@ def viewVideo(request,video):
 
 def viewAudio(request,audio):
     pde = pdeAttribute.objects.get(id=audio)
-    userE = Person.objects.get(identity=request.session['user']['identity'])
+    userE = Person.objects.get(id=request.session['user']['identity'])
     case = None
     if pde.caseAttribute:
         case = pde.caseAttribute.caseNumber
@@ -320,17 +320,38 @@ def viewAudio(request,audio):
     return data
 
 def addCase(case_name, case_number, request):
-    user = Person.objects.get(identity=request.session['user']['identity'])
+    user = Person.objects.get(id=request.session['user']['identity'])
     case = caseAttribute(caseName=case_name,caseNumber=case_number,person=user)
     case.save()
+    audit = AuditLogCase(person_id=user,action="Added",old_value="None",new_value=case_name,date=datetime.datetime.now())
+    audit.save()
     return True
 
 def deletePDE(pde_id,request):
+    user = Person.objects.get(id=request.session['user']['identity'])
     pde = pdeAttribute.objects.get(id=pde_id)
+    audit = AuditLogPDE(person_id=user,action="Deleted",pde_title=pde.title,pde_date=pde.date,pde_location=pde.location, date=datetime.datetime.now())
+    audit.save()
     pde.delete()
+    
     return True;
 
-def RegisterAuthorizedUser(request, name, surname, idNo, cell, role, Password, mail):
-    user = Person(first_name=name, last_name=surname, identity=idNo, cell_number=cell, email=mail,password=Password, userRole= role)
+def RegisterAuthorizedUser(request, name, surname, idNo, role, Password, mail):
+    user = Person(first_name=name, last_name=surname, id=idNo, email=mail,password=Password, userRole= role)
     user.save()
     return True
+
+#for encryption purposes
+def encrypt(data):
+    password = "(rime@Intergrity-(he(k"
+    key = hashlib.sha256(password).digest()
+    iv = 16 * '\x00'
+    mode = AES.MODE_CBC
+    
+    encryptor = AES.new(key, mode, IV=iv)
+    ciphertext = encryptor.encrypt(data.hexdigest())
+    print "am encrypted shem.............."
+    print ciphertext
+
+    
+    
