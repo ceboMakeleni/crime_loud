@@ -53,7 +53,7 @@ def login(request, jsonObj):
                 'email':result['email'],
                 'userRole':result['userRole']
             }
-        else:
+        elif request.session['user']['userRole'] == 'LEA' or request.session['user']['userRole'] == 'DFI' or request.session['user']['userRole'] == 'SA':
             data = {
                 'type':1,
                 'name':result['name'],
@@ -65,6 +65,21 @@ def login(request, jsonObj):
                 'audio': result['audio'],
                 'video': result['video'],
                 'date': result['date']
+            }
+        else:
+            data = {
+                'type':1,
+                'name':result['name'],
+                'surname':result['surname'],
+                'userID':result['userID'],
+                'userRole':result['userRole'],
+                'images':result['images'],
+                'audio': result['audio'],
+                'video': result['video'],
+                'date': result['date'],
+                'case':result['case'],
+                'caseName': result['caseName'],
+                'caseNumber': result['caseNumber']
             }
         
     else:
@@ -194,7 +209,7 @@ def viewImage(request,jsonObj):
     image_id = json_data['image']
     
     result = api.viewImage(request,image_id)
-    if result:
+    if result != "":
         data={
             'type':1,
             'name':result['name'],
@@ -254,6 +269,23 @@ def leaHomePage(request):
         }
         
         return HttpResponse(json.dumps(data))
+    
+def jdyHomePage(request):
+    res = api.jdyHomePage(request)
+    print str(res)
+    data = {
+        'type':1,
+        'name':res['name'],
+        'surname':res['surname'],
+        'images':res['images'],
+        'audio':res['audio'],
+        'video':res['video'],
+        'date':res['date'],
+        'caseNumber':res['caseNumber'],
+        'caseName':res['caseName'],
+        'case':res['case']
+    }
+    return HttpResponse(json.dumps(data))
 
 def viewVideo(request,jsonObj):
     json_data = json.loads(jsonObj)
@@ -376,5 +408,40 @@ def registerAuthorzedUser(request, jsonObj):
             'type':-1
         }
         return HttpResponse(json.dumps(data))
+
+def viewPdeViaCase(request,jsonObj):
+    json_data = json.loads(jsonObj)
+    id = json_data['ID']
+    res = api.viewPdeViaCase(request,id)
+    data = {
+        'type':1,
+        'name':res['name'],
+        'surname':res['surname'],
+        'images':res['images'],
+        'audio':res['audio'],
+        'video':res['video'],
+        'date':res['date'],
+        'caseNumber':res['caseNumber'],
+        'caseName':res['caseName'],
+        'case':res['case']
+    }
+    return HttpResponse(json.dumps(data))
+
+def viewByCase(request):
+    res = api.viewByCase(request)
     
+    data = {
+        'name':res['name'],
+        'surname':res['surname'],
+        'images':res['images'],
+        'audio':res['audio'],
+        'video':res['video'],
+        'case':res['case'],
+        'caseNumber':res['caseNumber'],
+        'caseName':res['caseName'],
+        'date':res['date']
+    }
+    
+    return HttpResponse(json.dumps(data))
+
     

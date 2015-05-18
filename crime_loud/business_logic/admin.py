@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Person, caseAttribute, pdeAttribute, AuditLogCase, AuditLogPDE
+from .models import Person, caseAttribute, pdeAttribute, AuditLogCase, AuditLogPDE, personCase
 
 # Register your models here.
 class PersonAdmin(admin.ModelAdmin):
@@ -21,3 +21,7 @@ admin.site.register(AuditLogCase,AuditLogCaseAdmin)
 class AuditLogPDEAdmin(admin.ModelAdmin):
     pass
 admin.site.register(AuditLogPDE,AuditLogPDEAdmin)
+
+class personCaseAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(personCase,personCaseAdmin)

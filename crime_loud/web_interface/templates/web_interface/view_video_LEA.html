@@ -11,14 +11,17 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                     </button>
-                    <a href="#" class="navbar-brand">Crime Loud</a>
+                    <a href="#" class="navbar-brand">Neigbourhood Watch</a>
             </div><!-- end navbar-header -->
 
             <div class="navbar-collapse collapse navbar-responsive-collapse">
                     <ul class="nav navbar-nav">
-                            <li class="active">
-                                    <a href="backHome">Home</a>
-                            </li>
+                        <li>
+                                <a href="/backHome">Home</a>
+                        </li>
+                        <li>
+                                <a href="/viewByCase">View by Case</a>
+                        </li>
                     </ul><!-- end navbar-left -->
                     <ul class="nav navbar-nav navbar-right">
                             <li>
@@ -78,6 +81,11 @@
             <form action="/deletePDE" method="post">
                <input type="hidden" name="ID" value=" {{videos}} "/>
                <input type="submit" name="submit" value="delete"/>
+            </form>
+            <form action="/Download" method="post">
+               <input type="hidden" name="ID" value="{{video}} "/>
+               <input type="hidden" name="type" value="video"/>
+               <input type="submit" name="submit" value="download"/>
             </form>
         </div>
     </div>

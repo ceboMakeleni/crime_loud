@@ -32,7 +32,9 @@ urlpatterns = patterns('',
     url(r'viewVideo/(?P<video_id>\d+)','web_interface.views.viewVideoJDY', name='view_video_JDY'),
     url(r'viewAudio/(?P<audio_id>\d+)','web_interface.views.viewAudioJDY', name='view_audio_JDY'),
     url(r'RegisterUser','web_interface.views.RegisterAuthorizedUser', name='register user'),
-    url(r'Download','web_interface.views.downloadFIle', name='register user')
+    url(r'Download','web_interface.views.downloadFile', name='register user'),
+    url(r'viewCase/(?P<ID>\d+)','web_interface.views.viewPdeViaCase', name='view case'),
+    url(r'viewByCase','web_interface.views.viewByCase', name='view case'),
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

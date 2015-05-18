@@ -5,6 +5,10 @@ from web_services import views
 from django.views.decorators.csrf import csrf_exempt
 from crime_loud.settings import MEDIA_ROOT
 from flask import send_file
+from django.http import HttpResponse
+from django.core.servers.basehttp import FileWrapper
+from django.views.static import serve
+import os
 
 def home(request):
     return render_to_response("web_interface/login.html",
@@ -79,9 +83,13 @@ def login(request):
                 return render_to_response("web_interface/judiciary.html",{ 'name':res['name'],
                                                                          'surname':res['surname'],
                                                                          'userID':res['userID'],
-                                                                         'userEmail':res['email'],
                                                                          'images':res['images'],
-                                                                         'audio':res['audio'],'video':res['video'], 'date':res['date']})
+                                                                         'audio':res['audio'],
+                                                                         'video':res['video'],
+                                                                         'date':res['date'],
+                                                                         'case':res['case'],
+                                                                         'caseName':res['caseName'],
+                                                                         "caseNumber":res['caseNumber']})
             elif res['userRole'] == 'SA':
                 return render_to_response("web_interface/administrator.html",{ 'name':res['name'],
                                                                          'surname':res['surname'],
@@ -153,13 +161,17 @@ def backHome(request):
                                                                          'video':res['video'], 'date':res['date']})
         
     elif userRole == 'JDY':
-        result = views.leaHomePage(request)
+        result = views.jdyHomePage(request)
         res = json.loads(result.content)
         return render_to_response("web_interface/judiciary.html",{ 'name':res['name'],
                                                                          'surname':res['surname'],
                                                                          'images':res['images'],
                                                                          'audio':res['audio'],
-                                                                         'video':res['video'], 'date':res['date']})
+                                                                         'video':res['video'],
+                                                                         'date':res['date'],
+                                                                         'case':res['case'],
+                                                                         'caseNumber':res['caseNumber'],
+                                                                         'caseName':res['caseName']})
     elif userRole == 'SA':
         pass
 
@@ -521,7 +533,7 @@ def assignCaseAudio(request,audio_id,case_id):
 def addCase(request):
     name = request.POST['name']
     number = request.POST['number']
-    
+    print "in web interface "+ number
     data = {
         'name':name,
         'number':number
@@ -616,6 +628,56 @@ def RegisterAuthorizedUser(request):
                                                                         'date':res['date']})
 
 @csrf_exempt
-def downloadFIle(request):
+def downloadFile(request):
     filename = request.POST['ID']
-    return send_file("../media/photo/"+filename, mimetype="jpeg")
+    Type = request.POST['type']
+
+    if Type == 'image':
+        filename = 'C:/Users/Mamelo/Documents/GitHub/crime_loud/crime_loud/media/photo/'+filename
+    elif Type == 'audio':
+        filename = 'C:/Users/Mamelo/Documents/GitHub/crime_loud/crime_loud/media/audio/'+filename
+    else:
+        filename = 'C:/Users/Mamelo/Documents/GitHub/crime_loud/crime_loud/media/video/'+filename
+    wrapper = FileWrapper(file(filename,'rb'))
+    response = HttpResponse(wrapper, content_type='text/jpeg')
+    response['Content-Disposition'] = 'attachment; filename=%s' % os.path.basename(filename)
+    response['Content-Length'] = os.path.getsize(filename)
+    return response
+    
+def viewPdeViaCase(request,ID):
+    result = views.viewPdeViaCase(request,json.dumps({'ID':ID}))
+    res = json.loads(result.content)
+    if request.session['user']['userRole'] == "JDY":
+        return render_to_response("web_interface/judiciary.html",{ 'name':res['name'],
+                                                                         'surname':res['surname'],
+                                                                         'images':res['images'],
+                                                                         'audio':res['audio'],
+                                                                         'video':res['video'],
+                                                                         'date':res['date'],
+                                                                         'case':res['case'],
+                                                                         'caseNumber':res['caseNumber'],
+                                                                         'caseName':res['caseName']})
+    else:
+        return render_to_response("web_interface/view_judiciary.html",{ 'name':res['name'],
+                                                                         'surname':res['surname'],
+                                                                         'images':res['images'],
+                                                                         'audio':res['audio'],
+                                                                         'video':res['video'],
+                                                                         'date':res['date'],
+                                                                         'case':res['case'],
+                                                                         'caseNumber':res['caseNumber'],
+                                                                         'caseName':res['caseName']})
+        
+
+def viewByCase(request):
+    result = views.viewByCase(request)
+    res = json.loads(result.content)
+    return render_to_response("web_interface/view_judiciary.html",{ 'name':res['name'],
+                                                                         'surname':res['surname'],
+                                                                         'images':res['images'],
+                                                                         'audio':res['audio'],
+                                                                         'video':res['video'],
+                                                                         'date':res['date'],
+                                                                         'case':res['case'],
+                                                                         'caseNumber':res['caseNumber'],
+                                                                         'caseName':res['caseName']})
