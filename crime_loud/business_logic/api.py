@@ -474,8 +474,6 @@ def viewAudio(request,audio):
 
 def addCase(case_name, case_number, request):
     user = Person.objects.get(id=request.session['user']['identity'])
-    print case_name
-    print case_number
     case = caseAttribute(caseName=case_name,caseNumber=case_number,person=user)
     case.save()
     person = personCase(person=user,case=case)
