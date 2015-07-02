@@ -7,7 +7,11 @@ from simplecrypt import encrypt, decrypt
 import binascii
 
 def registerNewUser(userID,username,surname,email,password,request):
-    user = Person(first_name=username, last_name=surname,email=email, id=userID,password=password,userRole='user')
+    text_name = binascii.b2a_base64(encrypt('pde%attr@137',username))
+    text_surname = binascii.b2a_base64(encrypt('pde%attr@137',surname))
+    text_password = binascii.b2a_base64(encrypt('pde%attr@137',password))
+    text_email = binascii.b2a_base64(encrypt('pde%attr@137',email))
+    user = Person(first_name=text_name, last_name=text_surname,email=text_email, id=userID,password=text_password,userRole='user')
     user.save()
     
     request.session['user']={'identity':userID,'userRole':'user', 'first_name': username, 'last_name':surname}
@@ -74,7 +78,7 @@ def login(userEmail, userPassword,request):
                 'date':str(datetime.date.today())
             }
         else:
-            case = personCase.objects.filter(person=userE)
+            case = personCaseAttribute.objects.filter(person=userE)
             cases = []
             
             for value in case:
@@ -322,7 +326,7 @@ def leaHomePage(request):
 
 def jdyHomePage(request):
     userE = Person.objects.get(id=request.session['user']['identity'])
-    case = personCase.objects.filter(person=userE)
+    case = personCaseAttribute.objects.filter(person=userE)
     cases = []
     for value in case:
         temp = []
@@ -476,7 +480,7 @@ def addCase(case_name, case_number, request):
     user = Person.objects.get(id=request.session['user']['identity'])
     case = caseAttribute(caseName=case_name,caseNumber=case_number,person=user)
     case.save()
-    person = personCase(person=user,case=case)
+    person = personCaseAttribute(person=user,case=case)
     person.save()
     audit = AuditLogCase(person_id=user,action="Added",old_value="None",new_value=case_name,date=datetime.datetime.now())
     audit.save()
@@ -502,7 +506,7 @@ def RegisterAuthorizedUser(request, name, surname, idNo, role, Password, mail):
     
 def viewPdeViaCase(request,ID):
     userE = Person.objects.get(id=request.session['user']['identity'])
-    case = personCase.objects.filter(person=userE)
+    case = personCaseAttribute.objects.filter(person=userE)
     cases = []
     
     for value in case:
@@ -546,7 +550,7 @@ def viewPdeViaCase(request,ID):
 
 def viewByCase(request):
     userE = Person.objects.get(id=request.session['user']['identity'])
-    case = personCase.objects.filter(person=userE)
+    case = personCaseAttribute.objects.filter(person=userE)
     cases = []
             
     for value in case:

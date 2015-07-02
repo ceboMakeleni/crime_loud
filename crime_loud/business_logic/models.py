@@ -13,6 +13,7 @@ class Person(models.Model):
     
     def __unicode__(self):
         return decrypt('pde%attr@137',binascii.a2b_base64(self.first_name))
+     #return self.first_name
 
 class caseAttribute(models.Model):
     caseName = models.CharField(max_length=30)
@@ -22,10 +23,9 @@ class caseAttribute(models.Model):
     def __unicode__(self):
       return self.caseName + " "+self.caseNumber
 
-class personCase(models.Model):
+class personCaseAttribute(models.Model):
     person = models.ForeignKey(Person)
     case = models.ForeignKey(caseAttribute)
-    Type = models.CharField(max_length=4,null=True )
     
     def __unicode__(self):
       return self.case.caseNumber
@@ -59,6 +59,21 @@ class leaDigitalEvidence(models.Model):
     
     def __unicode__(self):
         return self.title
+    
+class case(models.Model):
+    caseName = models.CharField(max_length=30)
+    caseNumber=models.CharField(max_length=20)
+    person = models.ForeignKey(Person)
+    
+    def __unicode__(self):
+      return self.caseName + " "+self.caseNumber
+    
+class personCase(models.Model):
+    person = models.ForeignKey(Person)
+    case = models.ForeignKey(case)
+    
+    def __unicode__(self):
+      return self.case.caseNumber
     
 class AuditLogCase(models.Model):
     person_id = models.ForeignKey(Person)
