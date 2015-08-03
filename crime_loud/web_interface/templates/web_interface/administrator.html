@@ -19,6 +19,9 @@
                             <li class="active">
                                     <a href="#">Home</a>
                             </li>
+                            <li>
+                                    <a href="#">View Documentation</a>
+                            </li>
                     </ul><!-- end navbar-left -->
                     <ul class="nav navbar-nav navbar-right">
                             <li>
@@ -43,30 +46,43 @@
     <div class="row" id="displayInfoAndUploads">
         <div class="col-sm-12 feature">
             <div class="col-sm-6 feature">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Add New Case</div>
-                    <div class="panel-body">
-                        <form action="add_case" method="post">
-                            Case Name: <input type="text" name="name" placeholder="Case Name"/><br/>
-                            Case Number: <input type="text" name="number" placeholder="Case Number"/><br/>
-                            <input type="submit" name="submit" value="Add" style="background-color: green"/>
-                        </form>
-                    </div>
+                <h4>User the add user button to register new users to the system and assign case to assign users to cases.</h4>
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" style="background-color: #151B54; text-align: center; color:white;">view Auditlog</button>
+                    <a href="#RegisterModal" role="button" type="button" class="btn btn-primary" data-toggle="modal" style="background-color: #151B54; text-align: center; color:white;">Add User</a>
+                    <button type="button" class="btn btn-primary" style="background-color: #151B54; text-align: center; color:white;">Assign Case</button>
                 </div>
             </div >
             <div class="col-sm-6 feature">
                 <div class="panel panel-default">
-                    <div class="panel-heading">System Administrator</div>
+                    <div class="panel-heading" style="background-color: #151B54; text-align: center; color:white;">Add New Case</div>
                     <div class="panel-body">
-                        <button class="btn btn-default" data-dismiss="modal" type="button">view Auditlog</button>
-                        <a href="#RegisterModal" role="button" class="btn btn-large btn-default" data-toggle="modal" >Add User</a>
+                        <form class="form-horizontal" method="post" action="add_case">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="idNum">Case Name: </label>
+                            <div class="col-lg-10">
+                                <input class="form-control" name="name" placeholder="Case Name as SAPS Report Database" type="text"/>
+                            </div><!-- end col-lg-10 -->
+                        </div><!-- end form-group -->
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="idNum">Case Number: </label>
+                            <div class="col-lg-10">
+                                <input class="form-control" name="number" placeholder="Case Number as SAPS Report Database" type="text"/>
+                            </div><!-- end col-lg-10 -->
+                        </div><!-- end form-group -->
+                        <!--Case Name: <input type="text" name="name" placeholder="Case Name as SAPS Report Database"/><br/>
+                        Case Number: <input type="text" name="number" placeholder="Case Number as SAPS Report Database"/><br/>
+                        Case Type: <input type="text" name="num" placeholder="e.g Burgary, Vandalism or Accident"/><br/>
+                        <input type="submit" name="submit" value="Add" style="background-color: #151B54; color: white;"/>-->
+                        <input  class="btn btn-primary" type="submit" value='Submit' style="background-color: #151B54; color: white;"/>
+                    </form>
                     </div>
                 </div>
             </div >
         </div>
         <div class="col-sm-4 feature">
             <div class="panel panel-default">
-                <div class="panel-heading">Images uploaded as on {{date}}</div>
+                <div class="panel-heading" style="background-color: #151B54; text-align: center; color:white;">Images uploaded as on {{date}}</div>
                  <div class="list-group" style="max-height: 300px; overflow-y: auto; overflow-x:hidden;">
                     {%for image in images%}
                         <a href="view_image/{{image.id}}" class="list-group-item">{{image.title}} : {{image.data}}</a>  
@@ -76,7 +92,7 @@
         </div>
         <div class="col-sm-4 feature">
             <div class="panel panel-default">
-                <div class="panel-heading">audio uploaded as on {{date}}</div>
+                <div class="panel-heading" style="background-color: #151B54; text-align: center; color:white;">audio uploaded as on {{date}}</div>
                 <div class="list-group" style="max-height: 400px; overflow-y: auto; overflow-x:hidden;">
                     {%for aud in audio%}
                         <a href="view_audio/{{aud.id}}" class="list-group-item">{{aud.title}} : {{aud.data}}</a>  
@@ -86,7 +102,7 @@
         </div>
         <div class="col-sm-4 feature">
             <div class="panel panel-default">
-                <div class="panel-heading">video uploaded as on {{date}}</div>
+                <div class="panel-heading" style="background-color: #151B54; text-align: center; color:white;">video uploaded as on {{date}}</div>
                  <div class="list-group" style="max-height: 300px; overflow-y: auto; overflow-x:hidden;">
                     {%for vid in video%}
                         <a href="view_video/{{vid.id}}" class="list-group-item">{{vid.title}} : {{vid.data}}</a>  

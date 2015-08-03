@@ -29,9 +29,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('action', models.CharField(max_length=20)),
                 ('date', models.DateTimeField()),
-                ('pde_title', models.CharField(max_length=100)),
                 ('pde_date', models.DateTimeField()),
-                ('pde_location', models.CharField(max_length=40)),
+                ('pde_description', models.CharField(max_length=100, null=True)),
             ],
             options={
             },
@@ -57,6 +56,10 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('caseName', models.CharField(max_length=30)),
                 ('caseNumber', models.CharField(max_length=20)),
+                ('title', models.CharField(max_length=30)),
+                ('description', models.CharField(max_length=100)),
+                ('date', models.DateTimeField()),
+                ('location', models.CharField(max_length=30)),
             ],
             options={
             },
@@ -77,14 +80,13 @@ class Migration(migrations.Migration):
             name='leaDigitalEvidence',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('title', models.CharField(max_length=30)),
-                ('description', models.CharField(max_length=100)),
-                ('location', models.CharField(max_length=40)),
                 ('date', models.DateTimeField()),
+                ('description', models.CharField(max_length=100, null=True)),
                 ('digitalData', models.CharField(max_length=1000, null=True)),
                 ('photo', models.FileField(null=True, upload_to=b'photo')),
                 ('video', models.FileField(null=True, upload_to=b'video')),
                 ('audio', models.FileField(null=True, upload_to=b'audio')),
+                ('textDoc', models.FileField(null=True, upload_to=b'text')),
             ],
             options={
             },
@@ -163,8 +165,8 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='leadigitalevidence',
-            name='caseAttribute',
-            field=models.ForeignKey(to='business_logic.caseAttribute', null=True),
+            name='case',
+            field=models.ForeignKey(to='business_logic.case', null=True),
             preserve_default=True,
         ),
         migrations.AddField(
@@ -183,6 +185,12 @@ class Migration(migrations.Migration):
             model_name='auditlogpde',
             name='person_id',
             field=models.ForeignKey(to='business_logic.Person'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='auditlogdigitalevidence',
+            name='case',
+            field=models.ForeignKey(to='business_logic.case', null=True),
             preserve_default=True,
         ),
         migrations.AddField(

@@ -47,20 +47,16 @@ def login(request, jsonObj):
         if request.session['user']['userRole'] == 'user':
             data = {
                 'type':1,
-                'name':result['name'],
-                'surname':result['surname'],
-                'userID':result['userID'],
-                'email':result['email'],
-                'userRole':result['userRole']
+                'name':request.session['user']['first_name'],
+                'surname':request.session['user']['last_name'],
+                'userRole':request.session['user']['userRole']
             }
         elif request.session['user']['userRole'] == 'LEA' or request.session['user']['userRole'] == 'DFI' or request.session['user']['userRole'] == 'SA':
             data = {
                 'type':1,
-                'name':result['name'],
-                'surname':result['surname'],
-                'userID':result['userID'],
-                'email':result['email'],
-                'userRole':result['userRole'],
+                'name':request.session['user']['first_name'],
+                'surname':request.session['user']['last_name'],
+                'userRole':request.session['user']['userRole'],
                 'images':result['images'],
                 'audio': result['audio'],
                 'video': result['video'],
@@ -69,10 +65,9 @@ def login(request, jsonObj):
         else:
             data = {
                 'type':1,
-                'name':result['name'],
-                'surname':result['surname'],
-                'userID':result['userID'],
-                'userRole':result['userRole'],
+                'name':request.session['user']['first_name'],
+                'surname':request.session['user']['last_name'],
+                'userRole':request.session['user']['userRole'],
                 'images':result['images'],
                 'audio': result['audio'],
                 'video': result['video'],
@@ -102,22 +97,46 @@ def imageUpload(request, jsonObj):
     
     result = api.uploadImage(request, title, description, location, date, userID)
     
-    if result is not None:
+    if result == True:
         data = {
             'type':1,
-            'name':result['name'],
-            'surname':result['surname'],
-            'userID':result['userID'],
-            'email': result['email']
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
         }
         
     else:
         data = {
             'type':-1,
-            'name':result['name'],
-            'surname':result['surname'],
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
+        }
+    
+    return HttpResponse(json.dumps(data))
+
+def imageUploadLEA(request, jsonObj):
+    json_data = json.loads(jsonObj)
+    
+    case = json_data['case']
+    description = json_data['description']
+    
+    result = api.uploadImageLEA(request, case, description)
+    
+    if result is not None:
+        data = {
+            'type':1,
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
             'userID':result['userID'],
-            'email': result['email']
+            'case': result['case']
+        }
+        
+    else:
+        data = {
+            'type':-1,
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
+            'userID':result['userID'],
+            'case': result['case']
         }
     
     return HttpResponse(json.dumps(data))
@@ -160,22 +179,44 @@ def UploadVideo(request, jsonObj):
     if result != "":
         data = {
             'type':1,
-            'name':result['name'],
-            'surname':result['surname'],
-            'userID':result['userID'],
-            'email':result['email']
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
         }
         return HttpResponse(json.dumps(data))
     else:
         data = {
             'type':-1,
-            'name':result['name'],
-            'surname':result['surname'],
-            'userID':result['userID'],
-            'email':result['email']
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
         }
         return HttpResponse(json.dumps(data))
     
+def UploadVideoLEA(request, jsonObj):
+    json_data = json.loads(jsonObj)
+    
+    case = json_data['case']
+    description = json_data['description']
+    #file = json_data['file']
+    
+    result = api.UploadVideoLEA(case,description,request)
+    if result != "":
+        data = {
+            'type':1,
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
+            'userID':result['userID'],
+            'case': result['case']
+        }
+        return HttpResponse(json.dumps(data))
+    else:
+        data = {
+            'type':-1,
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
+            'userID':result['userID'],
+            'case': result['case']
+        }
+        return HttpResponse(json.dumps(data))
     
 def UploadAudio(request, jsonObj):
     json_data = json.loads(jsonObj)
@@ -188,21 +229,43 @@ def UploadAudio(request, jsonObj):
     if result != "":
         data = {
             'type':1,
-            'name':result['name'],
-            'surname':result['surname'],
-            'userID':result['userID'],
-            'email':result['email']
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
         }
         return HttpResponse(json.dumps(data))
     else:
         data = {
             'type':-1,
-            'name':result['name'],
-            'surname':result['surname'],
-            'userID':result['userID'],
-            'email':result['email']
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
         }
         return HttpResponse(json.dumps(data))
+    
+def UploadAudioLEA(request, jsonObj):
+    json_data = json.loads(jsonObj)
+    case = json_data['case']
+    description = json_data['description']
+    #file = json_data['file']
+    result = api.UploadAudioLEA(case,description,request)
+    if result != "":
+        data = {
+            'type':1,
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
+            'userID':request.session['user']['identity'],
+            'case': result['case']
+        }
+        return HttpResponse(json.dumps(data))
+    else:
+        data = {
+            'type':-1,
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
+            'userID':result['userID'],
+            'case': result['case']
+        }
+        return HttpResponse(json.dumps(data))
+    
     
 def viewImage(request,jsonObj):
     json_data = json.loads(jsonObj)
@@ -212,8 +275,8 @@ def viewImage(request,jsonObj):
     if result != "":
         data={
             'type':1,
-            'name':result['name'],
-            'surname':result['surname'],
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
             'title': result['title'],
             'description':result['description'],
             'location':result['location'],
@@ -228,8 +291,8 @@ def viewImage(request,jsonObj):
         res = api.leaHomePage(result)
         data = {
             'type':-1,
-            'name':res['name'],
-            'surname':res['surname'],
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
             'images':res['images'],
             'audio': res['audio'],
             'video': res['video'],
@@ -260,8 +323,8 @@ def leaHomePage(request):
         
         data = {
             'type':1,
-            'name':res['name'],
-            'surname':res['surname'],
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
             'images':res['images'],
             'audio': res['audio'],
             'video': res['video'],
@@ -275,8 +338,8 @@ def jdyHomePage(request):
     print str(res)
     data = {
         'type':1,
-        'name':res['name'],
-        'surname':res['surname'],
+        'name':request.session['user']['first_name'],
+        'surname':request.session['user']['last_name'],
         'images':res['images'],
         'audio':res['audio'],
         'video':res['video'],
@@ -295,8 +358,8 @@ def viewVideo(request,jsonObj):
     if result:
         data={
             'type':1,
-            'name':result['name'],
-            'surname':result['surname'],
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
             'title': result['title'],
             'description':result['description'],
             'location':result['location'],
@@ -308,11 +371,11 @@ def viewVideo(request,jsonObj):
         
         return HttpResponse(json.dumps(data))
     else:
-        res = api.leaHomePage(result)
+        res = api.leaHomePage(request)
         data = {
             'type':-1,
-            'name':res['name'],
-            'surname':res['surname'],
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
             'images':res['images'],
             'audio': res['audio'],
             'video': res['video'],
@@ -328,8 +391,8 @@ def viewAudio(request,jsonObj):
     if result:
         data={
             'type':1,
-            'name':result['name'],
-            'surname':result['surname'],
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
             'title': result['title'],
             'description':result['description'],
             'location':result['location'],
@@ -341,11 +404,11 @@ def viewAudio(request,jsonObj):
         
         return HttpResponse(json.dumps(data))
     else:
-        res = api.leaHomePage(result)
+        res = api.leaHomePage(request)
         data = {
             'type':-1,
-            'name':res['name'],
-            'surname':res['surname'],
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
             'images':res['images'],
             'audio': res['audio'],
             'video': res['video'],
@@ -415,8 +478,8 @@ def viewPdeViaCase(request,jsonObj):
     res = api.viewPdeViaCase(request,id)
     data = {
         'type':1,
-        'name':res['name'],
-        'surname':res['surname'],
+        'name':request.session['user']['first_name'],
+        'surname':request.session['user']['last_name'],
         'images':res['images'],
         'audio':res['audio'],
         'video':res['video'],
@@ -431,8 +494,8 @@ def viewByCase(request):
     res = api.viewByCase(request)
     
     data = {
-        'name':res['name'],
-        'surname':res['surname'],
+        'name':request.session['user']['first_name'],
+        'surname':request.session['user']['last_name'],
         'images':res['images'],
         'audio':res['audio'],
         'video':res['video'],
@@ -444,4 +507,167 @@ def viewByCase(request):
     
     return HttpResponse(json.dumps(data))
 
+def IncidentResponce(request):
+    res = api.getUserCases(request)
+    data = {
+        'type': 1,
+        'cases':res
+    }
+    return HttpResponse(json.dumps(data))
+
+def documentation(request):
+    results = api.Documentation(request)
     
+    data = {
+        'name': request.session['user']['first_name'],
+        'surname': request.session['user']['last_name'],
+        'images': results['images'],
+        'audio': results['audio'],
+        'video': results['video'],
+        'case': results['case'],
+        'caseName': results['caseName'],
+        'caseNumber': results['caseNumber'],
+        'date': results['date']
+    }
+    
+    return HttpResponse(json.dumps(data))
+
+def viewImageLEA(request,jsonObj):
+    json_data = json.loads(jsonObj)
+    image_id = json_data['image']
+    
+    result = api.viewImageLEA(request,image_id)
+    if result != "":
+        data={
+            'type':1,
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
+            'title': result['title'],
+            'description':result['description'],
+            'case-description': result['case-description'],
+            'location':result['location'],
+            'date':result['date'],
+            'incident': result['incident'],
+            'caseNumber': result['caseNumber'],
+            'imageName':result['imageName'],
+            'cases':result['arrayCases']
+        }
+        
+        return HttpResponse(json.dumps(data))
+    else:
+        res = api.leaHomePage(request)
+        data = {
+            'type':-1,
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
+            'images':res['images'],
+            'audio': res['audio'],
+            'video': res['video'],
+            'date': res['date']
+        }
+        return HttpResponse(json.dumps(data))
+    
+def viewAudioLEA(request,jsonObj):
+    json_data = json.loads(jsonObj)
+    image_id = json_data['audio']
+    
+    result = api.viewAudioLEA(request,image_id)
+    if result != "":
+        data={
+            'type':1,
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
+            'title': result['title'],
+            'description':result['description'],
+            'case-description': result['case-description'],
+            'location':result['location'],
+            'date':result['date'],
+            'incident': result['incident'],
+            'caseNumber': result['caseNumber'],
+            'audioName':result['audioName'],
+            'cases':result['arrayCases']
+        }
+        
+        return HttpResponse(json.dumps(data))
+    else:
+        res = api.leaHomePage(request)
+        data = {
+            'type':-1,
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
+            'images':res['images'],
+            'audio': res['audio'],
+            'video': res['video'],
+            'date': res['date']
+        }
+        return HttpResponse(json.dumps(data))
+    
+def viewVideoLEA(request,jsonObj):
+    json_data = json.loads(jsonObj)
+    video_id = json_data['video']
+    
+    result = api.viewVideoLEA(request,video_id)
+    if result != "":
+        data={
+            'type':1,
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
+            'title': result['title'],
+            'description':result['description'],
+            'case-description': result['case-description'],
+            'location':result['location'],
+            'date':result['date'],
+            'incident': result['incident'],
+            'caseNumber': result['caseNumber'],
+            'videoName':result['videoName'],
+            'cases':result['arrayCases']
+        }
+        
+        return HttpResponse(json.dumps(data))
+    else:
+        res = api.leaHomePage(request)
+        data = {
+            'type':-1,
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
+            'images':res['images'],
+            'audio': res['audio'],
+            'video': res['video'],
+            'date': res['date']
+        }
+        return HttpResponse(json.dumps(data))
+    
+def assignCaseLEA(request,jsonObj):
+    json_data = json.loads(jsonObj)
+    case = json_data['case']
+    pde = json_data['pde']
+    
+    result = api.assignCaseLEA(pde,case)
+    
+    if result:
+        data ={
+            'type': 1
+        }
+    else:
+        data = {
+            'type':-1
+        }
+    
+    return HttpResponse(json.dumps(data))
+
+def Search(request,jsonObj):
+    json_data = json.loads(jsonObj)
+    case = json_data['case_id']
+    
+    results = api.Search(request,case_id)
+    if results:
+        data = {
+            'type':1,
+            'pde': results
+        }
+        return HttpResponse(json.dumps(data))
+    else:
+        data = {
+            'type': -1
+        } 
+        return HttpResponse(json.dumps(data))

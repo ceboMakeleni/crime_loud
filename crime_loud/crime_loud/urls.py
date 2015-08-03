@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'register', 'web_interface.views.registerNewUser', name = 'registerNewUser'),
     url(r'login', 'web_interface.views.login', name = 'login'),
+    url(r're-login', 'web_interface.views.reCaptchalogin', name = 'login'),
     url(r'imageUpload', 'web_interface.views.imageUpload', name = 'imageUpload'),
     url(r'audioUpload', 'web_interface.views.UploadAudio', name = 'upload_audio'),
     url(r'videoUpload', 'web_interface.views.UploadVideo', name = 'upload_video'),
@@ -35,6 +36,19 @@ urlpatterns = patterns('',
     url(r'Download','web_interface.views.downloadFile', name='register user'),
     url(r'viewCase/(?P<ID>\d+)','web_interface.views.viewPdeViaCase', name='view case'),
     url(r'viewByCase','web_interface.views.viewByCase', name='view case'),
+    url(r'documentation','web_interface.views.IncidentResponce', name='Incident response documentation'),
+    
+    url(r'AudioUploadLEA','web_interface.views.UploadAudioLEA', name='Incident response audio'),
+    url(r'VideoUploadLEA','web_interface.views.UploadVideoLEA', name='Incident response audio'),
+    url(r'ImageUploadLEA','web_interface.views.imageUploadLEA', name='Incident response audio'),
+    url(r'Documentations','web_interface.views.documentation', name='Incident response audio'),
+    url(r'ViewImageLEA/(?P<image_id>\d+)','web_interface.views.viewImageLEA', name='Incident response audio'),
+    url(r'ViewAudioLEA/(?P<audio_id>\d+)','web_interface.views.viewAudioLEA', name='Incident response audio'),
+    url(r'ViewVideoLEA/(?P<video_id>\d+)','web_interface.views.viewVideoLEA', name='Incident response audio'),
+    url(r'AssignImage/(?P<image_id>\d+)/(?P<case_id>\d+)','web_interface.views.assignCaseImageLEA', name='Incident response audio'),
+    url(r'AssignVideo/(?P<video_id>\d+)/(?P<case_id>\d+)','web_interface.views.assignCaseVideoLEA', name='Incident response audio'),
+    url(r'AssignAudio/(?P<audio_id>\d+)/(?P<case_id>\d+)','web_interface.views.assignCaseAudioLEA', name='Incident response audio'),
+    
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

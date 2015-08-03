@@ -19,8 +19,8 @@
                             <li class="active">
                                     <a href="#">Home</a>
                             </li>
-                            <li><a href="/viewByCase">View by Case</a></li>
-                            <li><a href="#">Incident Response</a></li>
+                            <li><a href="/Documentations">View Documentation</a></li>
+                            <li><a href="/documentation">First Respondant</a></li>  
                     </ul><!-- end navbar-left -->
                     <ul class="nav navbar-nav navbar-right">
                             <li>
@@ -43,17 +43,38 @@
 {% block content %}
 <div class="jumbotron">
     <div class="row" id="displayInfoAndUploads">
-        <div class="panel panel-default">
-            <div class="panel-heading" style="background-color: #151B54; text-align: center; color:white;">Add New Case</div>
-            <div class="panel-body">
-                <form action="add_case" method="post" >
-                    Case Name: <input type="text" name="name" placeholder="Case Name as SAPS Report Database"/><br/>
-                    Case Number: <input type="text" name="number" placeholder="Case Number as SAPS Report Database"/><br/>
-                    Case Type: <input type="text" name="num" placeholder="e.g Burgary, Vandalism or Accident"/><br/>
-                    <input type="submit" name="submit" value="Add" style="background-color: #151B54; color: white;"/>
-                </form>
+        <div class="col-sm-12 feature">
+        <div class="col-sm-6 feature">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #151B54; text-align: center; color:white;">Add New Case</div>
+                <div class="panel-body">
+                    <form class="form-horizontal" method="post" action="add_case">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="idNum">Case Name: </label>
+                            <div class="col-lg-10">
+                                <input class="form-control" name="name" placeholder="Case Name as SAPS Report Database" type="text"/>
+                            </div><!-- end col-lg-10 -->
+                        </div><!-- end form-group -->
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="idNum">Case Number: </label>
+                            <div class="col-lg-10">
+                                <input class="form-control" name="number" placeholder="Case Number as SAPS Report Database" type="text"/>
+                            </div><!-- end col-lg-10 -->
+                        </div><!-- end form-group -->
+                        <!--Case Name: <input type="text" name="name" placeholder="Case Name as SAPS Report Database"/><br/>
+                        Case Number: <input type="text" name="number" placeholder="Case Number as SAPS Report Database"/><br/>
+                        Case Type: <input type="text" name="num" placeholder="e.g Burgary, Vandalism or Accident"/><br/>
+                        <input type="submit" name="submit" value="Add" style="background-color: #151B54; color: white;"/>-->
+                        <input  class="btn btn-primary" type="submit" value='Submit' style="background-color: #151B54; color: white;"/>
+                    </form>
+                </div>
             </div>
         </div>
+        <div class="col-sm-6 feature">
+                <a href="/viewByCase" style="color:white;"><button type="button" class="btn btn-primay" style="background-color: #151B54;color:white;">View By Case</button></a>
+                <h4 style="font-style: italic;">To view potential digital evidence by the cases they are assigned.</h4>
+        </div>
+        <div class="col-sm-12 feature">
         <div class="col-sm-4 feature">
             <div class="panel panel-default">
                 <div class="panel-heading" style="background-color: #151B54; text-align: center; color:white;">Images Uploaded as at {{date}}</div>
