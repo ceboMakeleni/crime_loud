@@ -35,6 +35,7 @@ urlpatterns = patterns('',
     url(r'RegisterUser','web_interface.views.RegisterAuthorizedUser', name='register user'),
     url(r'Download','web_interface.views.downloadFile', name='register user'),
     url(r'viewCase/(?P<ID>\d+)','web_interface.views.viewPdeViaCase', name='view case'),
+    url(r'viewCaseD/(?P<ID>\d+)','web_interface.views.viewPdeViaCaseD', name='view case'),
     url(r'viewByCase','web_interface.views.viewByCase', name='view case'),
     url(r'documentation','web_interface.views.IncidentResponce', name='Incident response documentation'),
     
@@ -48,6 +49,8 @@ urlpatterns = patterns('',
     url(r'AssignImage/(?P<image_id>\d+)/(?P<case_id>\d+)','web_interface.views.assignCaseImageLEA', name='Incident response audio'),
     url(r'AssignVideo/(?P<video_id>\d+)/(?P<case_id>\d+)','web_interface.views.assignCaseVideoLEA', name='Incident response audio'),
     url(r'AssignAudio/(?P<audio_id>\d+)/(?P<case_id>\d+)','web_interface.views.assignCaseAudioLEA', name='Incident response audio'),
+    url(r'generatePDF/(?P<case_id>\d+)','reporting.views.get_case_report', name='Incident response audio'),
+    url(r'search/(?P<case_id>\d+)','web_interface.views.Search', name='Incident response audio'),
     
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

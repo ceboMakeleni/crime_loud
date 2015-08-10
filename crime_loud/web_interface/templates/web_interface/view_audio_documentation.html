@@ -62,7 +62,14 @@
                   <li class="list-group-item"><strong>Description: </strong>{{ description }}</li>
                   <li class="list-group-item"><strong>Location: </strong>{{location}}</li>
                   <li class="list-group-item"><strong>Date: </strong>{{date}}</li>
-                  <li class="list-group-item"><strong>Case Number:</strong> {{ caseName }}</li>
+                  <li class="list-group-item"><strong>Case Number:</strong> {{ caseNumber }}</li>
+                  {%if type == 1%}
+                    <li class="list-group-item" style="color:green"><span class="badge" id="myspan"><a href="#viewData" data-toggle="modal">view</a></span>
+                        <strong style="color:black">Validity: </strong>Hashes are equal</li>
+                  {%else%}
+                    <li class="list-group-item" style="color:green"><span class="badge" id="myspan"><a href="#viewData" data-toggle="modal">view</a></span>
+                        <strong style="color:black">Validity: </strong>Hashes are equal</li>
+                  {%endif%}
                 </ul>
             </div>
             
@@ -85,6 +92,25 @@
                <input type="submit" name="submit" value="download"/>
             </form>
             
+        </div>
+        <div class="col-sm-4 feature">		
+            <!-- The register modal -->
+            <div class="modal fade" id="viewData">
+                    <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">The hashes of the PDE </h4>
+                                </div><!-- end modal-header -->
+                                <div class="modal-body">
+                                    <ul class="list-group">
+                                        <li class="list-group-item list-group-item-default"><strong>Old Hash: </strong>{{oldHash}}</li>
+                                        <li class="list-group-item list-group-item-default"><strong>current Hash: </strong>{{newHash}}</li>
+                                    </ul>
+                                </div><!-- end form-group -->
+                            </div><!-- end modal-content -->
+                    </div><!-- end modal-dialog -->
+            </div>
         </div>
     </div>
 </div>

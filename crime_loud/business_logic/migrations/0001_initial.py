@@ -59,18 +59,9 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=30)),
                 ('description', models.CharField(max_length=100)),
                 ('date', models.DateTimeField()),
+                ('case_date', models.DateTimeField(null=True)),
                 ('location', models.CharField(max_length=30)),
-            ],
-            options={
-            },
-            bases=(models.Model,),
-        ),
-        migrations.CreateModel(
-            name='caseAttribute',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('caseName', models.CharField(max_length=30)),
-                ('caseNumber', models.CharField(max_length=20)),
+                ('textDoc', models.FileField(null=True, upload_to=b'document')),
             ],
             options={
             },
@@ -134,17 +125,6 @@ class Migration(migrations.Migration):
             },
             bases=(models.Model,),
         ),
-        migrations.CreateModel(
-            name='personCaseAttribute',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('case', models.ForeignKey(to='business_logic.caseAttribute')),
-                ('person', models.ForeignKey(to='business_logic.Person')),
-            ],
-            options={
-            },
-            bases=(models.Model,),
-        ),
         migrations.AddField(
             model_name='pdeattribute',
             name='Person',
@@ -154,7 +134,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='pdeattribute',
             name='caseAttribute',
-            field=models.ForeignKey(to='business_logic.caseAttribute', null=True),
+            field=models.ForeignKey(to='business_logic.case', null=True),
             preserve_default=True,
         ),
         migrations.AddField(
@@ -170,15 +150,15 @@ class Migration(migrations.Migration):
             preserve_default=True,
         ),
         migrations.AddField(
-            model_name='caseattribute',
+            model_name='case',
             name='person',
             field=models.ForeignKey(to='business_logic.Person'),
             preserve_default=True,
         ),
         migrations.AddField(
-            model_name='case',
-            name='person',
-            field=models.ForeignKey(to='business_logic.Person'),
+            model_name='auditlogpde',
+            name='case',
+            field=models.ForeignKey(to='business_logic.case', null=True),
             preserve_default=True,
         ),
         migrations.AddField(

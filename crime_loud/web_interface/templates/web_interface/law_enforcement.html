@@ -45,7 +45,12 @@
     <div class="row" id="displayInfoAndUploads">
         <div class="col-sm-12 feature">
         <div class="col-sm-6 feature">
-            <div class="panel panel-default">
+                <a href="#CreateCase" data-toggle="modal" style="color:white;"><button type="button" class="btn btn-primay" style="background-color: #151B54;color:white;">Add a Case</button></a>
+                <a href="/viewByCase" style="color:white;"><button type="button" class="btn btn-primay" style="background-color: #151B54;color:white;">View By Case</button></a>
+                <h4 style="font-style: italic;">Add a case or view potential digital evidence by the cases they are assigned.</h4>
+        </div>
+        <div class="col-sm-6 feature">
+          <!--  <div class="panel panel-default">
                 <div class="panel-heading" style="background-color: #151B54; text-align: center; color:white;">Add New Case</div>
                 <div class="panel-body">
                     <form class="form-horizontal" method="post" action="add_case">
@@ -53,28 +58,26 @@
                             <label class="col-lg-2 control-label" for="idNum">Case Name: </label>
                             <div class="col-lg-10">
                                 <input class="form-control" name="name" placeholder="Case Name as SAPS Report Database" type="text"/>
-                            </div><!-- end col-lg-10 -->
-                        </div><!-- end form-group -->
+                            </div><!-- end col-lg-10 --
+                        </div><!-- end form-group -
                         <div class="form-group">
                             <label class="col-lg-2 control-label" for="idNum">Case Number: </label>
                             <div class="col-lg-10">
                                 <input class="form-control" name="number" placeholder="Case Number as SAPS Report Database" type="text"/>
-                            </div><!-- end col-lg-10 -->
+                            </div><!-- end col-lg-10 --
                         </div><!-- end form-group -->
                         <!--Case Name: <input type="text" name="name" placeholder="Case Name as SAPS Report Database"/><br/>
                         Case Number: <input type="text" name="number" placeholder="Case Number as SAPS Report Database"/><br/>
                         Case Type: <input type="text" name="num" placeholder="e.g Burgary, Vandalism or Accident"/><br/>
-                        <input type="submit" name="submit" value="Add" style="background-color: #151B54; color: white;"/>-->
+                        <input type="submit" name="submit" value="Add" style="background-color: #151B54; color: white;"/>
                         <input  class="btn btn-primary" type="submit" value='Submit' style="background-color: #151B54; color: white;"/>
                     </form>
                 </div>
-            </div>
+            </div>-->
         </div>
-        <div class="col-sm-6 feature">
-                <a href="/viewByCase" style="color:white;"><button type="button" class="btn btn-primay" style="background-color: #151B54;color:white;">View By Case</button></a>
-                <h4 style="font-style: italic;">To view potential digital evidence by the cases they are assigned.</h4>
         </div>
         <div class="col-sm-12 feature">
+        <h2 style="text-align: center; color: #151B54;"><b>This is all the potential digital evidence uploaded by the community</b></h2><br/>
         <div class="col-sm-4 feature">
             <div class="panel panel-default">
                 <div class="panel-heading" style="background-color: #151B54; text-align: center; color:white;">Images Uploaded as at {{date}}</div>
@@ -105,6 +108,73 @@
                 </div>
             </div>
         </div>
+        <div class="col-sm-4 feature">		
+            <!-- The register modal -->
+            <div class="modal fade" id="CreateCase">
+                    <div class="modal-dialog">
+                            <div class="modal-content">
+                                    <form class="form-horizontal" method="post" action="/add_case" enctype="multipart/form-data">
+                                            <div class="modal-header">
+                                                    <button class="close" data-dismiss="modal">&times;</button>
+                                                    
+                                                    <h4 class="modal-title">Create a new Case</h4>
+                                            </div><!-- end modal-header -->
+                                            <div class="modal-body">
+                                                    
+                                                    <div class="form-group">
+                                                            <label class="col-lg-3 control-label" for="idNum">Case Name: </label>
+                                                            <div class="col-lg-9">
+                                                                    <input class="form-control" name = "name" id="registerID" placeholder="Enter 13-digit ID number or Passport number here" type="text"/>
+                                                            </div><!-- end col-lg-10 -->
+                                                    </div><!-- end form-group -->
+                                                            
+                                                    <div class="form-group">
+                                                            <label class="col-lg-3 control-label" for="registerName">Case Number: </label>
+                                                            <div class="col-lg-9">
+                                                                    <input class="form-control" name = "number" id="registerName" type = "text"/>
+                                                            </div><!-- end col-lg-10 -->
+                                                    </div><!-- end form-group -->
+                                                    
+                                                    <div class="form-group">
+                                                            <label class="col-lg-3 control-label" for="registerSurname">Title: </label>
+                                                            <div class="col-lg-9">
+                                                                    <input class="form-control" name = "title" id="registerSurname"  type="text">
+                                                            </div><!-- end col-lg-10 -->
+                                                    </div><!-- end form-group -->
+                                                    
+                                                    <div class="form-group">
+                                                            <label class="col-lg-3 control-label" for="registerEmail" rows="4" >Description: </label>
+                                                            <div class="col-lg-9">
+                                                                    <textarea  name = "description" id="registerEmail" class="form-control"></textarea>
+                                                            </div>
+                                                    </div>
+                                                    
+                                                    <div class="form-group">
+                                                            <label class="col-lg-3 control-label" for="registerPassword">Location: </label>
+                                                            <div class="col-lg-9">
+                                                                    <input type="text" name = "location" id="location" placeholder = "Create a password that can log you into the system in future"class="form-control">
+                                                            </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                            <label class="col-lg-3 control-label" for="registerPassword">Crime Scene Date: </label>
+                                                            <div class="col-lg-9">
+                                                                    <input type="text" name = "date" id="location" placeholder = "Create a password that can log you into the system in future"class="form-control">
+                                                            </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                            <label class="col-lg-3 control-label" for="imageFileUpload">File input</label>
+                                                            <input type="file" id="imageFileUpload" name="imageFileUpload" required='required'>
+                                                            <p class="help-block">List types of images files to be uploaded.</p>
+                                                    </div>
+                                                    
+                                            </div><!-- end modal-body -->
+                                            <div class="modal-footer">
+                                                    <input class="btn btn-default" data-dismiss="modal" type="submit" value='Close'>
+                                                    <input  class="btn btn-primary" type="submit" value='Submit'/>
+                                            </div><!-- end modal-footer -->
+                                    </form>
+                            </div><!-- end modal-content -->
+                    </div>
     </div>
 </div>
 {% endblock %}

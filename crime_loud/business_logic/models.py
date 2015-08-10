@@ -28,7 +28,7 @@ class Person(models.Model):
     def __unicode__(self):
         return decrypt(binascii.a2b_base64(self.first_name))
      #return self.first_name
-
+'''
 class caseAttribute(models.Model):
     caseName = models.CharField(max_length=30)
     caseNumber=models.CharField(max_length=20)
@@ -43,22 +43,8 @@ class personCaseAttribute(models.Model):
     
     def __unicode__(self):
       return self.case.caseNumber
+'''
 
-class pdeAttribute(models.Model):
-    title = models.CharField(max_length=30)
-    description=models.CharField(max_length=100)
-    location=models.CharField(max_length=40)
-    date=models.DateTimeField()
-    digitalData=models.CharField(max_length=1000,null=True)
-    caseAttribute=models.ForeignKey(caseAttribute, null=True)
-    Person = models.ForeignKey(Person) #Person who uploaded
-    photo = models.FileField(upload_to='photo',null=True)
-    video = models.FileField(upload_to='video',null=True)
-    audio = models.FileField(upload_to='audio',null=True)
-    
-    def __unicode__(self):
-        return self.title
-    
 class case(models.Model):
     caseName = models.CharField(max_length=30)
     caseNumber=models.CharField(max_length=20)
@@ -66,10 +52,27 @@ class case(models.Model):
     title = models.CharField(max_length=30)
     description = models.CharField(max_length=100)
     date = models.DateTimeField()
+    case_date = models.DateTimeField(null=True)
     location = models.CharField(max_length=30)
+    textDoc = models.FileField(upload_to='document',null=True)
     
     def __unicode__(self):
       return self.caseName + " "+self.caseNumber
+
+class pdeAttribute(models.Model):
+    title = models.CharField(max_length=30)
+    description=models.CharField(max_length=100)
+    location=models.CharField(max_length=40)
+    date=models.DateTimeField()
+    digitalData=models.CharField(max_length=1000,null=True)
+    caseAttribute=models.ForeignKey(case, null=True)
+    Person = models.ForeignKey(Person) #Person who uploaded
+    photo = models.FileField(upload_to='photo',null=True)
+    video = models.FileField(upload_to='video',null=True)
+    audio = models.FileField(upload_to='audio',null=True)
+    
+    def __unicode__(self):
+        return self.title
     
 class leaDigitalEvidence(models.Model):
     date=models.DateTimeField()
@@ -106,6 +109,7 @@ class AuditLogPDE(models.Model):
     pde_title=models.CharField(max_length=100)
     pde_date = models.DateTimeField()
     pde_location = models.CharField(max_length=40)
+    case =models.ForeignKey(case,null=True)
 
 class AuditLogDigitalEvidence(models.Model):
     person_id = models.ForeignKey(Person)

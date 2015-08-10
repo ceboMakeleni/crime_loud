@@ -272,7 +272,7 @@ def viewImage(request,jsonObj):
     image_id = json_data['image']
     
     result = api.viewImage(request,image_id)
-    if result != "":
+    if result['status'] == "success":
         data={
             'type':1,
             'name':request.session['user']['first_name'],
@@ -283,20 +283,26 @@ def viewImage(request,jsonObj):
             'date':result['date'],
             'caseNumber': result['caseNumber'],
             'imageName':result['imageName'],
-            'cases':result['arrayCases']
+            'cases':result['arrayCases'],
+            'oldHash': result['oldHash'],
+            'newHash': result['newHash']
         }
         
         return HttpResponse(json.dumps(data))
     else:
-        res = api.leaHomePage(result)
         data = {
             'type':-1,
             'name':request.session['user']['first_name'],
             'surname':request.session['user']['last_name'],
-            'images':res['images'],
-            'audio': res['audio'],
-            'video': res['video'],
-            'date': res['date']
+            'title': result['title'],
+            'description':result['description'],
+            'location':result['location'],
+            'date':result['date'],
+            'caseNumber': result['caseNumber'],
+            'imageName':result['imageName'],
+            'cases':result['arrayCases'],
+            'oldHash': result['odlHash'],
+            'newHash': result['newHash']
         }
         return HttpResponse(json.dumps(data))
 
@@ -305,7 +311,7 @@ def assignCase(request,jsonObj):
     case = json_data['case']
     pde = json_data['pde']
     
-    result = api.assignCase(pde,case)
+    result = api.assignCase(pde,case,request)
     
     if result:
         data ={
@@ -355,7 +361,7 @@ def viewVideo(request,jsonObj):
     video_id = json_data['image']
     
     result = api.viewVideo(request,video_id)
-    if result:
+    if result['status'] == 'success':
         data={
             'type':1,
             'name':request.session['user']['first_name'],
@@ -366,20 +372,26 @@ def viewVideo(request,jsonObj):
             'date':result['date'],
             'caseNumber': result['caseNumber'],
             'videoName':result['videoName'],
-            'cases':result['arrayCases']
+            'cases':result['arrayCases'],
+            'oldHash':result['oldHash'],
+            'newHash': result['newHash']
         }
         
         return HttpResponse(json.dumps(data))
     else:
-        res = api.leaHomePage(request)
         data = {
             'type':-1,
             'name':request.session['user']['first_name'],
             'surname':request.session['user']['last_name'],
-            'images':res['images'],
-            'audio': res['audio'],
-            'video': res['video'],
-            'date': res['date']
+            'title': result['title'],
+            'description':result['description'],
+            'location':result['location'],
+            'date':result['date'],
+            'caseNumber': result['caseNumber'],
+            'videoName':result['videoName'],
+            'cases':result['arrayCases'],
+            'oldHash':result['oldHash'],
+            'newHash': result['newHash']
         }
         return HttpResponse(json.dumps(data))
     
@@ -388,7 +400,7 @@ def viewAudio(request,jsonObj):
     video_id = json_data['audio']
     
     result = api.viewAudio(request,video_id)
-    if result:
+    if result['status'] == 'success':
         data={
             'type':1,
             'name':request.session['user']['first_name'],
@@ -399,20 +411,26 @@ def viewAudio(request,jsonObj):
             'date':result['date'],
             'caseNumber': result['caseNumber'],
             'audioName':result['audioName'],
-            'cases':result['arrayCases']
+            'cases':result['arrayCases'],
+            'oldHash':result['oldHash'],
+            'newHash': result['newHash']
         }
         
         return HttpResponse(json.dumps(data))
     else:
-        res = api.leaHomePage(request)
         data = {
             'type':-1,
             'name':request.session['user']['first_name'],
             'surname':request.session['user']['last_name'],
-            'images':res['images'],
-            'audio': res['audio'],
-            'video': res['video'],
-            'date': res['date']
+            'title': result['title'],
+            'description':result['description'],
+            'location':result['location'],
+            'date':result['date'],
+            'caseNumber': result['caseNumber'],
+            'audioName':result['audioName'],
+            'cases':result['arrayCases'],
+            'oldHash':result['oldHash'],
+            'newHash': result['newHash']
         }
         return HttpResponse(json.dumps(data))
 
@@ -420,8 +438,13 @@ def addCase(request,jsonObj):
     json_data = json.loads(jsonObj)
     name = json_data['name']
     number = json_data['number']
+    date = json_data['date']
+    location = json_data['location']
+    title = json_data['location']
+    description=json_data['description']
     
-    result = api.addCase(name,number,request)
+    
+    result = api.addCase(name,number,request,title,description,date,location)
     if result:
         data = {
             'type': 1,
@@ -490,6 +513,24 @@ def viewPdeViaCase(request,jsonObj):
     }
     return HttpResponse(json.dumps(data))
 
+def viewPdeViaCaseD(request,jsonObj):
+    json_data = json.loads(jsonObj)
+    id = json_data['ID']
+    res = api.viewPdeViaCaseD(request,id)
+    data = {
+        'type':1,
+        'name':request.session['user']['first_name'],
+        'surname':request.session['user']['last_name'],
+        'images':res['images'],
+        'audio':res['audio'],
+        'video':res['video'],
+        'date':res['date'],
+        'caseNumber':res['caseNumber'],
+        'caseName':res['caseName'],
+        'case':res['case']
+    }
+    return HttpResponse(json.dumps(data))
+
 def viewByCase(request):
     res = api.viewByCase(request)
     
@@ -525,6 +566,7 @@ def documentation(request):
         'audio': results['audio'],
         'video': results['video'],
         'case': results['case'],
+        'case_id':results['case_id'],
         'caseName': results['caseName'],
         'caseNumber': results['caseNumber'],
         'date': results['date']
@@ -544,13 +586,13 @@ def viewImageLEA(request,jsonObj):
             'surname':request.session['user']['last_name'],
             'title': result['title'],
             'description':result['description'],
-            'case-description': result['case-description'],
             'location':result['location'],
             'date':result['date'],
-            'incident': result['incident'],
             'caseNumber': result['caseNumber'],
             'imageName':result['imageName'],
-            'cases':result['arrayCases']
+            'cases':result['arrayCases'],
+            'oldHash':result['oldhash'],
+            'newHash': result['newhash']
         }
         
         return HttpResponse(json.dumps(data))
@@ -560,10 +602,15 @@ def viewImageLEA(request,jsonObj):
             'type':-1,
             'name':request.session['user']['first_name'],
             'surname':request.session['user']['last_name'],
-            'images':res['images'],
-            'audio': res['audio'],
-            'video': res['video'],
-            'date': res['date']
+            'title': result['title'],
+            'description':result['description'],
+            'location':result['location'],
+            'date':result['date'],
+            'caseNumber': result['caseNumber'],
+            'imageName':result['imageName'],
+            'cases':result['arrayCases'],
+            'oldHash':result['oldhash'],
+            'newHash': result['newhash']
         }
         return HttpResponse(json.dumps(data))
     
@@ -579,13 +626,13 @@ def viewAudioLEA(request,jsonObj):
             'surname':request.session['user']['last_name'],
             'title': result['title'],
             'description':result['description'],
-            'case-description': result['case-description'],
             'location':result['location'],
             'date':result['date'],
-            'incident': result['incident'],
             'caseNumber': result['caseNumber'],
             'audioName':result['audioName'],
-            'cases':result['arrayCases']
+            'cases':result['arrayCases'],
+            'oldHash':result['oldhash'],
+            'newHash': result['newhash']
         }
         
         return HttpResponse(json.dumps(data))
@@ -595,10 +642,15 @@ def viewAudioLEA(request,jsonObj):
             'type':-1,
             'name':request.session['user']['first_name'],
             'surname':request.session['user']['last_name'],
-            'images':res['images'],
-            'audio': res['audio'],
-            'video': res['video'],
-            'date': res['date']
+            'title': result['title'],
+            'description':result['description'],
+            'location':result['location'],
+            'date':result['date'],
+            'caseNumber': result['caseNumber'],
+            'audioName':result['audioName'],
+            'cases':result['arrayCases'],
+            'oldHash':result['oldhash'],
+            'newHash': result['newhash']
         }
         return HttpResponse(json.dumps(data))
     
@@ -614,13 +666,14 @@ def viewVideoLEA(request,jsonObj):
             'surname':request.session['user']['last_name'],
             'title': result['title'],
             'description':result['description'],
-            'case-description': result['case-description'],
             'location':result['location'],
             'date':result['date'],
             'incident': result['incident'],
             'caseNumber': result['caseNumber'],
             'videoName':result['videoName'],
-            'cases':result['arrayCases']
+            'cases':result['arrayCases'],
+            'oldHash':result['oldhash'],
+            'newHash': result['newhash']
         }
         
         return HttpResponse(json.dumps(data))
@@ -630,10 +683,15 @@ def viewVideoLEA(request,jsonObj):
             'type':-1,
             'name':request.session['user']['first_name'],
             'surname':request.session['user']['last_name'],
-            'images':res['images'],
-            'audio': res['audio'],
-            'video': res['video'],
-            'date': res['date']
+            'title': result['title'],
+            'description':result['description'],
+            'location':result['location'],
+            'date':result['date'],
+            'caseNumber': result['caseNumber'],
+            'videoName':result['videoName'],
+            'cases':result['arrayCases'],
+            'oldHash':result['oldhash'],
+            'newHash': result['newhash']
         }
         return HttpResponse(json.dumps(data))
     
@@ -654,20 +712,42 @@ def assignCaseLEA(request,jsonObj):
         }
     
     return HttpResponse(json.dumps(data))
+    
+def getCaseInformationForReport(request,jsonObj):
+    json_data = json.loads(jsonObj)
+    case_id = json_data['case_id']
+    
+    case_info = api.getCaseData(request,case_id)
+    cs_data = api.getPDEdata(request,case_id)
+    
+    data = {
+        'case_info':case_info,
+        'cs_docs':cs_data
+    }
+    
+    return HttpResponse(json.dumps(data))
 
 def Search(request,jsonObj):
-    json_data = json.loads(jsonObj)
-    case = json_data['case_id']
+    json_data= json.loads(jsonObj)
+    case_id = json_data['case_id']
     
-    results = api.Search(request,case_id)
-    if results:
-        data = {
+    res = api.Search(request,case_id)
+    data = []
+    if res:
+        data={
             'type':1,
-            'pde': results
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
+            'images':res['images'],
+            'audio':res['audio'],
+            'video':res['video'],
+            'date':res['date']
+            
         }
-        return HttpResponse(json.dumps(data))
     else:
-        data = {
-            'type': -1
-        } 
-        return HttpResponse(json.dumps(data))
+        data={
+            'type':-1,
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
+        }
+    return HttpResponse(json.dumps(data))
