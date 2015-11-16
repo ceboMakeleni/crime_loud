@@ -51,7 +51,10 @@ urlpatterns = patterns('',
     url(r'AssignAudio/(?P<audio_id>\d+)/(?P<case_id>\d+)','web_interface.views.assignCaseAudioLEA', name='Incident response audio'),
     url(r'generatePDF/(?P<case_id>\d+)','reporting.views.get_case_report', name='Incident response audio'),
     url(r'search/(?P<case_id>\d+)','web_interface.views.Search', name='Incident response audio'),
-    
+    url(r'auditlog','web_interface.views.auditlog', name='Incident response audio'),
+    url(r'Delete','web_interface.views.deleteLEA', name='Incident response audio'),
+    url(r'view_deleted','web_interface.views.getDeleted', name='Incident response audio'),
+    url(r'View_deleted_image/(?P<image_id>\d+)','web_interface.views.viewImageDel', name='Incident response audio'),
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

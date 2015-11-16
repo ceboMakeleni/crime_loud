@@ -65,6 +65,8 @@ def login(userEmail, userPassword,request):
     surname=decrypt(binascii.a2b_base64(userE.last_name))
     if password == userPassword:
         request.session['user']={'identity':userE.id,'userRole':userE.userRole,'first_name':name,'last_name':surname}
+        audit = LoginAuditLog(person_id=userE,action="Login",date=datetime.datetime.now())
+        audit.save()
         if userE.userRole == 'user':
             data = {
                 'name':name,
@@ -79,15 +81,15 @@ def login(userEmail, userPassword,request):
             audio = []
             video = []
             for value in pde:
-                if value.photo:
+                if value.photo and value.deleted == False:
                     name = value.photo.name
                     sts = name.split('/')
                     images.append({'title': value.title, 'data': sts[1],'id':value.id})
-                elif value.audio:
+                elif value.audio and value.deleted == False:
                     name = value.audio.name
                     sts = name.split('/')
                     audio.append({'title': value.title, 'data': sts[1],'id':value.id})
-                elif value.video:
+                elif value.video and value.deleted == False:
                     name = value.video.name
                     sts = name.split('/')
                     video.append({'title': value.title, 'data': sts[1],'id':value.id})
@@ -99,7 +101,7 @@ def login(userEmail, userPassword,request):
                 'date':str(datetime.date.today())
             }
         else:
-            case = personCaseAttribute.objects.filter(person=userE)
+            case = personCase.objects.filter(person=userE)
             cases = []
             
             for value in case:
@@ -114,15 +116,15 @@ def login(userEmail, userPassword,request):
             audio = []
             video = []
             for val in pde:
-                if val.photo:
+                if val.photo and val.deleted == False:
                     name = val.photo.name
                     sts = name.split('/')
                     images.append({'title': val.title, 'data': sts[1],'id':val.id})
-                elif val.audio:
+                elif val.audio and val.deleted == False:
                     name = val.audio.name
                     sts = name.split('/')
                     audio.append({'title': val.title, 'data': sts[1],'id':val.id})
-                elif val.video:
+                elif val.video and val.deleted == False:
                     name = val.video.name
                     sts = name.split('/')
                     video.append({'title': val.title, 'data': sts[1],'id':val.id})
@@ -140,7 +142,12 @@ def login(userEmail, userPassword,request):
         return data
     else:
         return ""
-
+    
+def logout(request):
+    userE = Person.objects.get(id=request.session['user']['identity'])
+    audit = LoginAuditLog(person_id=userE,action="Logout",date=datetime.datetime.now())
+    audit.save()
+    return True
 
 def UploadAudio(Title,Description,Location,Date,request):
     file = request.FILES['audioFileUpload']
@@ -375,15 +382,15 @@ def leaHomePage(request):
     audio = []
     video = []
     for value in pde:
-        if value.photo:
+        if value.photo and value.deleted == False:
             name = value.photo.name
             sts = name.split('/')
             images.append({'title': value.title, 'data': sts[1],'id':value.id})
-        elif value.audio:
+        elif value.audio and value.deleted == False:
             name = value.audio.name
             sts = name.split('/')
             audio.append({'title': value.title, 'data': sts[1],'id':value.id})
-        elif value.video:
+        elif value.video and value.deleted == False:
             name = value.video.name
             sts = name.split('/')
             video.append({'title': value.title, 'data': sts[1],'id':value.id})
@@ -413,15 +420,15 @@ def jdyHomePage(request):
     audio = []
     video = []
     for val in pde:
-        if val.photo:
+        if val.photo and val.deleted == False:
             name = val.photo.name
             sts = name.split('/')
             images.append({'title': val.title, 'data': sts[1],'id':val.id})
-        elif val.audio:
+        elif val.audio and val.deleted == False:
             name = val.audio.name
             sts = name.split('/')
             audio.append({'title': val.title, 'data': sts[1],'id':val.id})
-        elif val.video:
+        elif val.video and val.deleted == False:
             name = val.video.name
             sts = name.split('/')
             video.append({'title': val.title, 'data': sts[1],'id':val.id})
@@ -604,8 +611,8 @@ def deletePDE(pde_id,request):
     pde = pdeAttribute.objects.get(id=pde_id)
     audit = AuditLogPDE(person_id=user,action="Deleted",pde_title=pde.title,pde_date=pde.date,pde_location=pde.location, date=datetime.datetime.now())
     audit.save()
-    pde.delete()
-    
+    pde.deleted = True
+    pde.save()
     return True
 
 def RegisterAuthorizedUser(request, name, surname, idNo, role, Password, mail):
@@ -635,15 +642,15 @@ def viewPdeViaCase(request,ID):
     audio = []
     video = []
     for val in pde:
-        if val.photo:
+        if val.photo and val.deleted == False:
             name = val.photo.name
             sts = name.split('/')
             images.append({'title': val.title,'data': sts[1],'id':val.id})
-        elif val.audio:
+        elif val.audio and val.deleted == False:
             name = val.audio.name
             sts = name.split('/')
             audio.append({'title': val.title, 'data': sts[1],'id':val.id})
-        elif val.video:
+        elif val.video and val.deleted == False:
             name = val.video.name
             sts = name.split('/')
             video.append({'title': val.title,'data': sts[1],'id':val.id})
@@ -677,15 +684,15 @@ def viewPdeViaCaseD(request,ID):
     audio = []
     video = []
     for val in pde:
-        if val.photo:
+        if val.photo and val.deleted == False:
             name = val.photo.name
             sts = name.split('/')
             images.append({'data': sts[1],'id':val.id})
-        elif val.audio:
+        elif val.audio and val.deleted == False:
             name = val.audio.name
             sts = name.split('/')
             audio.append({'data': sts[1],'id':val.id})
-        elif val.video:
+        elif val.video and val.deleted == False:
             name = val.video.name
             sts = name.split('/')
             video.append({'data': sts[1],'id':val.id})
@@ -718,15 +725,15 @@ def viewByCase(request):
     audio = []
     video = []
     for val in pde:
-        if val.photo:
+        if val.photo and val.deleted == False:
             name = val.photo.name
             sts = name.split('/')
             images.append({'title': val.title, 'data': sts[1],'id':val.id})
-        elif val.audio:
+        elif val.audio and val.deleted == False:
             name = val.audio.name
             sts = name.split('/')
             audio.append({'title': val.title, 'data': sts[1],'id':val.id})
-        elif val.video:
+        elif val.video and val.deleted == False:
             name = val.video.name
             sts = name.split('/')
             video.append({'title': val.title, 'data': sts[1],'id':val.id})
@@ -769,15 +776,15 @@ def Documentation(request):
     audio = []
     video = []
     for val in pde:
-        if val.photo:
+        if val.photo and val.deleted == False:
             name = val.photo.name
             sts = name.split('/')
             images.append({'data': sts[1],'id':val.id})
-        elif val.audio:
+        elif val.audio and val.deleted == False:
             name = val.audio.name
             sts = name.split('/')
             audio.append({'data': sts[1],'id':val.id})
-        elif val.video:
+        elif val.video and val.deleted == False:
             name = val.video.name
             sts = name.split('/')
             video.append({'data': sts[1],'id':val.id})
@@ -1033,38 +1040,46 @@ def deletePDE_LEA(pde_id,request):
     pde = leaDigitalEvidence.objects.get(id=pde_id)
     audit = AuditLogDigitalEvidence(person_id=user,action="Deleted",pde_date=pde.date, pde_description= pde.description, date=datetime.datetime.now())
     audit.save()
-    pde.delete()
+    pde.deleted = True
+    pde.save()
     
     return True
 
 def Search(request,case_id):
     cases = case.objects.get(id=case_id)
     pde = pdeAttribute.objects.filter(location=cases.location)
+    pde1 = pdeAttribute.objects.filter(location=' hatfield ')
+    print str(pde)
     
     images = []
     audio = []
     video = []
     if pde:
         for i in pde:
+            print "i traverse" + i.title
             if i.date.date() == cases.date.date():
-                if i.photo:
+                print "am in here"
+                if i.photo and i.deleted == False:
+                    print "ininininininniniiiinnnnninininin"
                     name = i.photo.name
                     sts = name.split('/')
                     images.append({'title': i.title, 'data': sts[1],'id':i.id})
-                elif i.audio:
+                elif i.audio and i.deleted == False:
                     name = i.audio.name
                     sts = name.split('/')
                     audio.append({'title': i.title, 'data': sts[1],'id':i.id})
-                else:
+                elif i.video and val.deleted == False:
                     name = i.video.name
                     sts = name.split('/')
                     video.append({'title': i.title, 'data': sts[1],'id':i.id})
-        
+        print str(images)
         data = {
             'images':images,
             'audio':audio,
             'video':video,
-            'date':str(cases.date.date())
+            'date':str(cases.date.date()),
+            'case_name': cases.caseName,
+            'case_number': cases.caseNumber
         }
         return data
     else:
@@ -1078,10 +1093,10 @@ def getCaseData(request,case_id):
     data.append(Case.caseNumber)
     data.append(Case.title)
     data.append(Case.description)
-    data.append(str(Case.date))
+    data.append(str(Case.date.strftime("%Y-%m-%d %H:%M:%S")))
     data.append(Case.location)
     
-    return data
+    return data    
     
 def getPDEdata(request,case_id):
     Case = case.objects.get(id=case_id)
@@ -1099,8 +1114,228 @@ def getPDEdata(request,case_id):
     
     return data
         
+def getPDEdata(request,case_id):
+    Case = case.objects.get(id=case_id)
+    digital = AuditLogDigitalEvidence.objects.filter(case=Case)
+    community = AuditLogPDE.objects.filter(case=Case)
     
+    data = []
+    community1 = []
+    for d in digital:
+        temp = []
+        name = binascii.a2b_base64(d.person_id.first_name)
+        name = decrypt(name)
+        surn = binascii.a2b_base64(d.person_id.last_name)
+        surn = decrypt(surn)
+        temp.append(name + " "+ surn)
+        temp.append(str(d.date.strftime("%Y-%m-%d %H:%M:%S")))
+        temp.append(d.action)
+        temp.append(Case.title)
+        temp.append(str(d.pde_date.strftime("%Y-%m-%d %H:%M:%S")))
+        data.append(temp)
     
-    
+    for d in community:
+        temp =[]
+        name = binascii.a2b_base64(d.person_id.first_name)
+        name = decrypt(name)
+        surn = binascii.a2b_base64(d.person_id.last_name)
+        surn = decrypt(surn)
+        temp.append(name + " " + surn)
+        temp.append(str(d.date.strftime("%Y-%m-%d %H:%M:%S")))
+        temp.append(d.action)
+        temp.append(d.pde_title)
+        temp.append(str(d.pde_date.strftime("%Y-%m-%d %H:%M:%S")))
+        community1.append(temp)
+        
+    final =[]
+    final.append(data)
+    final.append(community1)
+    return final
 
+def auditLog(request):
+    login = LoginAuditLog.objects.all()
+    logins = []
+    for i in login:
+        temp = []
+        name = binascii.a2b_base64(i.person_id.first_name)
+        name = decrypt(name)
+        surn = binascii.a2b_base64(i.person_id.last_name)
+        surn = decrypt(surn)
+        temp.append(name+ " "+ surn)
+        date = i.date.strftime("%Y-%m-%d %H:%M:%S")
+        temp.append(str(date))
+        temp.append(i.action)
+        logins.append(temp)
     
+    pdeC = AuditLogPDE.objects.all()
+    CommPDE = []
+    for i in pdeC:
+        temp=[]
+        name = binascii.a2b_base64(i.person_id.first_name)
+        name = decrypt(name)
+        surn = binascii.a2b_base64(i.person_id.last_name)
+        surn = decrypt(surn)
+        temp.append(name+ " "+surn)
+        temp.append(i.pde_title)
+        date = i.date.strftime("%Y-%m-%d %H:%M:%S")
+        temp.append(str(date))
+        date = i.pde_date.strftime("%Y-%m-%d %H:%M:%S")
+        temp.append(str(date))
+        temp.append(i.action)
+        if i.case:
+            temp.append(i.case.caseName+" "+i.case.caseNumber)
+        else:
+            temp.append('None')
+        CommPDE.append(temp)
+        
+    pdeA = AuditLogDigitalEvidence.objects.all()
+    AuthPDE=[]
+    for i in pdeA:
+        temp = []
+        name = binascii.a2b_base64(i.person_id.first_name)
+        name = decrypt(name)
+        surn = binascii.a2b_base64(i.person_id.last_name)
+        surn = decrypt(surn)
+        temp.append(name+ " "+surn)
+        date = i.date.strftime("%Y-%m-%d %H:%M:%S")
+        temp.append(str(date))
+        date = i.pde_date.strftime("%Y-%m-%d %H:%M:%S")
+        temp.append(str(date))
+        temp.append(i.action)
+        if i.case:
+            temp.append(i.case.caseName+" "+i.case.caseNumber)
+        else:
+            temp.append('None')
+        AuthPDE.append(temp)
+        
+    data = []
+    data.append(logins)
+    data.append(CommPDE)
+    data.append(AuthPDE)
+    return data
+        
+def getDeleted(request):
+    comPDE = pdeAttribute.objects.filter(deleted=True)
+    authPDE = leaDigitalEvidence.objects.filter(deleted=True)
+    
+    community = []
+    authorized = []
+    
+    imagesC = []
+    audioC = []
+    videoC=[]
+    for val in comPDE:
+        if val.photo:
+            name = val.photo.name
+            sts = name.split('/')
+            imagesC.append({'title': val.title,'data': sts[1],'id':val.id})
+        elif val.audio:
+            name = val.audio.name
+            sts = name.split('/')
+            audioC.append({'title': val.title,'data': sts[1],'id':val.id})
+        elif val.video:
+            name = val.video.name
+            sts = name.split('/')
+            videoC.append({'title': val.title,'data': sts[1],'id':val.id})
+    
+    community.append(imagesC)
+    community.append(audioC)
+    community.append(videoC)
+    
+    images = []
+    audio =[]
+    video = []
+    for val in authPDE:
+        if val.photo:
+            name = val.photo.name
+            sts = name.split('/')
+            images.append({'data': sts[1],'id':val.id})
+        elif val.audio:
+            name = val.audio.name
+            sts = name.split('/')
+            audio.append({'data': sts[1],'id':val.id})
+        elif val.video:
+            name = val.video.name
+            sts = name.split('/')
+            video.append({'data': sts[1],'id':val.id})
+            
+    authorized.append(images)
+    authorized.append(audio)
+    authorized.append(video)
+    
+    combined = []
+    combined.append(community)
+    combined.append(authorized)
+    return combined
+    
+def viewImageDel(request,image):
+    pde = leaDigitalEvidence.objects.get(id=image)
+    encypted = pde.digitalData
+    text = binascii.a2b_base64(encypted)
+    plaintext = decrypt(text)
+    hashed = hashlib.sha256()
+    hashed.update(pde.photo.read())
+
+    if plaintext == hashed.hexdigest():
+        userE = Person.objects.get(id=request.session['user']['identity'])
+        cases = None
+        caseN = None
+        if pde.case:
+            cases = pde.case.caseNumber
+            caseN = pde.case.caseName
+    
+        Iname = pde.photo.name
+        sts = Iname.split('/')
+    
+        caseObj = case.objects.all()
+        list = []
+        for i in caseObj:
+            list1 = []
+            list1.append(i.caseNumber)
+            list1.append(i.id)
+            list.append(list1)
+        
+        data = {
+            'title':pde.case.title,
+            'description': pde.description,
+            'location':pde.case.location,
+            'date':str(pde.date.strftime("%Y-%m-%d %H:%M:%S")),
+            'caseNumber':cases,
+            'imageName':sts[1],
+            'arrayCases':list,
+            'oldhash': plaintext,
+            'newhash': hashed.hexdigest()
+        }
+    
+        return data
+    else:
+        userE = Person.objects.get(id=request.session['user']['identity'])
+        cases = None
+        caseN = None
+        if pde.case:
+            cases = pde.case.caseNumber
+            caseN = pde.case.caseName
+    
+        Iname = pde.photo.name
+        sts = Iname.split('/')
+    
+        caseObj = case.objects.all()
+        list = []
+        for i in caseObj:
+            list1 = []
+            list1.append(i.caseNumber)
+            list1.append(i.id)
+            list.append(list1)
+        print "darli dont plsssssssssssssssssssssssssssssssss"
+        data = {
+            'title':pde.case.title,
+            'description': pde.description,
+            'location':pde.case.location,
+            'date':str(pde.date.strftime("%Y-%m-%d %H:%M:%S")),
+            'caseNumber':cases,
+            'imageName':sts[1],
+            'arrayCases':list,
+            'oldhash': plaintext,
+            'newhash': hashed.hexdigest()
+        }
+        return data

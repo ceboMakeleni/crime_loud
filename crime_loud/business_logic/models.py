@@ -70,6 +70,7 @@ class pdeAttribute(models.Model):
     photo = models.FileField(upload_to='photo',null=True)
     video = models.FileField(upload_to='video',null=True)
     audio = models.FileField(upload_to='audio',null=True)
+    deleted = models.BooleanField(default=False)
     
     def __unicode__(self):
         return self.title
@@ -84,6 +85,7 @@ class leaDigitalEvidence(models.Model):
     video = models.FileField(upload_to='video',null=True)
     audio = models.FileField(upload_to='audio',null=True)
     textDoc = models.FileField(upload_to='text',null=True)
+    deleted = models.BooleanField(default=False)
     
     def __unicode__(self):
         return decrypt(binascii.a2b_base64(self.Person.first_name)) + str(self.id)
@@ -118,5 +120,11 @@ class AuditLogDigitalEvidence(models.Model):
     pde_date = models.DateTimeField()
     pde_description = models.CharField(max_length=100,null=True)
     case = models.ForeignKey(case, null = True)
+
+class LoginAuditLog(models.Model):
+    person_id = models.ForeignKey(Person)
+    action = models.CharField(max_length=7)
+    date = models.DateTimeField()
     
+
 

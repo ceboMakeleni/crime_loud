@@ -16,9 +16,13 @@
 
             <div class="navbar-collapse collapse navbar-responsive-collapse">
                     <ul class="nav navbar-nav">
-                            <li class="active">
-                                    <a href="backHome">Home</a>
+                            <li>
+                                    <a href="/backHome">Home</a>
                             </li>
+                            <li>
+                                    <a href="/documentations">View Documentation</a>
+                            </li>
+                            
                     </ul><!-- end navbar-left -->
                     <ul class="nav navbar-nav navbar-right">
                             <li>
@@ -41,30 +45,21 @@
 <div class="jumbotron">
     <div class="row" id="displayInfoAndUploads">
         <div class="col-md-6 feature">
-            <div align="center" class="embed-responsive embed-responsive-16by9">
-                 <video autoplay controls class="embed-responsive-item">
-                    <source src="../media/video/{{video}}" type="video/mp4">
-                    <source src="../media/video/{{video}}" type="video/3gp">
-                    <source src="../media/video/{{video}}" type="video/avi">
-                    <source src="../media/video/{{video}}" type="video/asf">
-                    <source src="../media/video/{{video}}" type="video/mov">
-                    <source src="../media/video/{{video}}" type="video/mwv">
-                </video>
-            </div>
+            <img src="../media/photo/{{image}}" width='500' height='400'/>
         </div>
         <div class="col-md-6 feature">
             
-            <div class="panel panel-primary">
+            <div class="panel panel-primary" >
                 <!-- Default panel contents -->
-              <div class="panel-heading" style="background-color: #151B54; color: white;">Video Information</div>
+              <div class="panel-heading" style="background-color:  #151B54">Image Information</div>
                 <ul class="list-group">
                   <li class="list-group-item"><strong>Title: </strong> {{title}}</li>
                   <li class="list-group-item"><strong>Description: </strong>{{ description }}</li>
                   <li class="list-group-item"><strong>Location: </strong>{{location}}</li>
                   <li class="list-group-item"><strong>Date: </strong>{{date}}</li>
-                  <li class="list-group-item"><strong>Case Number:</strong> {{ caseName }}</li>
+                  <li class="list-group-item"><strong>Case Number:</strong> {{ caseNumber }}</li>
                   {%if type == 1%}
-                    <li class="list-group-item" style="color:green"><span class="badge" id="myspan"><a href="#viewData" data-toggle="modal">view</a></span>
+                    <li class="list-group-item" style="color:green"><span class="badge" id="myspan" style="background-color: #3366FF; color: #000000;"><a href="#viewData" data-toggle="modal">view</a></span>
                         <strong style="color:black">Validity: </strong>Hashes are equal</li>
                   {%else%}
                     <li class="list-group-item" style="color:green"><span class="badge" id="myspan"><a href="#viewData" data-toggle="modal">view</a></span>
@@ -72,6 +67,22 @@
                   {%endif%}
                 </ul>
             </div>
+            
+            <form  method="post" action="/Delete">
+              <!-- <input type="hidden" name="ID" value=" {{images}} "/>
+               <input type="submit" name="submit" value="delete"/>-->
+                <input type="hidden" name="ID" value={{ images }}>
+                <button id="login_form_sbmt_btn" type="submit" class="btn btn-default" style="background-color: #151B54; text-align: center; color:white;">Delete</button>
+            </form>
+            
+            <form  method="post" action="/unmark">
+               <!--<input type="hidden" name="ID" value="{{image}} "/>
+               <input type="hidden" name="type" value="image"/>
+               <input type="submit" name="submit" value="download"/>-->
+                    <input type="hidden" name="ID" value={{ images }}>
+                    <input type="hidden" name="type" value="image"/>
+                  <button id="login_form_sbmt_btn" type="submit" class="btn btn-default" style="background-color: #151B54; text-align: center; color:white;">Unmark</button>
+            </form>
             
         </div>
         <div class="col-sm-4 feature">		
@@ -90,7 +101,7 @@
                                     </ul>
                                 </div><!-- end form-group -->
                             </div><!-- end modal-content -->
-                    </div><!-- end modal-dialog -->
+                    </div><!-- end modal-dialog --> 
             </div>
         </div>
     </div>

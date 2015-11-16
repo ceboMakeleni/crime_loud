@@ -390,8 +390,10 @@ def UploadVideoLEA(request):
                                                                      })
         
 def logout(request):
-    request.session.delete()      
+    request.session.delete()
+    views.logout(request)
     return render_to_response("web_interface/login.html")
+
 
 def takePhoto(request):  
     return render_to_response("web_interface/takePhoto.html")
@@ -802,6 +804,33 @@ def deletePDE(request):
                                                                         'video':res['video'],
                                                                         'date':res['date']})
 
+@csrf_exempt
+def deleteLEA(request):
+    pde_id = request.POST['ID']
+    results = views.deleteLEA(request, json.dumps({'id':pde_id}))
+    res = json.loads(results.content)
+    
+    if res['type'] == 1:
+        result = views.leaHomePage(request)
+        res = json.loads(result.content)
+        if res['type'] == 1:
+            return render_to_response("web_interface/law_enforcement.html",{'name':res['name'],
+                                                                        'surname':res['surname'],
+                                                                        'images':res['images'],
+                                                                        'audio':res['audio'],
+                                                                        'video':res['video'],
+                                                                        'date':res['date']})
+    else:
+        result = views.leaHomePage(request)
+        res = json.loads(result.content)
+        if res['type'] == 1:
+            return render_to_response("web_interface/law_enforcement.html",{'name':res['name'],
+                                                                        'surname':res['surname'],
+                                                                        'images':res['images'],
+                                                                        'audio':res['audio'],
+                                                                        'video':res['video'],
+                                                                        'date':res['date']})
+
 @csrf_exempt    
 def RegisterAuthorizedUser(request):
     name = request.POST['registerName'],
@@ -903,7 +932,8 @@ def viewPdeViaCaseD(request,ID):
                                                                          'date':res['date'],
                                                                          'case':res['case'],
                                                                          'caseNumber':res['caseNumber'],
-                                                                         'caseName':res['caseName']})
+                                                                         'caseName':res['caseName'],
+                                                                         'case_id':ID})
         
 
 def viewByCase(request):
@@ -1195,6 +1225,8 @@ def Search(request,case_id):
                                       'video':res['video'],
                                       'date':res['date'],
                                       'case_id':case_id,
+                                      'case_name':res['case_name'],
+                                      'case_number':res['case_number'],
                                       'type':1
                                 })
     else:
@@ -1203,3 +1235,60 @@ def Search(request,case_id):
                                       'case_id':case_id,
                                       'type':-1
                                 })
+    
+def auditlog(request):
+    result = views.Auditlog(request)
+    res = json.loads(result.content)
+    
+    if res['type'] == 1:
+        return render_to_response("web_interface/auditlog.html",{'name':res['name'],
+                                      'surname':res['surname'],
+                                      'login':res['login'],
+                                      'comPDE': res['comPDE'],
+                                      'authPDE': res['authPDE']
+                                })
+
+def getDeleted(request):
+    result = views.getDeleted(request)
+    res = json.loads(result.content)
+    
+    if res['type'] == 1:
+         return render_to_response("web_interface/deleted.html",{'name':res['name'],
+                                      'surname':res['surname'],
+                                      'community':res['community'],
+                                      'authorized': res['authorized'],
+                                      'date':res['date']
+                                })
+        
+def viewImageDel(request,image_id):
+    results = views.viewImageDel(request,json.dumps({'image':image_id}))
+    res = json.loads(results.content)
+    
+    if res['type'] == 1:
+        return render_to_response("web_interface/deleted_image.html", {'image':res['imageName'],
+                                                                        'cases':res['cases'],
+                                                                        'date':res['date'],
+                                                                        'location': res['location'],
+                                                                        'description':res['description'],
+                                                                        'title': res['title'],
+                                                                        'surname':res['surname'],
+                                                                        'name':res['name'],
+                                                                        'images':image_id,
+                                                                        'type':1,
+                                                                        'caseNumber':res['caseNumber'],
+                                                                        'oldHash':res['oldHash'],
+                                                                        'newHash':res['newHash']})
+    else:
+        return render_to_response("web_interface/deleted_image.html", {'image':res['imageName'],
+                                                                        'cases':res['cases'],
+                                                                        'date':res['date'],
+                                                                        'location': res['location'],
+                                                                        'description':res['description'],
+                                                                        'title': res['title'],
+                                                                        'surname':res['surname'],
+                                                                        'name':res['name'],
+                                                                        'images':image_id,
+                                                                        'type':-1,
+                                                                        'caseNumber':res['caseNumber'],
+                                                                        'oldHash':res['oldHash'],
+                                                                        'newHash':res['newHash']})

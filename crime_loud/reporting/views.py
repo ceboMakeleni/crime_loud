@@ -38,6 +38,7 @@ def get_case_report(request,case_id):
     # the crime scene documentation will be in same format as the community one
     #MAMZO WHAT IS THE DIFFERENCE IN DATA FOR THESE TWO??
     cs_docs = res['cs_docs']
+    comms = res['comm_docs']
     
     
-    return generate_case_report(case, cs_docs)
+    return generate_case_report(case, cs_docs, comms)

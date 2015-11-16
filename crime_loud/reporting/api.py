@@ -18,7 +18,7 @@ from django.shortcuts import render
 
 styles = getSampleStyleSheet()
 
-def generate_case_report(case, cs_docs):
+def generate_case_report(case, cs_docs, comms):
     
     cName = case[0]
     cNumber = case[1]
@@ -72,21 +72,21 @@ def generate_case_report(case, cs_docs):
                                 ('GRID',(0,0), (-1,0),1, colors.black),
                                 ('BACKGROUND',(0,0),(-1,-1),colors.lightblue)#Give total a grey background)
                               ]))
-    table._argW[0]=7.0*inch
+    table._argW[0]=8.0*inch
     elements.append(table)
     elements.append(Spacer(width=0, height=1*cm))
     
     tdata = [[Paragraph('<b>User Name</b>',styleN),
               Paragraph('<b>Date</b>',styleN),
               Paragraph('<b>Action</b>',styleN),
-              Paragraph('<b>Description</b>',styleN),
+              Paragraph('<b>Title</b>',styleN),
               Paragraph('<b>PDE Date </b>', styleN)
             ]]
     table = Table(tdata, colWidths=None, rowHeights=None)
     table.setStyle(TableStyle([
                                 ('GRID',(0,0), (-1,-1),1, colors.black)
                               ]))
-    table._argW[0]=2.5*inch #Set the size(width) of the first column in the table
+    table._argW[0]=1.5*inch #Set the size(width) of the first column in the table
     table._argW[1]=1.5*inch
     table._argW[2]=1.5*inch
     table._argW[3]=1.5*inch
@@ -94,28 +94,94 @@ def generate_case_report(case, cs_docs):
     
     
     elements.append(table)
-    elements.append(Spacer(width=0, height=1*cm))
+   # elements.append(Spacer(width=0, height=1*cm))
     '''
     this part of the table must loop through the community aray to display all available information
     for example:
-    
+    '''
     for k in cs_docs:
-    
-        tdata = [k[0], k[1],k[2], k[3],k[4]]
-        table2 = Table(tdata, colWidths=None, rowHeights=None)
-        table2.setStyle(TableStyle([
+        #print "cs_docs size:  "+ k[0] + "----"+ k[1] + "----"+ k[2] + "----"+ k[3] + "----"+ k[4] + "----"
+        usrName = k[0]
+        title = k[1]
+        action = k[2]
+        date = k[3]
+        pdeDate = k[4]
+        
+        tdata = [usrName, title, action, date, pdeDate],
+        table = Table(tdata, colWidths=None, rowHeights=None, repeatRows=1)
+        table.setStyle(TableStyle([
                                 ('GRID',(0,0), (-1,-1),1, colors.black)
                               ]))
          #table=Table(tdata, colWidths=80, rowHeights=30)
-        table2._argW[0]=2.5*inch #Set the size(width) of the first collumn in the table
-        table2._argW[1]=1.5*inch
-        table2._argW[2]=1.5*inch
-        table2._argW[3]=1.5*inch
-        table2._argW[4]=1.5*inch
-        elements.append(table2)
+        table._argW[0]=1.5*inch #Set the size(width) of the first collumn in the table
+        table._argW[1]=1.5*inch
+        table._argW[2]=1.5*inch
+        table._argW[3]=1.5*inch
+        table._argW[4]=1.5*inch
+        elements.append(table)
         
     elements.append(Spacer(width=0, height=1*cm))
+    
+        ##############################################
+    
+    tdata = [[Paragraph('<b>' + 'Community Uploads' + '</b>',styleN)
+            ]]
+    table = Table(tdata, colWidths=None, rowHeights=None)
+    table.setStyle(TableStyle([
+                                ('GRID',(0,0), (-1,0),1, colors.black),
+                                ('BACKGROUND',(0,0),(-1,-1),colors.lightblue)#Give total a grey background)
+                              ]))
+    table._argW[0]=8.0*inch
+    elements.append(table)
+    elements.append(Spacer(width=0, height=1*cm))
+    
+    tdata = [[Paragraph('<b>User Name</b>',styleN),
+              Paragraph('<b>Date</b>',styleN),
+              Paragraph('<b>Action</b>',styleN),
+              Paragraph('<b>Title</b>',styleN),
+              Paragraph('<b>PDE Date </b>', styleN)
+            ]]
+    table = Table(tdata, colWidths=None, rowHeights=None)
+    table.setStyle(TableStyle([
+                                ('GRID',(0,0), (-1,-1),1, colors.black)
+                              ]))
+    table._argW[0]=1.5*inch #Set the size(width) of the first column in the table
+    table._argW[1]=1.5*inch
+    table._argW[2]=1.5*inch
+    table._argW[3]=1.5*inch
+    table._argW[4]=1.5*inch
+    
+    
+    elements.append(table)
+   # elements.append(Spacer(width=0, height=1*cm))
     '''
+    this part of the table must loop through the community aray to display all available information
+    for example:
+    '''
+    for k in comms:
+        
+        usrName = k[0]
+        print "usrName: "+ usrName 
+        title = k[1]
+        action = k[2]
+        date = k[3]
+        pdeDate = k[4]
+        
+        tdata = [usrName, title, action, date, pdeDate],
+        table = Table(tdata, colWidths=None, rowHeights=None, repeatRows=1)
+        table.setStyle(TableStyle([
+                                ('GRID',(0,0), (-1,-1),1, colors.black)
+                              ]))
+         #table=Table(tdata, colWidths=80, rowHeights=30)
+        table._argW[0]=1.5*inch #Set the size(width) of the first collumn in the table
+        table._argW[1]=1.5*inch
+        table._argW[2]=1.5*inch
+        table._argW[3]=1.5*inch
+        table._argW[4]=1.5*inch
+        elements.append(table)
+        
+    elements.append(Spacer(width=0, height=1*cm))
+    
     
     my_pdf.build(elements)
     

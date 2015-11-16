@@ -19,8 +19,8 @@
                             <li>
                                     <a href="/backHome">Home</a>
                             </li>
-                            <li class="active"><a href="#">View by Case</a></li>
-                            <li><a href="#">Incident Response</a></li>
+                            <li><a href="#">View Documentation</a></li>
+                            <li><a href="#">First Respondant</a></li>
                     </ul><!-- end navbar-left -->
                     <ul class="nav navbar-nav navbar-right">
                             <li>
@@ -45,7 +45,7 @@
     <div class="row" id="displayInfoAndUploads">
         <div class="btn-group" role="group">
             <button type="button" style="background-color: #151B54; color: white;"class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                Assign Case<span class="caret"></span></button>
+                Choose Case<span class="caret"></span></button>
             <ul class="dropdown-menu" role="menu">
                 {%for i in case%}
                     <li><a href="/viewCase/{{i.0}}">{{i.2}} {{i.1}}</a></li>

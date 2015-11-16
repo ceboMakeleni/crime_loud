@@ -113,6 +113,7 @@ def imageUpload(request, jsonObj):
     
     return HttpResponse(json.dumps(data))
 
+#@isLawEnforcementAgent
 def imageUploadLEA(request, jsonObj):
     json_data = json.loads(jsonObj)
     
@@ -471,6 +472,22 @@ def deletePDE(request,jsonObj):
             'type':-1
         }
         return HttpResponse(json.dumps(data))
+    
+def deleteLEA(request,jsonObj):
+    json_data = json.loads(jsonObj)
+    pde = json_data['id']
+    
+    result = api.deletePDE_LEA(pde,request)
+    if result:
+        data = {
+            'type':1
+        }
+        return HttpResponse(json.dumps(data))
+    else:
+        data ={
+            'type':-1
+        }
+        return HttpResponse(json.dumps(data))
 
 def registerAuthorzedUser(request, jsonObj):
     json_data = json.loads(jsonObj)
@@ -722,7 +739,8 @@ def getCaseInformationForReport(request,jsonObj):
     
     data = {
         'case_info':case_info,
-        'cs_docs':cs_data
+        'cs_docs':cs_data[0],
+        'comm_docs': cs_data[1]
     }
     
     return HttpResponse(json.dumps(data))
@@ -734,6 +752,7 @@ def Search(request,jsonObj):
     res = api.Search(request,case_id)
     data = []
     if res:
+        print "Theres something"
         data={
             'type':1,
             'name':request.session['user']['first_name'],
@@ -741,13 +760,68 @@ def Search(request,jsonObj):
             'images':res['images'],
             'audio':res['audio'],
             'video':res['video'],
-            'date':res['date']
+            'date':res['date'],
+            'case_name':res['case_name'],
+            'case_number': res['case_number']
             
         }
     else:
+        print "Theres nothing"
         data={
             'type':-1,
             'name':request.session['user']['first_name'],
             'surname':request.session['user']['last_name'],
         }
     return HttpResponse(json.dumps(data))
+
+def Auditlog(request):
+    res = api.auditLog(request)
+    data = {
+        'type':1,
+        'name': request.session['user']['first_name'],
+        'surname':request.session['user']['last_name'],
+        'login': res[0],
+        'comPDE': res[1],
+        'authPDE': res[2]
+    }
+    return HttpResponse(json.dumps(data))
+
+def logout(request):
+    api.logout(request)
+    return HttpResponse()
+
+def getDeleted(request):
+    res = api.getDeleted(request)
+    data = {
+        'type':1,
+        'name':request.session['user']['first_name'],
+        'surname':request.session['user']['last_name'],
+        'community': res[0],
+        'authorized': res[1],
+        'date':str(datetime.datetime.today().date())
+    }
+    return HttpResponse(json.dumps(data))
+
+def viewImageDel(request,jsonObj):
+    json_data = json.loads(jsonObj)
+    image_id = json_data['image']
+    
+    result = api.viewImageDel(request,image_id)
+    if result != "":
+        data={
+            'type':1,
+            'name':request.session['user']['first_name'],
+            'surname':request.session['user']['last_name'],
+            'title': result['title'],
+            'description':result['description'],
+            'location':result['location'],
+            'date':result['date'],
+            'caseNumber': result['caseNumber'],
+            'imageName':result['imageName'],
+            'cases':result['arrayCases'],
+            'oldHash':result['oldhash'],
+            'newHash': result['newhash']
+        }
+        
+        return HttpResponse(json.dumps(data))
+   
